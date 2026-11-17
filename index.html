@@ -258,26 +258,26 @@
     <div class="jirai-lace-border-bottom"></div>
     <!-- กรอบหน้าเว็บหลัก -->
     <main class="max-w-4xl mx-auto kawaii-frame overflow-hidden p-3 sm:p-6">
-        <!-- แถบริบบิ้นด้านบนสุด -->
-        <div class="w-full h-8 bg-[#2A2227] rounded-t-2xl flex items-center justify-between px-2.5 sm:px-4 text-[#FFF5F9] text-xs border-b border-[#F075AB]/40">
-            <div class="flex items-center gap-2">
-                <button onclick="toggleBgmMusic()" id="bgmToggleBtn" class="kawaii-btn py-0.5 px-2.5 rounded-full bg-[#1D171B] text-[#FFC2DE] hover:bg-[#2A2227] font-medium text-[11px] shadow-2xs border border-[#F075AB] flex items-center gap-1.5 cursor-pointer" title="คลิกเพื่อเปิด/ปิดเพลงประกอบเว็บไซต์">
-                    <i id="bgmIcon" class="fa-solid fa-music text-[#FFC2DE] text-[10px]"></i>
-                    <span id="bgmEqBars" class="flex items-end gap-[2px] h-3">
-                        <span class="eq-bar eq-bar-1 h-1"></span>
-                        <span class="eq-bar eq-bar-2 h-2"></span>
-                        <span class="eq-bar eq-bar-3 h-1.5"></span>
-                    </span>
-                    <span id="bgmStatusText">BGM: กำลังโหลด...</span>
-                </button>
-                <span class="hidden md:inline text-[#F075AB]">✟ ⁺ ₊ ✧</span>
+        <!-- แถบด้านบน (สไตล์เดียวกับเว็บช่องทางชำระเงิน) -->
+        <div class="w-full bg-[#2D242A] rounded-t-2xl border-b border-[#FFE4F0] px-3 sm:px-4 py-2.5 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-1.5 shrink-0">
+                <span class="w-3.5 h-3.5 rounded-full bg-[#F075AB] border border-[#FFEBF3] inline-block"></span>
+                <span class="w-3.5 h-3.5 rounded-full bg-[#211B1F] border border-[#FFE4F0] inline-block"></span>
+                <span class="w-3.5 h-3.5 rounded-full bg-[#FFF5F9] inline-block"></span>
             </div>
-            <span id="topBarStoreName" class="font-cute tracking-widest text-sm hidden sm:inline uppercase text-[#FFC2DE]">AURELIA STORE</span>
-            <div class="flex items-center gap-2">
-                <span class="hidden md:inline text-[#F075AB]">✧ ₊ ⁺ ✟</span>
-                <button onclick="toggleAdminView()" id="tab-admin" class="kawaii-btn py-0.5 px-2.5 rounded-full bg-[#1D171B] text-[#FFC2DE] hover:bg-[#2A2227] font-medium text-[11px] shadow-2xs border border-[#F075AB] flex items-center gap-1 cursor-pointer">
-                    <i class="fa-solid fa-wand-magic-sparkles text-[#F075AB]"></i>
-                    <span id="adminToggleBtnText">หลังบ้าน (Admin)</span>
+            <div class="bg-[#181316] border border-[#FFD6E8] rounded-full px-3 py-1 text-xs sm:text-sm text-[#FFF5F9] flex items-center gap-1.5 truncate max-w-[180px] sm:max-w-xs">
+                <svg class="w-3.5 h-3.5 text-[#F47FB3] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></svg>
+                <span id="topBarStoreName" class="truncate font-medium">AURELIA STORE</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+                <button onclick="toggleBgmMusic()" id="bgmToggleBtn" title="เปิด/ปิดเพลงประกอบ" class="w-8 h-8 rounded-lg bg-[#181316] text-[#FFF5F9] border border-[#FFD6E8] hover:bg-[#3A2E35] flex items-center justify-center shrink-0 transition cursor-pointer shadow-sm">
+                    <span id="bgmIcon" class="flex items-center justify-center"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
+                </button>
+                <button onclick="if(isAdminViewActive) toggleAdminView()" id="tab-customer" title="หน้าลูกค้า" class="w-8 h-8 rounded-lg bg-[#F075AB] text-[#FFFFFF] border border-[#FFEBF3] flex items-center justify-center shrink-0 transition cursor-pointer shadow-sm">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                </button>
+                <button onclick="if(!isAdminViewActive) toggleAdminView()" id="tab-admin" title="หลังบ้านร้านค้า (Admin)" class="w-8 h-8 rounded-lg bg-[#181316] text-[#FFF5F9] border border-[#FFD6E8] hover:bg-[#3A2E35] flex items-center justify-center shrink-0 transition cursor-pointer shadow-sm">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
                 </button>
             </div>
         </div>
@@ -1351,6 +1351,12 @@
             modal.classList.add('hidden');
             modal.classList.remove('flex');
         }
+        function setTopTabs(adminActive) {
+            const on = 'w-8 h-8 rounded-lg bg-[#F075AB] text-[#FFFFFF] border border-[#FFEBF3] flex items-center justify-center shrink-0 transition cursor-pointer shadow-sm';
+            const off = 'w-8 h-8 rounded-lg bg-[#181316] text-[#FFF5F9] border border-[#FFD6E8] hover:bg-[#3A2E35] flex items-center justify-center shrink-0 transition cursor-pointer shadow-sm';
+            document.getElementById('tab-customer').className = adminActive ? off : on;
+            document.getElementById('tab-admin').className = adminActive ? on : off;
+        }
         function toggleAdminView() {
             if (!isAdminViewActive && !isAdminAuthenticated) {
                 openAdminLoginModal();
@@ -1359,16 +1365,15 @@
             isAdminViewActive = !isAdminViewActive;
             const statusView = document.getElementById('view-status');
             const adminView = document.getElementById('view-admin');
-            const toggleText = document.getElementById('adminToggleBtnText');
             if (isAdminViewActive) {
                 statusView.classList.add('hidden');
                 adminView.classList.remove('hidden');
-                toggleText.textContent = 'กลับหน้าลูกค้า';
+                setTopTabs(true);
                 loadQueues();
             } else {
                 adminView.classList.add('hidden');
                 statusView.classList.remove('hidden');
-                toggleText.textContent = 'หลังบ้าน (Admin)';
+                setTopTabs(false);
                 /* ล้างผลค้นหาเดิม ไม่ให้ข้อมูลเก่าค้างหน้าจอ */
                 document.getElementById('queuePreviewResult').classList.add('hidden');
                 document.getElementById('queueFullDetailCard').classList.add('hidden');
@@ -1950,20 +1955,15 @@
         }
         function updateBgmButtonUI(playing, waitingInteraction) {
             const btn = document.getElementById('bgmToggleBtn');
-            const statusText = document.getElementById('bgmStatusText');
-            const eqBars = document.getElementById('bgmEqBars');
             const icon = document.getElementById('bgmIcon');
-            if (!btn || !statusText || !eqBars || !icon) return;
+            if (!btn || !icon) return;
+            const svgAttr = 'class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"';
             if (playing) {
-                btn.className = 'kawaii-btn py-0.5 px-2.5 rounded-full bg-[#1D171B] text-[#FFC2DE] font-semibold text-[11px] shadow-2xs border border-[#F075AB] flex items-center gap-1.5 cursor-pointer';
-                eqBars.classList.add('eq-playing');
-                icon.className = 'fa-solid fa-volume-high text-[#FFC2DE] text-[10px]';
-                statusText.textContent = 'BGM: เปิดอยู่';
+                btn.className = 'w-8 h-8 rounded-lg bg-[#F075AB] text-[#FFFFFF] border border-[#FFEBF3] flex items-center justify-center shrink-0 transition cursor-pointer shadow-sm';
+                icon.innerHTML = `<svg ${svgAttr}><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`;
             } else {
-                btn.className = 'kawaii-btn py-0.5 px-2.5 rounded-full bg-[#1D171B]/90 text-[#FFD6E8] hover:bg-[#2A2227] font-medium text-[11px] shadow-2xs border border-[#F075AB] flex items-center gap-1.5 cursor-pointer';
-                eqBars.classList.remove('eq-playing');
-                icon.className = 'fa-solid fa-volume-xmark text-[#FFD6E8] text-[10px]';
-                statusText.textContent = waitingInteraction ? 'เปิดเพลง ♪' : 'BGM: ปิดอยู่';
+                btn.className = 'w-8 h-8 rounded-lg bg-[#181316] text-[#FFF5F9] border border-[#FFD6E8] hover:bg-[#3A2E35] flex items-center justify-center shrink-0 transition cursor-pointer shadow-sm';
+                icon.innerHTML = `<svg ${svgAttr}><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`;
             }
         }
     </script>
