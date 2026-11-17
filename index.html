@@ -1,0 +1,1973 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurelia Store - ระบบจองคิวออนไลน์</title>
+    <!-- โหลด Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- โหลด Supabase JS (ล็อกเวอร์ชัน) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+    <!-- โหลด Google Fonts: Itim, Fredoka และ Prompt -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Itim&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- โหลด Font Awesome สำหรับไอคอน -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Prompt', 'sans-serif'],
+                        cute: ['Itim', 'cursive'],
+                        number: ['Fredoka', 'cursive'],
+                    },
+                    colors: {
+                        jiraiDark: '#120A0F',
+                        jiraiCard: '#1C121A',
+                        jiraiBorder: '#D87D98',
+                        jiraiPink: '#FF9EB5',
+                        jiraiText: '#F5E6EC',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* พื้นหลังธีมจิไรเคย์ (Jirai Kei) โทนดำอมม่วงเข้ม ตัดลายตารางและจุดไข่ปลา */
+        body {
+            background-color: #120A0F;
+            background-image: 
+                linear-gradient(rgba(216, 125, 152, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(216, 125, 152, 0.05) 1px, transparent 1px);
+            background-size: 24px 24px;
+            color: #F5E6EC;
+            font-family: 'Prompt', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+        }
+        /* แถบระบายลูกไม้ขอบบนและล่างสุดของเว็บไซต์ (แปะอยู่บนสุด/ล่างสุดของหน้าเว็บ ไม่เลื่อนตามหน้าจอ) */
+        .jirai-lace-border-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 36px;
+            background-repeat: repeat-x;
+            background-position: top left;
+            background-size: 84px 36px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='36' viewBox='0 0 84 36'%3E%3Cpath d='M0 0 H84 V21 C76 21 72 26 68 26 C64 26 60 22 57 22 C54 22 49 32 42 32 C35 32 30 22 27 22 C24 22 20 26 16 26 C12 26 8 21 0 21 Z' fill='%23FF9EB5'/%3E%3Cpath d='M0 21 C8 21 12 26 16 26 C20 26 24 22 27 22 C30 22 35 32 42 32 C49 32 54 22 57 22 C60 22 64 26 68 26 C72 26 76 21 84 21' fill='none' stroke='%23120A0F' stroke-width='2'/%3E%3Cpath d='M0 17.5 C7 17.5 11 22.5 16 22.5 C20 22.5 23 18.5 27 18.5 C31 18.5 35 28 42 28 C49 28 53 18.5 57 18.5 C61 18.5 64 22.5 68 22.5 C73 22.5 77 17.5 84 17.5' fill='none' stroke='%23120A0F' stroke-width='1.5' stroke-dasharray='2.5 2.5'/%3E%3Cpath d='M42 10 Q42 16 47 16 Q42 16 42 22 Q42 16 37 16 Q42 16 42 10 Z' fill='%23120A0F'/%3E%3Ccircle cx='16' cy='15' r='1.5' fill='%23120A0F'/%3E%3Ccircle cx='68' cy='15' r='1.5' fill='%23120A0F'/%3E%3C/svg%3E");
+            z-index: 40;
+            pointer-events: none;
+        }
+        .jirai-lace-border-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 36px;
+            background-repeat: repeat-x;
+            background-position: bottom left;
+            background-size: 84px 36px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='36' viewBox='0 0 84 36'%3E%3Cpath d='M0 36 H84 V15 C76 15 72 10 68 10 C64 10 60 14 57 14 C54 14 49 4 42 4 C35 4 30 14 27 14 C24 14 20 10 16 10 C12 10 8 15 0 15 Z' fill='%23FF9EB5'/%3E%3Cpath d='M0 15 C8 15 12 10 16 10 C20 10 24 14 27 14 C30 14 35 4 42 4 C49 4 54 14 57 14 C60 14 64 10 68 10 C72 10 76 15 84 15' fill='none' stroke='%23120A0F' stroke-width='2'/%3E%3Cpath d='M0 18.5 C7 18.5 11 13.5 16 13.5 C20 13.5 23 17.5 27 17.5 C31 17.5 35 8 42 8 C49 8 53 17.5 57 17.5 C61 17.5 64 13.5 68 13.5 C73 13.5 77 18.5 84 18.5' fill='none' stroke='%23120A0F' stroke-width='1.5' stroke-dasharray='2.5 2.5'/%3E%3Cpath d='M42 14 Q42 20 47 20 Q42 20 42 26 Q42 20 37 20 Q42 20 42 14 Z' fill='%23120A0F'/%3E%3Ccircle cx='16' cy='21' r='1.5' fill='%23120A0F'/%3E%3Ccircle cx='68' cy='21' r='1.5' fill='%23120A0F'/%3E%3C/svg%3E");
+            z-index: 40;
+            pointer-events: none;
+        }
+        /* กรอบการ์ดหลักสไตล์จิไรเคย์ */
+        .kawaii-frame {
+            background-color: #1C121A;
+            border: 3px solid #D87D98;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(216, 125, 152, 0.2);
+            position: relative;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        /* เส้นประตกแต่งด้านใน */
+        .dashed-box {
+            border: 2px dashed #D87D98;
+            border-radius: 18px;
+            background-color: rgba(28, 18, 26, 0.85);
+        }
+        /* แถบกันสาดร้านค้า */
+        .awning-stripe {
+            background: repeating-linear-gradient(
+                90deg,
+                #2C1A26,
+                #2C1A26 28px,
+                #1C121A 28px,
+                #1C121A 56px
+            );
+            height: 22px;
+            border-bottom: 2px dashed #D87D98;
+        }
+        /* ปุ่มสไตล์เม็ดแคปซูลจิไรเคย์ */
+        .kawaii-btn {
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .kawaii-btn:hover {
+            transform: translateY(-2px);
+        }
+        .kawaii-btn:active {
+            transform: scale(0.96);
+        }
+        /* แถบป้ายสถานะ */
+        .demo-badge {
+            background-color: #2E1B26;
+            color: #FF9EB5;
+            border: 1px dashed #D87D98;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        /* เอฟเฟกต์หัวใจเต้นเบาๆ เมื่อครบ 100% */
+        @keyframes heartPulseComplete {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+        }
+        .heart-complete {
+            animation: heartPulseComplete 1.6s infinite ease-in-out;
+        }
+        /* เอฟเฟกต์คลื่นน้ำขยับเบาๆ ในหัวใจ */
+        @keyframes waveFloat {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-18px); }
+        }
+        .heart-wave {
+            animation: waveFloat 3.2s infinite ease-in-out;
+        }
+        /* เอฟเฟกต์วิบวับรอบหัวใจ */
+        @keyframes sparkleTwinkle {
+            0%, 100% { opacity: 0.35; transform: scale(0.85); }
+            50% { opacity: 1; transform: scale(1.15); }
+        }
+        .sparkle-dot {
+            animation: sparkleTwinkle 2s infinite ease-in-out;
+        }
+        /* เอฟเฟคคลื่นเสียงเวลาเล่นเพลง */
+        @keyframes eqBounce {
+            0%, 100% { height: 4px; }
+            50% { height: 12px; }
+        }
+        .eq-bar {
+            width: 2.5px;
+            background-color: #FF9EB5;
+            border-radius: 999px;
+            transition: height 0.2s ease;
+        }
+        .eq-playing .eq-bar-1 { animation: eqBounce 0.7s infinite ease-in-out; }
+        .eq-playing .eq-bar-2 { animation: eqBounce 0.5s infinite ease-in-out 0.15s; }
+        .eq-playing .eq-bar-3 { animation: eqBounce 0.8s infinite ease-in-out 0.3s; }
+
+        /* เอฟเฟกต์เด้งเบาๆ สำหรับโลโก้ร้านและหัวใจสถานะ */
+        @keyframes gentleBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-6px) scale(1.03); }
+        }
+        .gentle-bounce {
+            animation: gentleBounce 2.6s infinite ease-in-out;
+        }
+
+        /* เอฟเฟกต์ระยิบระยับโปรยปรายทั่วหน้าจอ */
+        @keyframes floatingSparkle {
+            0% {
+                transform: translateY(-10vh) rotate(0deg) scale(0.7);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.85;
+            }
+            80% {
+                opacity: 0.75;
+            }
+            100% {
+                transform: translateY(105vh) rotate(360deg) scale(1.1);
+                opacity: 0;
+            }
+        }
+        .ambient-sparkle {
+            position: fixed;
+            top: -5vh;
+            color: #FF9EB5;
+            pointer-events: none;
+            z-index: 35;
+            user-select: none;
+            animation: floatingSparkle linear infinite;
+            text-shadow: 0 0 8px rgba(255, 158, 181, 0.6);
+        }
+
+        /* แถบโหลดไล่สี (Gradient Progress Bar) */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .gradient-progress-fill {
+            background: linear-gradient(90deg, #9C4A63, #D87D98, #FF9EB5, #FFD1DC, #D87D98);
+            background-size: 200% 200%;
+            animation: gradientShift 2s ease infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen pt-12 pb-14 px-3 sm:pt-14 sm:pb-16 sm:px-6">
+    <!-- หน้าจอรอโหลด (Preloader + Gradient Progress Bar) -->
+    <div id="sitePreloader" class="fixed inset-0 bg-[#120A0F] z-[120] flex flex-col items-center justify-center p-6 transition-opacity duration-500">
+        <!-- แถบลูกไม้ตกแต่งในหน้าโหลด -->
+        <div class="jirai-lace-border-top"></div>
+        <div class="jirai-lace-border-bottom"></div>
+
+        <div class="max-w-xs w-full text-center space-y-5 relative z-10">
+            <!-- โลโก้หน้าโหลดเด้งเบาๆ -->
+            <div class="relative inline-block">
+                <span class="sparkle-dot absolute -top-2 -left-3 text-[#FF9EB5] text-lg">✟</span>
+                <span class="sparkle-dot absolute -bottom-1 -right-3 text-[#D87D98] text-base" style="animation-delay: 0.6s;">♡</span>
+                <div class="w-28 h-28 sm:w-32 sm:h-32 mx-auto rounded-full border-4 border-[#D87D98] shadow-[0_0_25px_rgba(216,125,152,0.4)] overflow-hidden bg-[#2C1A26] gentle-bounce">
+                    <img id="preloaderLogoImg" src="https://placehold.co/400x400/2C1A26/FF9EB5?text=Aurelia%0ALogo" alt="โลโก้รอโหลด" class="w-full h-full object-cover">
+                </div>
+            </div>
+
+            <!-- ชื่อร้านและข้อความต้อนรับ -->
+            <div class="space-y-1">
+                <h2 id="preloaderStoreName" class="font-cute text-2xl sm:text-3xl font-bold text-[#FF9EB5] tracking-wide">
+                    Aurelia Store <span class="text-sm text-[#D87D98]">✟°｡⋆</span>
+                </h2>
+                <p class="text-xs text-[#D8B4BE]">กำลังเตรียมความน่ารักสักครู่นะคะ...</p>
+            </div>
+
+            <!-- Gradient Progress Bar + ตัวเลข 0% - 100% -->
+            <div class="space-y-2 pt-1">
+                <div class="w-full h-4 bg-[#1C121A] rounded-full p-0.5 border-2 border-[#D87D98] shadow-inner overflow-hidden">
+                    <div id="preloaderProgressBar" class="h-full rounded-full gradient-progress-fill transition-all duration-150 ease-out" style="width: 0%;"></div>
+                </div>
+                <div class="flex items-center justify-between text-xs font-number px-1">
+                    <span class="text-[#D87D98]">LOADING ✧</span>
+                    <span id="preloaderPercentText" class="font-bold text-sm text-[#FF9EB5]">0%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- เลเยอร์เอฟเฟกต์ระยิบระยับโปรยปรายทั่วหน้าจอ -->
+    <div id="ambientSparklesContainer" class="fixed inset-0 pointer-events-none overflow-hidden z-[35]" aria-hidden="true"></div>
+
+    <!-- แถบระบายลูกไม้ขอบบนและล่างสุดของเว็บไซต์ -->
+    <div class="jirai-lace-border-top"></div>
+    <div class="jirai-lace-border-bottom"></div>
+    <!-- กรอบหน้าเว็บหลัก -->
+    <main class="max-w-4xl mx-auto kawaii-frame overflow-hidden p-3 sm:p-6">
+        <!-- แถบริบบิ้นด้านบนสุด -->
+        <div class="w-full h-8 bg-[#2C1A26] rounded-t-2xl flex items-center justify-between px-2.5 sm:px-4 text-[#F5E6EC] text-xs border-b border-[#D87D98]/40">
+            <div class="flex items-center gap-2">
+                <button onclick="toggleBgmMusic()" id="bgmToggleBtn" class="kawaii-btn py-0.5 px-2.5 rounded-full bg-[#1C121A] text-[#FF9EB5] hover:bg-[#2C1A26] font-medium text-[11px] shadow-2xs border border-[#D87D98] flex items-center gap-1.5 cursor-pointer" title="คลิกเพื่อเปิด/ปิดเพลงประกอบเว็บไซต์">
+                    <i id="bgmIcon" class="fa-solid fa-music text-[#FF9EB5] text-[10px]"></i>
+                    <span id="bgmEqBars" class="flex items-end gap-[2px] h-3">
+                        <span class="eq-bar eq-bar-1 h-1"></span>
+                        <span class="eq-bar eq-bar-2 h-2"></span>
+                        <span class="eq-bar eq-bar-3 h-1.5"></span>
+                    </span>
+                    <span id="bgmStatusText">BGM: กำลังโหลด...</span>
+                </button>
+                <span class="hidden md:inline text-[#D87D98]">✟ ⁺ ₊ ✧</span>
+            </div>
+            <span id="topBarStoreName" class="font-cute tracking-widest text-sm hidden sm:inline uppercase text-[#FF9EB5]">AURELIA STORE</span>
+            <div class="flex items-center gap-2">
+                <span class="hidden md:inline text-[#D87D98]">✧ ₊ ⁺ ✟</span>
+                <button onclick="toggleAdminView()" id="tab-admin" class="kawaii-btn py-0.5 px-2.5 rounded-full bg-[#1C121A] text-[#FF9EB5] hover:bg-[#2C1A26] font-medium text-[11px] shadow-2xs border border-[#D87D98] flex items-center gap-1 cursor-pointer">
+                    <i class="fa-solid fa-wand-magic-sparkles text-[#D87D98]"></i>
+                    <span id="adminToggleBtnText">หลังบ้าน (Admin)</span>
+                </button>
+            </div>
+        </div>
+        <!-- ส่วนแบนเนอร์ 1920x800px และโปรไฟล์ร้าน -->
+        <div class="relative w-full mt-3">
+            <div class="w-full aspect-[1920/800] rounded-2xl overflow-hidden border-2 border-[#D87D98] bg-[#2C1A26] relative group">
+                <img
+                    id="storeBanner"
+                    src="https://placehold.co/1920x800/1C121A/FF9EB5?text=Aurelia+Store+Banner+(1920x800px)"
+                    alt="แบนเนอร์ร้าน"
+                    class="w-full h-full object-cover opacity-90"
+                    onerror="this.src='https://placehold.co/1920x800/1C121A/FF9EB5?text=Banner+1920x800'"
+                >
+            </div>
+            <!-- ส่วนหัวโปรไฟล์ร้าน: โลโก้และชื่อร้านจัดกึ่งกลางสมบูรณ์ -->
+            <div class="flex flex-col items-center justify-center text-center px-4 -mt-12 sm:-mt-16 relative z-10">
+                <!-- โลโก้วงกลม (เพิ่มเอฟเฟกต์เด้งเบาๆ) -->
+                <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full border-4 border-[#D87D98] shadow-md overflow-hidden bg-[#2C1A26] flex-shrink-0 relative gentle-bounce">
+                    <img
+                        id="storeLogo"
+                        src="https://placehold.co/400x400/2C1A26/FF9EB5?text=Aurelia%0ALogo"
+                        alt="โลโก้ร้าน"
+                        class="w-full h-full object-cover"
+                        onerror="this.src='https://placehold.co/400x400/2C1A26/FF9EB5?text=Logo'"
+                    >
+                </div>
+                <!-- ชื่อร้านและรายละเอียดอยู่ตรงกลางใต้โลโก้ -->
+                <div class="mt-3 pb-1 w-full max-w-xl mx-auto text-center flex flex-col items-center">
+                    <h1 id="storeNameDisplay" class="font-cute text-2xl sm:text-3xl font-bold text-[#FF9EB5] text-center drop-shadow-sm">
+                        Aurelia Store <span class="text-base font-normal text-[#D87D98]">✟°｡⋆</span>
+                    </h1>
+                    <p id="storeDescDisplay" class="text-xs sm:text-sm text-[#D8B4BE] mt-1.5 text-center leading-relaxed max-w-md mx-auto">
+                        ยินดีต้อนรับสู่ระบบตรวจสอบคิวออนไลน์ กรอกรหัสที่ได้รับจากทางร้านเพื่อเช็กลำดับและสถานะงานได้เลยค่ะ
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- แถบตกแต่งกันสาดร้านค้า -->
+        <div class="awning-stripe rounded-t-xl my-6"></div>
+        <!-- ========================================================= -->
+        <!-- ส่วนที่ 1: หน้าลูกค้าตรวจสอบสถานะคิว -->
+        <!-- ========================================================= -->
+        <section id="view-status" class="space-y-5">
+            <div class="dashed-box p-4 sm:p-6">
+                <div class="flex items-center justify-between border-b border-dashed border-[#D87D98] pb-3 mb-4">
+                    <h2 class="font-cute text-lg sm:text-xl font-bold text-[#FF9EB5] flex items-center gap-2">
+                        <i class="fa-solid fa-magnifying-glass text-[#D87D98]"></i> ตรวจสอบสถานะและลำดับคิว
+                    </h2>
+                    <span class="demo-badge">สำหรับลูกค้า</span>
+                </div>
+                <p class="text-xs sm:text-sm text-[#D8B4BE] mb-4 bg-[#2C1A26] p-3 rounded-xl leading-relaxed border border-[#D87D98]/40">
+                    <i class="fa-solid fa-shield-halved text-[#FF9EB5]"></i> กรุณากรอก <b>รหัสคิวที่ได้รับจากแอดมิน</b> เพื่อตรวจสอบสถานะงาน แล้วยืนยันด้วย <b>รหัส PIN</b> ที่ได้รับพร้อมกัน
+                </p>
+                <div class="flex flex-col sm:flex-row gap-2">
+                    <input type="text" id="searchCodeInput" placeholder="กรอกรหัสคิวของคุณ เช่น AUR-1024" class="flex-1 p-3 rounded-xl border-2 border-[#D87D98] bg-[#120A0F] text-[#F5E6EC] placeholder:text-gray-500 focus:outline-none focus:border-[#FF9EB5] text-sm uppercase">
+                    <button id="searchBtn" onclick="searchQueueByCode(this)" class="kawaii-btn py-3 px-6 rounded-xl bg-[#2C1A26] hover:bg-[#3D2536] border-2 border-[#D87D98] text-[#FF9EB5] font-semibold text-sm flex items-center justify-center gap-2 cursor-pointer shadow-sm">
+                        <i class="fa-solid fa-search text-[#FF9EB5]"></i> ค้นหาคิวของฉัน
+                    </button>
+                </div>
+            </div>
+            <!-- ผลลัพธ์การค้นหาเบื้องต้น -->
+            <div id="queuePreviewResult" class="hidden"></div>
+            <!-- กล่องรายละเอียดคิวฉบับเต็ม -->
+            <div id="queueFullDetailCard" class="hidden dashed-box p-5 sm:p-6 border-2 border-[#D87D98] shadow-md"></div>
+            <!-- กล่องช่องทางการติดต่อแอดมิน (แบบไอคอนทั้งหมด อยู่กึ่งกลาง) -->
+            <div class="dashed-box p-5 text-center space-y-3">
+                <div class="flex items-center justify-center gap-2 text-[#FF9EB5]">
+                    <i class="fa-solid fa-headset text-lg text-[#D87D98]"></i>
+                    <h3 class="font-cute text-lg font-bold">สอบถามเพิ่มเติม / ติดต่อแอดมิน</h3>
+                </div>
+                <p class="text-xs sm:text-sm text-[#D8B4BE] max-w-md mx-auto">
+                    หากมีข้อสงสัยเรื่องคิวงานหรือต้องการแจ้งปรับแก้ สามารถกดที่ไอคอนช่องทางติดต่อด้านล่างได้เลยค่ะ
+                </p>
+                <div id="publicContactButtons" class="flex flex-wrap items-center justify-center gap-3.5 pt-2">
+                    <!-- โหลดปุ่มไอคอนติดต่อผ่าน JavaScript -->
+                </div>
+            </div>
+        </section>
+        <!-- ========================================================= -->
+        <!-- ส่วนที่ 2: หน้าหลังบ้านสำหรับเจ้าของร้าน -->
+        <!-- ========================================================= -->
+        <section id="view-admin" class="hidden space-y-6">
+            <div class="bg-[#2E1B26] border-2 border-dashed border-[#D87D98] rounded-2xl p-4 text-xs sm:text-sm text-[#FF9EB5] flex items-start gap-3">
+                <i class="fa-solid fa-triangle-exclamation text-lg text-[#FF9EB5] mt-0.5"></i>
+                <div>
+                    <p class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-[#D87D98]"></i> หน้าหลังบ้าน (Admin)</p>
+                    <p class="mt-0.5 text-[#D8B4BE]">ข้อมูลการตั้งค่าร้านค้า โลโก้ แบนเนอร์ ช่องทางติดต่อ และรายการคิว ถูกบันทึกลงฐานข้อมูลจริง (Supabase)</p>
+                </div>
+            </div>
+            <!-- แถบปุ่มเมนูป๊อบอัพสำหรับแอดมิน -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl dashed-box">
+                <div>
+                    <h2 class="font-cute text-lg font-bold text-[#FF9EB5]">จัดการหลังบ้านร้านค้า</h2>
+                    <p class="text-xs text-[#D8B4BE]">ตั้งค่าโปรไฟล์ร้าน รูปภาพ ช่องทางติดต่อ หรือเพิ่มคิวลูกค้าใหม่</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                    <button onclick="openUnifiedStoreSettingsModal()" class="kawaii-btn py-2.5 px-4 rounded-full bg-[#2C1A26] hover:bg-[#3D2536] text-[#FF9EB5] border border-[#D87D98] text-xs sm:text-sm font-semibold flex items-center gap-1.5 shadow-sm cursor-pointer">
+                        <i class="fa-solid fa-store text-[#D87D98]"></i> ตั้งค่าร้านค้า & ช่องทางติดต่อ
+                    </button>
+                    <button onclick="openAddQueueModal()" class="kawaii-btn py-2.5 px-4 rounded-full bg-gradient-to-r from-[#D87D98] to-[#FF9EB5] text-[#120A0F] text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-sm cursor-pointer">
+                        <i class="fa-solid fa-plus-circle"></i> เพิ่มคิวลูกค้าใหม่
+                    </button>
+                    <button onclick="adminLogout()" class="kawaii-btn py-2.5 px-4 rounded-full bg-[#1C121A] hover:bg-[#3D2536] text-[#D8B4BE] border border-[#D87D98]/60 text-xs sm:text-sm font-semibold flex items-center gap-1.5 shadow-sm cursor-pointer">
+                        <i class="fa-solid fa-right-from-bracket text-[#D87D98]"></i> ออกจากระบบ
+                    </button>
+                </div>
+            </div>
+            <!-- ส่วนค้นหาและจัดการรายการคิวทั้งหมด -->
+            <div class="dashed-box p-4 sm:p-6 space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-dashed border-[#D87D98] pb-3">
+                    <h2 id="adminListTitle" class="font-cute text-lg sm:text-xl font-bold text-[#FF9EB5] flex items-center gap-2">
+                        <i class="fa-solid fa-crown text-[#D87D98]"></i> รายการคิวทั้งหมด (Aurelia Store)
+                    </h2>
+                    <button onclick="loadQueues(this)" class="text-xs px-3 py-1.5 rounded-full bg-[#2C1A26] hover:bg-[#3D2536] text-[#D8B4BE] border border-[#D87D98]/50 self-start sm:self-auto cursor-pointer flex items-center gap-1.5">
+                        <i class="fa-solid fa-rotate text-[#D87D98]"></i> รีเฟรชรายการ
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    <div class="sm:col-span-2 relative">
+                        <i class="fa-solid fa-search absolute left-3.5 top-3.5 text-[#D87D98] text-sm"></i>
+                        <input type="text" id="adminSearchInput" oninput="renderAdminList()" placeholder="ค้นหาชื่อลูกค้า, รหัสคิว, ช่องทางติดต่อ, หรือบริการ..." class="w-full pl-9 pr-3 py-2.5 rounded-xl border-2 border-[#D87D98] bg-[#120A0F] text-[#F5E6EC] placeholder:text-gray-500 text-sm focus:outline-none focus:border-[#FF9EB5]">
+                    </div>
+                    <select id="adminStatusFilter" onchange="renderAdminList()" class="p-2.5 rounded-xl border-2 border-[#D87D98] text-sm bg-[#120A0F] text-[#F5E6EC] focus:outline-none">
+                        <option value="ALL">สถานะทั้งหมด</option>
+                        <option value="รอบรีฟ 0%">[0%] รอบรีฟ 0%</option>
+                        <option value="บรีฟแล้ว 25%">[25%] บรีฟแล้ว 25%</option>
+                        <option value="กำลังดำเนินงาน 50%">[50%] กำลังดำเนินงาน 50%</option>
+                        <option value="รอเช็คงาน 75%">[75%] รอเช็คงาน 75%</option>
+                        <option value="ส่งแล้ว 100%">[100%] ส่งแล้ว 100%</option>
+                    </select>
+                </div>
+                <div id="adminQueueList" class="space-y-3 pt-2"></div>
+            </div>
+        </section>
+        <!-- ฟุตเตอร์ตกแต่งสไตล์จิไรเคย์ -->
+        <footer class="mt-8 pt-4 border-t-2 border-dashed border-[#D87D98] text-center text-xs text-[#D8B4BE] space-y-1">
+            <div class="flex items-center justify-center gap-2 text-[#FF9EB5]">
+                <span>✟</span>
+                <span id="footerStoreName" class="font-cute">Aurelia Store Queue System</span>
+                <span>✟</span>
+            </div>
+            <p>ออกแบบสไตล์ Jirai Kei • ใช้งานได้ทั้งมือถือ iPad และคอมพิวเตอร์</p>
+        </footer>
+    </main>
+    <!-- ========================================================= -->
+    <!-- หน้าต่าง Modal 2: ตั้งค่าร้านค้า & ช่องทางติดต่อ (รวมครบจบในหน้าเดียว) -->
+    <!-- ========================================================= -->
+    <div id="unifiedStoreSettingsModal" class="fixed inset-0 bg-black/70 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
+        <div class="bg-[#1C121A] border-4 border-[#D87D98] rounded-3xl max-w-2xl w-full p-5 sm:p-6 shadow-xl space-y-5 max-h-[90vh] overflow-y-auto text-[#F5E6EC]">
+            <div class="flex items-center justify-between border-b border-dashed border-[#D87D98] pb-3">
+                <h3 class="font-cute text-lg sm:text-xl font-bold text-[#FF9EB5] flex items-center gap-2">
+                    <i class="fa-solid fa-ribbon text-[#D87D98]"></i> ตั้งค่าร้านค้า & ช่องทางติดต่อ
+                </h3>
+                <button onclick="closeUnifiedStoreSettingsModal()" class="w-8 h-8 rounded-full bg-[#2C1A26] text-[#FF9EB5] hover:bg-[#3D2536] border border-[#D87D98] flex items-center justify-center cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <!-- ส่วนที่ 1: ข้อมูลร้านค้า & รูปภาพ -->
+            <div class="space-y-3 text-xs sm:text-sm bg-[#120A0F] p-4 rounded-2xl border-2 border-dashed border-[#D87D98]">
+                <div class="flex items-center justify-between">
+                    <h4 class="font-cute text-base font-bold text-[#FF9EB5] flex items-center gap-1.5">
+                        <i class="fa-solid fa-shop text-[#D87D98]"></i> ส่วนที่ 1: ข้อมูลร้าน โลโก้ และแบนเนอร์
+                    </h4>
+                    <button type="button" onclick="resetStoreProfileToDefault()" class="text-[11px] px-2.5 py-1 rounded-full bg-[#2C1A26] hover:bg-[#3D2536] text-[#D8B4BE] border border-[#D87D98]/50 cursor-pointer flex items-center gap-1">
+                        <i class="fa-solid fa-rotate-left text-[#D87D98]"></i> คืนค่าโปรไฟล์เริ่มต้น
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold mb-1 text-[#FF9EB5]">ชื่อร้านค้า</label>
+                        <input type="text" id="settingStoreName" maxlength="100" placeholder="กรอกชื่อร้าน..." class="w-full p-2.5 rounded-xl border-2 border-[#D87D98] bg-[#1C121A] text-[#F5E6EC] focus:outline-none focus:border-[#FF9EB5]">
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1 text-[#FF9EB5]">รายละเอียดร้าน / ข้อความต้อนรับ</label>
+                        <input type="text" id="settingStoreDesc" maxlength="500" placeholder="กรอกคำอธิบายร้านสั้นๆ..." class="w-full p-2.5 rounded-xl border-2 border-[#D87D98] bg-[#1C121A] text-[#F5E6EC] focus:outline-none focus:border-[#FF9EB5]">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                    <!-- เปลี่ยนรูปโลโก้ -->
+                    <div class="p-3 rounded-2xl bg-[#2C1A26]/80 border border-[#D87D98] space-y-2">
+                        <label class="font-semibold text-[#FF9EB5] text-xs flex items-center gap-1.5"><i class="fa-solid fa-heart text-[#D87D98]"></i> รูปโลโก้ร้าน (1:1)</label>
+                        <div class="flex items-center gap-2.5">
+                            <img id="previewLogoImg" src="" alt="ตัวอย่างโลโก้" class="w-14 h-14 rounded-full object-cover border-2 border-[#D87D98] shadow-xs bg-[#1C121A] flex-shrink-0">
+                            <div class="flex-1 space-y-1.5 min-w-0">
+                                <label class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#1C121A] border border-[#D87D98] text-[#FF9EB5] text-[11px] font-semibold cursor-pointer hover:bg-[#2C1A26]">
+                                    <i class="fa-solid fa-upload text-[#D87D98]"></i> อัปโหลดรูป
+                                    <input type="file" accept="image/*" onchange="handleImageUpload(event, 'logo')" class="hidden">
+                                </label>
+                                <input type="url" id="settingLogoUrl" oninput="syncUrlToPreview('logo')" placeholder="หรือวางลิงก์ URL..." class="w-full p-1.5 rounded-lg border border-[#D87D98] bg-[#1C121A] text-[#F5E6EC] text-[11px] focus:outline-none">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- เปลี่ยนรูปแบนเนอร์ -->
+                    <div class="p-3 rounded-2xl bg-[#2C1A26]/80 border border-[#D87D98] space-y-2">
+                        <label class="font-semibold text-[#FF9EB5] text-xs flex items-center gap-1.5"><i class="fa-regular fa-image text-[#D87D98]"></i> รูปแบนเนอร์ร้าน (1920×800px)</label>
+                        <div class="flex items-center gap-2.5">
+                            <img id="previewBannerImg" src="" alt="ตัวอย่างแบนเนอร์" class="w-20 h-14 rounded-xl object-cover border-2 border-[#D87D98] shadow-xs bg-[#1C121A] flex-shrink-0">
+                            <div class="flex-1 space-y-1.5 min-w-0">
+                                <label class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#1C121A] border border-[#D87D98] text-[#FF9EB5] text-[11px] font-semibold cursor-pointer hover:bg-[#2C1A26]">
+                                    <i class="fa-solid fa-upload text-[#D87D98]"></i> อัปโหลดรูป
+                                    <input type="file" accept="image/*" onchange="handleImageUpload(event, 'banner')" class="hidden">
+                                </label>
+                                <input type="url" id="settingBannerUrl" oninput="syncUrlToPreview('banner')" placeholder="หรือวางลิงก์ URL..." class="w-full p-1.5 rounded-lg border border-[#D87D98] bg-[#1C121A] text-[#F5E6EC] text-[11px] focus:outline-none">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- เปลี่ยนรูปโลโก้หน้าจอรอโหลด (อัปโหลดจากมือถือได้) -->
+                <div class="p-3 rounded-2xl bg-[#2C1A26]/80 border border-[#D87D98] space-y-2">
+                    <div class="flex items-center justify-between">
+                        <label class="font-semibold text-[#FF9EB5] text-xs flex items-center gap-1.5"><i class="fa-solid fa-hourglass-half text-[#D87D98]"></i> รูปโลโก้หน้าจอรอโหลด (Loading Screen Logo)</label>
+                        <button type="button" onclick="previewLoadingScreenFromAdmin()" class="text-[11px] px-2.5 py-0.5 rounded-full bg-[#1C121A] text-[#FF9EB5] border border-[#D87D98] hover:bg-[#3D2536] cursor-pointer">
+                            <i class="fa-solid fa-play mr-1 text-[#D87D98]"></i> ทดสอบดูหน้าโหลด
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <img id="previewLoaderLogoImg" src="" alt="ตัวอย่างโลโก้หน้าโหลด" class="w-14 h-14 rounded-full object-cover border-2 border-[#D87D98] shadow-xs bg-[#1C121A] flex-shrink-0">
+                        <div class="flex-1 space-y-1.5 min-w-0">
+                            <label class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1C121A] border border-[#D87D98] text-[#FF9EB5] text-[11px] font-semibold cursor-pointer hover:bg-[#2C1A26]">
+                                <i class="fa-solid fa-mobile-screen-button text-[#D87D98]"></i> อัปโหลดรูปจากมือถือ / เครื่อง
+                                <input type="file" accept="image/*" onchange="handleImageUpload(event, 'loaderLogo')" class="hidden">
+                            </label>
+                            <input type="url" id="settingLoaderLogoUrl" oninput="syncUrlToPreview('loaderLogo')" placeholder="หรือวางลิงก์ URL รูปหน้าโหลด (ว่างไว้จะใช้รูปเดียวกับโลโก้ร้าน)..." class="w-full p-1.5 rounded-lg border border-[#D87D98] bg-[#1C121A] text-[#F5E6EC] text-[11px] focus:outline-none">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ส่วนที่ 2: จัดการไอคอนช่องทางติดต่อแอดมิน -->
+            <div class="space-y-3 text-xs sm:text-sm bg-[#120A0F] p-4 rounded-2xl border-2 border-dashed border-[#D87D98]">
+                <h4 class="font-cute text-base font-bold text-[#FF9EB5] flex items-center gap-1.5">
+                    <i class="fa-solid fa-icons text-[#D87D98]"></i> ส่วนที่ 2: จัดการไอคอนช่องทางติดต่อ
+                </h4>
+                <!-- ฟอร์มเพิ่ม / แก้ไขช่องทางติดต่อ -->
+                <div class="bg-[#2C1A26] p-3 rounded-xl border border-[#D87D98] space-y-2">
+                    <p id="contactFormTitle" class="font-bold text-[#FF9EB5] text-xs flex items-center gap-1.5"><i class="fa-solid fa-circle-plus text-[#D87D98]"></i> เพิ่มช่องทางติดต่อใหม่</p>
+                    <input type="hidden" id="editContactId" value="">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        <div>
+                            <select id="contactPlatformSelect" onchange="handlePlatformPresetChange()" class="w-full p-2 rounded-xl border border-[#D87D98] bg-[#1C121A] text-[#F5E6EC] text-xs focus:outline-none">
+                                <option value="facebook">Facebook</option>
+                                <option value="line">LINE</option>
+                                <option value="instagram">Instagram</option>
+                                <option value="twitter">X (Twitter)</option>
+                                <option value="discord">Discord</option>
+                                <option value="tiktok">TikTok</option>
+                                <option value="youtube">YouTube</option>
+                                <option value="email">อีเมล (Email)</option>
+                                <option value="website">เว็บไซต์ / ร้านค้า</option>
+                            </select>
+                        </div>
+                        <div>
+                            <input type="text" id="contactLabelInput" maxlength="100" placeholder="ชื่อแสดง (เช่น เพจร้าน)" class="w-full p-2 rounded-xl border border-[#D87D98] bg-[#1C121A] text-[#F5E6EC] text-xs focus:outline-none placeholder:text-gray-500">
+                        </div>
+                        <div>
+                            <input type="url" id="contactUrlInput" placeholder="ลิงก์ URL เช่น https://..." class="w-full p-2 rounded-xl border border-[#D87D98] bg-[#1C121A] text-[#F5E6EC] text-xs focus:outline-none placeholder:text-gray-500">
+                        </div>
+                    </div>
+                    <div class="flex justify-end gap-2 pt-0.5">
+                        <button type="button" id="cancelEditContactBtn" onclick="resetContactForm()" class="hidden py-1.5 px-3 rounded-full bg-[#1C121A] text-gray-300 text-xs font-medium cursor-pointer border border-[#D87D98]/50">
+                            ยกเลิกแก้ไข
+                        </button>
+                        <button type="button" id="saveContactBtn" onclick="saveContactItem()" class="py-1.5 px-4 rounded-full bg-[#2C1A26] hover:bg-[#3D2536] text-[#FF9EB5] border border-[#D87D98] text-xs font-semibold shadow-2xs cursor-pointer">
+                            <i class="fa-solid fa-plus mr-1 text-[#D87D98]"></i> <span id="saveContactBtnText">เพิ่มไอคอนติดต่อ</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- รายการช่องทางติดต่อที่มีอยู่ -->
+                <div class="space-y-1.5">
+                    <p class="text-[11px] font-semibold text-[#D8B4BE]">รายการไอคอนที่แสดงหน้าเว็บตอนนี้:</p>
+                    <div id="adminContactList" class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-44 overflow-y-auto pr-1">
+                        <!-- แสดงรายการผ่าน JS -->
+                    </div>
+                </div>
+            </div>
+            <!-- ปุ่มบันทึกการตั้งค่าทั้งหมด -->
+            <div class="flex gap-2 pt-1">
+                <button type="button" onclick="closeUnifiedStoreSettingsModal()" class="flex-1 py-2.5 rounded-full bg-[#2C1A26] text-[#D8B4BE] text-sm font-medium cursor-pointer border border-[#D87D98]">
+                    ปิดหน้าต่าง
+                </button>
+                <button type="button" onclick="saveAllUnifiedSettings(this)" class="flex-1 py-2.5 rounded-full bg-gradient-to-r from-[#D87D98] to-[#FF9EB5] hover:opacity-95 text-[#120A0F] text-sm font-bold shadow-sm cursor-pointer">
+                    <i class="fa-solid fa-floppy-disk mr-1"></i> บันทึกข้อมูลร้านค้าทั้งหมด
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- ========================================================= -->
+    <!-- หน้าต่าง Modal 3: เพิ่มคิวลูกค้าใหม่ -->
+    <!-- ========================================================= -->
+    <div id="addQueueModal" class="fixed inset-0 bg-black/70 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
+        <div class="bg-[#1C121A] border-4 border-[#D87D98] rounded-3xl max-w-lg w-full p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto text-[#F5E6EC]">
+            <div class="flex items-center justify-between border-b border-dashed border-[#D87D98] pb-3">
+                <h3 class="font-cute text-lg sm:text-xl font-bold text-[#FF9EB5] flex items-center gap-2">
+                    <i class="fa-solid fa-circle-plus text-[#D87D98]"></i> เพิ่มคิวลูกค้าใหม่ (แอดมินกรอกเอง)
+                </h3>
+                <button onclick="closeAddQueueModal()" class="w-8 h-8 rounded-full bg-[#2C1A26] text-[#FF9EB5] hover:bg-[#3D2536] border border-[#D87D98] flex items-center justify-center cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <form id="adminAddQueueForm" onsubmit="handleAdminAddQueue(event)" class="space-y-3">
+                <div>
+                    <label class="block text-xs sm:text-sm font-medium mb-1 text-[#FF9EB5]">
+                        1. ชื่อลูกค้า / แอคเคาท์ <span class="text-[#FF9EB5]">*</span>
+                    </label>
+                    <input type="text" id="adminCustName" required maxlength="150" placeholder="เช่น คุณนิตา / @nita_cute" class="w-full p-2.5 rounded-xl border-2 border-[#D87D98] bg-[#120A0F] text-[#F5E6EC] focus:outline-none focus:border-[#FF9EB5] text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs sm:text-sm font-medium mb-1 text-[#FF9EB5]">
+                        2. ช่องทางการติดต่อ <span class="text-[#FF9EB5]">*</span>
+                    </label>
+                    <input type="text" id="adminCustContact" required maxlength="200" placeholder="เช่น LINE: nita123 / IG / X" class="w-full p-2.5 rounded-xl border-2 border-[#D87D98] bg-[#120A0F] text-[#F5E6EC] focus:outline-none focus:border-[#FF9EB5] text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs sm:text-sm font-medium mb-1 text-[#FF9EB5]">
+                        3. บริการที่ลูกค้าสั่ง <span class="text-[#FF9EB5]">*</span>
+                    </label>
+                    <input type="text" id="adminCustService" required maxlength="200" placeholder="เช่น ออกแบบป้าย / วาดรูป..." class="w-full p-2.5 rounded-xl border-2 border-[#D87D98] bg-[#120A0F] text-[#F5E6EC] focus:outline-none focus:border-[#FF9EB5] text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs sm:text-sm font-medium mb-1 text-[#FF9EB5]">
+                        4. วันเวลาส่งงาน <span class="text-[#FF9EB5]">*</span>
+                    </label>
+                    <input type="datetime-local" id="adminDueDate" required class="w-full p-2.5 rounded-xl border-2 border-[#D87D98] bg-[#120A0F] text-[#F5E6EC] focus:outline-none focus:border-[#FF9EB5] text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs sm:text-sm font-medium mb-1 text-[#FF9EB5]">
+                        5. รายละเอียดงานเพิ่มเติม <span class="text-[#FF9EB5]">*</span>
+                    </label>
+                    <textarea id="adminCustDetail" rows="2" required maxlength="3000" placeholder="ระบุรายละเอียดบรีฟงาน..." class="w-full p-2.5 rounded-xl border-2 border-[#D87D98] bg-[#120A0F] text-[#F5E6EC] focus:outline-none focus:border-[#FF9EB5] text-sm"></textarea>
+                </div>
+                <div class="flex gap-2 pt-2">
+                    <button type="button" onclick="closeAddQueueModal()" class="flex-1 py-2.5 rounded-full bg-[#2C1A26] text-[#D8B4BE] text-sm font-medium cursor-pointer border border-[#D87D98]">
+                        ยกเลิก
+                    </button>
+                    <button type="submit" class="flex-1 py-2.5 rounded-full bg-gradient-to-r from-[#D87D98] to-[#FF9EB5] text-[#120A0F] text-sm font-bold shadow-sm cursor-pointer">
+                        บันทึกเพิ่มคิว
+                    </button>
+                </div>
+            </form>
+            <div id="adminCreatedBanner" class="hidden mt-3 p-3 rounded-2xl bg-[#2C1A26] border-2 border-dashed border-[#D87D98] space-y-2">
+                <p class="text-xs sm:text-sm text-[#FF9EB5] font-bold flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[#FF9EB5]"></i> เพิ่มคิวสำเร็จ! ส่งรหัสคิวและ PIN นี้ให้ลูกค้าได้เลย</p>
+                <div class="flex flex-wrap items-center gap-2 text-xs">
+                    <span>รหัสคิว: <b id="adminLatestCode" class="font-mono text-sm text-[#FF9EB5] bg-[#120A0F] px-2 py-0.5 rounded border border-[#D87D98]">AUR-XXXX</b></span>
+                    <span>PIN: <b id="adminLatestPin" class="font-mono text-sm text-[#FF9EB5] bg-[#120A0F] px-2 py-0.5 rounded border border-[#D87D98]">0000</b></span>
+                </div>
+                <button type="button" onclick="copyLatestQueueAndPin()" class="kawaii-btn w-full py-2 rounded-full bg-[#D87D98] text-[#120A0F] text-xs font-bold flex items-center justify-center gap-1 cursor-pointer">
+                    <i class="fa-regular fa-copy"></i> คัดลอกรหัส + PIN ส่งลูกค้า
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- ========================================================= -->
+    <!-- หน้าต่าง Modal 4: ยืนยันรหัส PIN -->
+    <!-- ========================================================= -->
+    <div id="verifyModal" class="fixed inset-0 bg-black/70 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
+        <div class="bg-[#1C121A] border-4 border-[#D87D98] rounded-3xl max-w-sm w-full p-6 text-center shadow-xl space-y-4 text-[#F5E6EC]">
+            <div class="w-14 h-14 bg-[#2C1A26] rounded-full flex items-center justify-center mx-auto text-2xl text-[#FF9EB5] border-2 border-dashed border-[#D87D98]">
+                <i class="fa-solid fa-key text-[#FF9EB5]"></i>
+            </div>
+            <div>
+                <h3 class="font-cute text-lg font-bold text-[#FF9EB5]">กรอกรหัส PIN ประจำคิว</h3>
+                <p class="text-xs text-[#D8B4BE] mt-1">
+                    กรุณากรอก <b>รหัส PIN 4 หลัก</b> ที่ได้รับจากแอดมิน เพื่อเปิดดูสถานะและรายละเอียดคิวของคุณ
+                </p>
+            </div>
+            <input type="text" id="secondVerifyInput" maxlength="6" inputmode="numeric" placeholder="เช่น 4829" class="w-full p-3 rounded-xl border-2 border-[#D87D98] bg-[#120A0F] text-center font-mono tracking-widest text-lg font-bold text-[#FF9EB5] focus:outline-none focus:border-[#FF9EB5]">
+            <p id="secondVerifyError" class="text-xs text-red-400 hidden">รหัส PIN ไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง</p>
+            <div class="flex gap-2 pt-1">
+                <button onclick="closeVerifyModal()" class="flex-1 py-2.5 rounded-full bg-[#2C1A26] text-[#D8B4BE] text-sm font-medium cursor-pointer border border-[#D87D98]">
+                    ยกเลิก
+                </button>
+                <button onclick="confirmSecondVerification(this)" class="flex-1 py-2.5 rounded-full bg-[#D87D98] text-[#120A0F] text-sm font-bold shadow-sm cursor-pointer">
+                    ยืนยัน PIN
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- ========================================================= -->
+    <!-- หน้าต่าง Modal 5: ล็อกอินแอดมินสไตล์จิไรเคย์ (Jirai Kei Admin Login) -->
+    <!-- ========================================================= -->
+    <div id="adminLoginModal" class="fixed inset-0 bg-black/75 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
+        <div class="bg-[#1C121A] border-4 border-[#D87D98] rounded-3xl max-w-sm w-full p-6 text-center shadow-[0_10px_35px_rgba(216,125,152,0.3)] space-y-4 text-[#F5E6EC] relative overflow-hidden">
+            <!-- แถบตกแต่งด้านบนของ Modal -->
+            <div class="flex items-center justify-between border-b border-dashed border-[#D87D98] pb-2.5">
+                <span class="text-xs text-[#D87D98] tracking-widest">✟ ADMIN ONLY ✟</span>
+                <button onclick="closeAdminLoginModal()" class="w-7 h-7 rounded-full bg-[#2C1A26] text-[#FF9EB5] hover:bg-[#3D2536] border border-[#D87D98] flex items-center justify-center cursor-pointer text-xs">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- ไอคอนล็อกอินสไตล์จิไรเคย์ -->
+            <div class="relative w-16 h-16 mx-auto">
+                <div class="w-16 h-16 bg-[#2C1A26] rounded-full flex items-center justify-center text-2xl text-[#FF9EB5] border-2 border-dashed border-[#D87D98] gentle-bounce shadow-inner">
+                    <i class="fa-solid fa-lock text-[#FF9EB5]"></i>
+                </div>
+                <span class="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-[#1C121A] border border-[#D87D98] flex items-center justify-center text-[11px] text-[#FF9EB5]">
+                    <i class="fa-solid fa-heart"></i>
+                </span>
+            </div>
+
+            <div>
+                <h3 class="font-cute text-xl font-bold text-[#FF9EB5]">เข้าสู่ระบบหลังบ้าน ✟</h3>
+                <p class="text-xs text-[#D8B4BE] mt-1 leading-relaxed">
+                    กรุณากรอกอีเมลและรหัสผ่านแอดมินเพื่อเข้าจัดการร้านค้า
+                </p>
+            </div>
+
+            <form onsubmit="handleAdminLoginSubmit(event)" class="space-y-3 text-left">
+                <div>
+                    <label class="block text-xs font-semibold text-[#FF9EB5] mb-1">อีเมลแอดมิน (Email)</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-envelope absolute left-3.5 top-3.5 text-[#D87D98] text-xs"></i>
+                        <input type="email" id="adminEmailInput" required autocomplete="username" placeholder="กรอกอีเมลแอดมิน" class="w-full pl-9 pr-3 py-2.5 rounded-xl border-2 border-[#D87D98] bg-[#120A0F] text-[#F5E6EC] placeholder:text-gray-500 text-sm focus:outline-none focus:border-[#FF9EB5]">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-[#FF9EB5] mb-1">รหัสผ่านแอดมิน (Password)</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-key absolute left-3.5 top-3.5 text-[#D87D98] text-xs"></i>
+                        <input type="password" id="adminPasswordInput" required autocomplete="current-password" placeholder="กรอกรหัสผ่านแอดมิน..." class="w-full pl-9 pr-10 py-2.5 rounded-xl border-2 border-[#D87D98] bg-[#120A0F] text-[#F5E6EC] placeholder:text-gray-500 text-sm focus:outline-none focus:border-[#FF9EB5]">
+                        <button type="button" onclick="toggleAdminPasswordVisibility()" class="absolute right-3 top-3 text-[#D8B4BE] hover:text-[#FF9EB5] text-xs cursor-pointer" title="แสดง/ซ่อนรหัสผ่าน">
+                            <i id="adminPwdEyeIcon" class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <p id="adminLoginError" class="text-xs text-[#FF9EB5] text-center hidden bg-[#2E1B26] py-1.5 px-2 rounded-lg border border-dashed border-[#D87D98]">
+                    <i class="fa-solid fa-circle-exclamation mr-1 text-[#FF9EB5]"></i> <span id="adminLoginErrorText">อีเมลหรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่ค่ะ</span>
+                </p>
+                <div class="flex gap-2 pt-1">
+                    <button type="button" onclick="closeAdminLoginModal()" class="flex-1 py-2.5 rounded-full bg-[#2C1A26] text-[#D8B4BE] text-xs sm:text-sm font-medium cursor-pointer border border-[#D87D98]">
+                        ยกเลิก
+                    </button>
+                    <button type="submit" class="flex-1 py-2.5 rounded-full bg-gradient-to-r from-[#D87D98] to-[#FF9EB5] text-[#120A0F] text-xs sm:text-sm font-bold shadow-sm cursor-pointer">
+                        เข้าสู่ระบบ ✧
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- กล่องแจ้งเตือน Toast Message -->
+    <div id="toastBox" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-[#2C1A26] text-[#FF9EB5] border border-[#D87D98] px-5 py-2.5 rounded-full text-xs sm:text-sm shadow-xl opacity-0 pointer-events-none transition-opacity duration-300 z-[130] flex items-center gap-2 max-w-[92vw]">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-[#FF9EB5]"></i>
+        <span id="toastMessage">บันทึกเรียบร้อยแล้ว</span>
+    </div>
+    <!-- กล่องซ่อนสำหรับเล่นเพลง YouTube BGM (MC6hL6Hj8ww) -->
+    <div class="fixed -left-[9999px] -top-[9999px] w-1 h-1 opacity-0 pointer-events-none overflow-hidden" aria-hidden="true">
+        <div id="youtubeBgmPlayer"></div>
+    </div>
+    <script>
+        /* ===================== ตั้งค่า Supabase (โปรเจกต์ของคุณเท่านั้น) ===================== */
+        const SUPABASE_URL = 'https://gkpirpcjgwenfiiigkns.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_D5AwhQNZmhJFDSNeGF23Wg_vg9qCQn7';
+        const STORAGE_BUCKET = 'store-assets';
+        let sb = null;
+        try {
+            sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        } catch (e) {
+            console.error('Supabase client init failed', e);
+        }
+
+        const STATUS_PERCENT_MAP = {
+            'รอบรีฟ 0%': 0,
+            'บรีฟแล้ว 25%': 25,
+            'กำลังดำเนินงาน 50%': 50,
+            'รอเช็คงาน 75%': 75,
+            'ส่งแล้ว 100%': 100
+        };
+        const DEFAULT_STORE_PROFILE = {
+            name: 'Aurelia Store',
+            description: 'ยินดีต้อนรับสู่ระบบตรวจสอบคิวออนไลน์ กรอกรหัสที่ได้รับจากทางร้านเพื่อเช็กลำดับและสถานะงานได้เลยค่ะ',
+            logo: 'https://placehold.co/400x400/2C1A26/FF9EB5?text=Aurelia%0ALogo',
+            banner: 'https://placehold.co/1920x800/1C121A/FF9EB5?text=Aurelia+Store+Banner+(1920x800px)',
+            loaderLogo: 'https://placehold.co/400x400/2C1A26/FF9EB5?text=Aurelia%0ALogo'
+        };
+        const PLATFORM_STYLES = {
+            facebook: { icon: 'fa-brands fa-facebook-f', bg: 'bg-[#2C1A26]', hover: 'hover:bg-[#3D2536]', text: 'text-[#FF9EB5]', border: 'border-[#D87D98]', defaultLabel: 'Facebook' },
+            line: { icon: 'fa-brands fa-line', bg: 'bg-[#2C1A26]', hover: 'hover:bg-[#3D2536]', text: 'text-[#FF9EB5]', border: 'border-[#D87D98]', defaultLabel: 'LINE' },
+            instagram: { icon: 'fa-brands fa-instagram', bg: 'bg-[#2C1A26]', hover: 'hover:bg-[#3D2536]', text: 'text-[#FF9EB5]', border: 'border-[#D87D98]', defaultLabel: 'Instagram' },
+            twitter: { icon: 'fa-brands fa-x-twitter', bg: 'bg-[#2C1A26]', hover: 'hover:bg-[#3D2536]', text: 'text-[#FF9EB5]', border: 'border-[#D87D98]', defaultLabel: 'X (Twitter)' },
+            discord: { icon: 'fa-brands fa-discord', bg: 'bg-[#2C1A26]', hover: 'hover:bg-[#3D2536]', text: 'text-[#FF9EB5]', border: 'border-[#D87D98]', defaultLabel: 'Discord' },
+            tiktok: { icon: 'fa-brands fa-tiktok', bg: 'bg-[#2C1A26]', hover: 'hover:bg-[#3D2536]', text: 'text-[#FF9EB5]', border: 'border-[#D87D98]', defaultLabel: 'TikTok' },
+            youtube: { icon: 'fa-brands fa-youtube', bg: 'bg-[#2C1A26]', hover: 'hover:bg-[#3D2536]', text: 'text-[#FF9EB5]', border: 'border-[#D87D98]', defaultLabel: 'YouTube' },
+            email: { icon: 'fa-solid fa-envelope', bg: 'bg-[#2C1A26]', hover: 'hover:bg-[#3D2536]', text: 'text-[#FF9EB5]', border: 'border-[#D87D98]', defaultLabel: 'Email' },
+            website: { icon: 'fa-solid fa-globe', bg: 'bg-[#2C1A26]', hover: 'hover:bg-[#3D2536]', text: 'text-[#FF9EB5]', border: 'border-[#D87D98]', defaultLabel: 'Website' }
+        };
+
+        /* ข้อมูลทั้งหมดมาจาก Supabase (ไม่ใช้ LocalStorage เก็บข้อมูลอีกต่อไป) */
+        let queues = [];
+        let storeProfile = { ...DEFAULT_STORE_PROFILE };
+        let contactList = [];
+        let targetQueueForVerification = null;
+        let isAdminViewActive = false;
+        let isAdminAuthenticated = false;
+        const pendingBlobs = {};
+
+        /* ===================== ตัวช่วยทั่วไป ===================== */
+        const inflight = new Set();
+        async function guarded(key, fn) {
+            if (inflight.has(key)) return;
+            inflight.add(key);
+            try { return await fn(); } finally { inflight.delete(key); }
+        }
+        const SPINNER = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังทำงาน...';
+        async function runBusy(btn, loadingHtml, fn) {
+            if (!btn) return fn();
+            if (btn.dataset.busy === '1') return;
+            btn.dataset.busy = '1';
+            const oldHtml = btn.innerHTML;
+            btn.disabled = true;
+            btn.classList.add('opacity-60', 'cursor-wait');
+            if (loadingHtml) btn.innerHTML = loadingHtml;
+            try {
+                return await fn();
+            } finally {
+                btn.dataset.busy = '0';
+                btn.disabled = false;
+                btn.classList.remove('opacity-60', 'cursor-wait');
+                if (loadingHtml) btn.innerHTML = oldHtml;
+            }
+        }
+        function friendlyError(err) {
+            const m = (err && err.message) ? err.message : String(err);
+            if (/failed to fetch|network|load failed/i.test(m)) return 'เชื่อมต่ออินเทอร์เน็ตไม่ได้ กรุณาลองใหม่ค่ะ';
+            if ((err && err.code === '42501') || /row-level security|forbidden|permission|not authorized/i.test(m)) return 'ไม่มีสิทธิ์ทำรายการนี้ กรุณาเข้าสู่ระบบแอดมินใหม่ค่ะ';
+            return 'เกิดข้อผิดพลาด: ' + m;
+        }
+        function isValidHttpUrl(v) {
+            return /^https?:\/\/\S+$/i.test(v);
+        }
+        function requireClient() {
+            if (!sb) {
+                showToast('โหลดตัวเชื่อมฐานข้อมูลไม่สำเร็จ กรุณารีเฟรชหน้าเว็บค่ะ', true);
+                return false;
+            }
+            return true;
+        }
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            applyStoreProfileUI();
+            updateAllContactDisplays();
+            initAmbientSparkles();
+            startPreloaderSequence();
+            initYoutubeBgm();
+            if (!requireClient()) return;
+            await Promise.all([loadStoreProfile(), loadContacts(), restoreAdminSession()]);
+        });
+
+        /* ===================== ระบบหน้าจอรอโหลด 0% - 100% ===================== */
+        function startPreloaderSequence(isPreview = false) {
+            const preloader = document.getElementById('sitePreloader');
+            const bar = document.getElementById('preloaderProgressBar');
+            const percentText = document.getElementById('preloaderPercentText');
+            const loaderLogo = document.getElementById('preloaderLogoImg');
+            const loaderName = document.getElementById('preloaderStoreName');
+            if (!preloader || !bar || !percentText) return;
+
+            if (loaderLogo) {
+                loaderLogo.src = storeProfile.loaderLogo || storeProfile.logo || DEFAULT_STORE_PROFILE.logo;
+            }
+            if (loaderName) {
+                loaderName.innerHTML = `${escapeHTML(storeProfile.name)} <span class="text-sm text-[#D87D98]">✟°｡⋆</span>`;
+            }
+
+            preloader.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
+            let progress = 0;
+            bar.style.width = '0%';
+            percentText.textContent = '0%';
+
+            const interval = setInterval(() => {
+                const step = progress < 65 ? Math.floor(Math.random() * 14) + 8 : Math.floor(Math.random() * 10) + 5;
+                progress = Math.min(100, progress + step);
+                bar.style.width = progress + '%';
+                percentText.textContent = progress + '%';
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        preloader.classList.add('opacity-0', 'pointer-events-none');
+                        setTimeout(() => {
+                            preloader.classList.add('hidden');
+                        }, 450);
+                    }, isPreview ? 450 : 300);
+                }
+            }, 95);
+        }
+
+        function previewLoadingScreenFromAdmin() {
+            const loaderLogoPreview = document.getElementById('previewLoaderLogoImg');
+            const tempSrc = loaderLogoPreview.src || storeProfile.loaderLogo || storeProfile.logo;
+            const loaderLogo = document.getElementById('preloaderLogoImg');
+            if (loaderLogo && tempSrc) {
+                loaderLogo.src = tempSrc;
+            }
+            startPreloaderSequence(true);
+        }
+
+        /* สร้างเอฟเฟกต์ระยิบระยับโปรยปรายทั่วหน้าจอ */
+        function initAmbientSparkles() {
+            const container = document.getElementById('ambientSparklesContainer');
+            if (!container) return;
+            const symbols = ['✧', '✦', '♡', '✟', '˚₊·', '⋆', '₊'];
+            const count = 22;
+            container.innerHTML = '';
+
+            for (let i = 0; i < count; i++) {
+                const el = document.createElement('span');
+                el.className = 'ambient-sparkle';
+                el.textContent = symbols[i % symbols.length];
+                const left = Math.random() * 100;
+                const duration = 7 + Math.random() * 9;
+                const delay = Math.random() * -14;
+                const size = 10 + Math.floor(Math.random() * 9);
+                el.style.left = `${left}vw`;
+                el.style.animationDuration = `${duration}s`;
+                el.style.animationDelay = `${delay}s`;
+                el.style.fontSize = `${size}px`;
+                container.appendChild(el);
+            }
+        }
+
+        /* ===================== โปรไฟล์ร้าน (store_settings) ===================== */
+        async function loadStoreProfile() {
+            const { data, error } = await sb.from('store_settings').select('*').eq('id', 1).maybeSingle();
+            if (error) {
+                console.error(error);
+                showToast('โหลดข้อมูลร้านไม่สำเร็จ: ' + friendlyError(error), true);
+                return;
+            }
+            if (data) {
+                storeProfile = {
+                    name: data.name || DEFAULT_STORE_PROFILE.name,
+                    description: data.description ?? DEFAULT_STORE_PROFILE.description,
+                    logo: data.logo_url || DEFAULT_STORE_PROFILE.logo,
+                    banner: data.banner_url || DEFAULT_STORE_PROFILE.banner,
+                    loaderLogo: data.loader_logo_url || data.logo_url || DEFAULT_STORE_PROFILE.loaderLogo
+                };
+            }
+            applyStoreProfileUI();
+        }
+        function applyStoreProfileUI() {
+            const nameEl = document.getElementById('storeNameDisplay');
+            const descEl = document.getElementById('storeDescDisplay');
+            const logoEl = document.getElementById('storeLogo');
+            const bannerEl = document.getElementById('storeBanner');
+            const topBarNameEl = document.getElementById('topBarStoreName');
+            const footerNameEl = document.getElementById('footerStoreName');
+            const adminTitleEl = document.getElementById('adminListTitle');
+            const preloaderLogoEl = document.getElementById('preloaderLogoImg');
+            const preloaderNameEl = document.getElementById('preloaderStoreName');
+            if (nameEl) {
+                nameEl.innerHTML = `${escapeHTML(storeProfile.name)} <span class="text-base font-normal text-[#D87D98]">✟°｡⋆</span>`;
+            }
+            if (descEl) {
+                descEl.textContent = storeProfile.description || '';
+            }
+            if (logoEl && storeProfile.logo) {
+                logoEl.src = storeProfile.logo;
+            }
+            if (preloaderLogoEl) {
+                preloaderLogoEl.src = storeProfile.loaderLogo || storeProfile.logo || DEFAULT_STORE_PROFILE.logo;
+            }
+            if (preloaderNameEl) {
+                preloaderNameEl.innerHTML = `${escapeHTML(storeProfile.name)} <span class="text-sm text-[#D87D98]">✟°｡⋆</span>`;
+            }
+            if (bannerEl && storeProfile.banner) {
+                bannerEl.src = storeProfile.banner;
+            }
+            if (topBarNameEl) {
+                topBarNameEl.textContent = storeProfile.name.toUpperCase();
+            }
+            if (footerNameEl) {
+                footerNameEl.textContent = `${storeProfile.name} Queue System`;
+            }
+            if (adminTitleEl) {
+                adminTitleEl.innerHTML = `<i class="fa-solid fa-crown text-[#D87D98]"></i> รายการคิวทั้งหมด (${escapeHTML(storeProfile.name)})`;
+            }
+            document.title = `${storeProfile.name} - ระบบจองคิวออนไลน์`;
+        }
+        function clearPending(type) {
+            delete pendingBlobs[type];
+            const map = { logo: 'previewLogoImg', banner: 'previewBannerImg', loaderLogo: 'previewLoaderLogoImg' };
+            const el = document.getElementById(map[type]);
+            if (el) delete el.dataset.uploaded;
+        }
+        function openUnifiedStoreSettingsModal() {
+            ['logo', 'banner', 'loaderLogo'].forEach(clearPending);
+            document.getElementById('settingStoreName').value = storeProfile.name || '';
+            document.getElementById('settingStoreDesc').value = storeProfile.description || '';
+            document.getElementById('settingLogoUrl').value = storeProfile.logo || '';
+            document.getElementById('settingBannerUrl').value = storeProfile.banner || '';
+            const currentLoaderLogo = storeProfile.loaderLogo || storeProfile.logo || DEFAULT_STORE_PROFILE.loaderLogo;
+            document.getElementById('settingLoaderLogoUrl').value = currentLoaderLogo;
+            document.getElementById('previewLogoImg').src = storeProfile.logo || DEFAULT_STORE_PROFILE.logo;
+            document.getElementById('previewBannerImg').src = storeProfile.banner || DEFAULT_STORE_PROFILE.banner;
+            document.getElementById('previewLoaderLogoImg').src = currentLoaderLogo;
+            resetContactForm();
+            renderAdminContactList();
+            const modal = document.getElementById('unifiedStoreSettingsModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        function closeUnifiedStoreSettingsModal() {
+            const modal = document.getElementById('unifiedStoreSettingsModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        function resetStoreProfileToDefault() {
+            document.getElementById('settingStoreName').value = DEFAULT_STORE_PROFILE.name;
+            document.getElementById('settingStoreDesc').value = DEFAULT_STORE_PROFILE.description;
+            document.getElementById('settingLogoUrl').value = DEFAULT_STORE_PROFILE.logo;
+            document.getElementById('settingBannerUrl').value = DEFAULT_STORE_PROFILE.banner;
+            document.getElementById('settingLoaderLogoUrl').value = DEFAULT_STORE_PROFILE.loaderLogo;
+            document.getElementById('previewLogoImg').src = DEFAULT_STORE_PROFILE.logo;
+            document.getElementById('previewBannerImg').src = DEFAULT_STORE_PROFILE.banner;
+            document.getElementById('previewLoaderLogoImg').src = DEFAULT_STORE_PROFILE.loaderLogo;
+            ['logo', 'banner', 'loaderLogo'].forEach(clearPending);
+            showToast('คืนค่าโปรไฟล์ร้านเริ่มต้นแล้ว กดบันทึกเพื่อยืนยัน');
+        }
+        /* ย่อรูปในเบราว์เซอร์ แล้วเก็บเป็นไฟล์รออัปโหลดขึ้น Supabase Storage ตอนกดบันทึก */
+        function handleImageUpload(event, type) {
+            const file = event.target.files[0];
+            if (!file) return;
+            if (!/^image\//.test(file.type)) {
+                showToast('กรุณาเลือกไฟล์รูปภาพเท่านั้นค่ะ', true);
+                event.target.value = '';
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = new Image();
+                img.onload = function () {
+                    const canvas = document.createElement('canvas');
+                    const maxDim = (type === 'logo' || type === 'loaderLogo') ? 450 : 1280;
+                    let width = img.width;
+                    let height = img.height;
+                    if (width > maxDim || height > maxDim) {
+                        if (width > height) {
+                            height = Math.round((height * maxDim) / width);
+                            width = maxDim;
+                        } else {
+                            width = Math.round((width * maxDim) / height);
+                            height = maxDim;
+                        }
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.fillStyle = '#1C121A';
+                    ctx.fillRect(0, 0, width, height);
+                    ctx.drawImage(img, 0, 0, width, height);
+                    canvas.toBlob(function (blob) {
+                        if (!blob) {
+                            showToast('แปลงรูปภาพไม่สำเร็จ กรุณาลองรูปอื่นค่ะ', true);
+                            return;
+                        }
+                        const previewUrl = URL.createObjectURL(blob);
+                        pendingBlobs[type] = blob;
+                        const map = { logo: ['previewLogoImg', 'settingLogoUrl'], loaderLogo: ['previewLoaderLogoImg', 'settingLoaderLogoUrl'], banner: ['previewBannerImg', 'settingBannerUrl'] };
+                        const [previewId, urlId] = map[type];
+                        document.getElementById(previewId).src = previewUrl;
+                        document.getElementById(previewId).dataset.uploaded = '1';
+                        document.getElementById(urlId).value = '';
+                        showToast('เลือกรูปภาพแล้ว กดบันทึกเพื่ออัปโหลดและใช้งาน');
+                    }, 'image/jpeg', 0.85);
+                };
+                img.onerror = function () {
+                    showToast('อ่านไฟล์รูปไม่สำเร็จ กรุณาลองรูปอื่นค่ะ', true);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+        function syncUrlToPreview(type) {
+            const map = { logo: ['settingLogoUrl', 'previewLogoImg'], loaderLogo: ['settingLoaderLogoUrl', 'previewLoaderLogoImg'], banner: ['settingBannerUrl', 'previewBannerImg'] };
+            const [urlId, previewId] = map[type];
+            const url = document.getElementById(urlId).value.trim();
+            clearPending(type);
+            if (url) {
+                document.getElementById(previewId).src = url;
+            }
+        }
+        async function uploadAsset(blob, type) {
+            const path = `${type}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}.jpg`;
+            const { error } = await sb.storage.from(STORAGE_BUCKET).upload(path, blob, {
+                contentType: 'image/jpeg',
+                cacheControl: '3600',
+                upsert: false
+            });
+            if (error) throw error;
+            return sb.storage.from(STORAGE_BUCKET).getPublicUrl(path).data.publicUrl;
+        }
+        async function saveAllUnifiedSettings(btn) {
+            if (!requireClient()) return;
+            await runBusy(btn, '<i class="fa-solid fa-spinner fa-spin mr-1"></i> กำลังบันทึก...', async () => {
+                try {
+                    const newName = document.getElementById('settingStoreName').value.trim() || DEFAULT_STORE_PROFILE.name;
+                    const newDesc = document.getElementById('settingStoreDesc').value.trim();
+                    const logoUrlInput = document.getElementById('settingLogoUrl').value.trim();
+                    const bannerUrlInput = document.getElementById('settingBannerUrl').value.trim();
+                    const loaderUrlInput = document.getElementById('settingLoaderLogoUrl').value.trim();
+                    for (const u of [logoUrlInput, bannerUrlInput, loaderUrlInput]) {
+                        if (u && !isValidHttpUrl(u)) {
+                            showToast('ลิงก์รูปต้องขึ้นต้นด้วย https:// หรือ http:// ค่ะ', true);
+                            return;
+                        }
+                    }
+                    const pendingUrl = document.getElementById('contactUrlInput').value.trim();
+                    if (pendingUrl) {
+                        const ok = await saveContactItem(true);
+                        if (ok === false) return;
+                    }
+                    let finalLogo = logoUrlInput || storeProfile.logo;
+                    let finalBanner = bannerUrlInput || storeProfile.banner;
+                    let finalLoader = loaderUrlInput || storeProfile.loaderLogo;
+                    if (pendingBlobs.logo) finalLogo = await uploadAsset(pendingBlobs.logo, 'logo');
+                    if (pendingBlobs.banner) finalBanner = await uploadAsset(pendingBlobs.banner, 'banner');
+                    if (pendingBlobs.loaderLogo) finalLoader = await uploadAsset(pendingBlobs.loaderLogo, 'loader');
+                    finalLoader = finalLoader || finalLogo;
+                    const { error } = await sb.from('store_settings').update({
+                        name: newName,
+                        description: newDesc,
+                        logo_url: finalLogo,
+                        banner_url: finalBanner,
+                        loader_logo_url: finalLoader
+                    }).eq('id', 1);
+                    if (error) throw error;
+                    storeProfile = { name: newName, description: newDesc, logo: finalLogo, banner: finalBanner, loaderLogo: finalLoader };
+                    ['logo', 'banner', 'loaderLogo'].forEach(clearPending);
+                    applyStoreProfileUI();
+                    updateAllContactDisplays();
+                    closeUnifiedStoreSettingsModal();
+                    showToast('บันทึกข้อมูลร้านค้าและช่องทางติดต่อเรียบร้อยแล้ว!');
+                } catch (err) {
+                    console.error(err);
+                    showToast(friendlyError(err), true);
+                }
+            });
+        }
+
+        /* ===================== ช่องทางติดต่อ (contact_links) ===================== */
+        async function loadContacts() {
+            const { data, error } = await sb.from('contact_links').select('*').order('sort_order', { ascending: true }).order('id', { ascending: true });
+            if (error) {
+                console.error(error);
+                showToast('โหลดช่องทางติดต่อไม่สำเร็จ: ' + friendlyError(error), true);
+                return false;
+            }
+            contactList = (data || []).map(r => ({ id: r.id, platform: r.platform, label: r.label, url: r.url, sort_order: r.sort_order }));
+            updateAllContactDisplays();
+            renderAdminContactList();
+            return true;
+        }
+        function updateAllContactDisplays() {
+            const container = document.getElementById('publicContactButtons');
+            if (!container) return;
+            if (!contactList || contactList.length === 0) {
+                container.innerHTML = `<span class="text-xs text-gray-400">ยังไม่ได้ตั้งค่าช่องทางติดต่อ</span>`;
+                return;
+            }
+            container.innerHTML = contactList.map(item => {
+                const style = PLATFORM_STYLES[item.platform] || PLATFORM_STYLES.website;
+                const tooltip = item.label || style.defaultLabel;
+                return `
+                    <a href="${escapeHTML(item.url)}" target="_blank" rel="noopener noreferrer"
+                       title="${escapeHTML(tooltip)}"
+                       aria-label="${escapeHTML(tooltip)}"
+                       class="kawaii-btn w-12 h-12 sm:w-13 sm:h-13 rounded-full ${style.bg} ${style.hover} ${style.text} border-2 ${style.border} shadow-xs flex items-center justify-center text-xl sm:text-2xl">
+                        <i class="${style.icon}"></i>
+                    </a>
+                `;
+            }).join('');
+        }
+        function handlePlatformPresetChange() {
+            const platform = document.getElementById('contactPlatformSelect').value;
+            const style = PLATFORM_STYLES[platform] || PLATFORM_STYLES.website;
+            const labelInput = document.getElementById('contactLabelInput');
+            if (!labelInput.value.trim()) {
+                labelInput.placeholder = `เช่น ${style.defaultLabel} ของร้าน`;
+            }
+        }
+        function renderAdminContactList() {
+            const container = document.getElementById('adminContactList');
+            if (!container) return;
+            if (contactList.length === 0) {
+                container.innerHTML = `<p class="text-center text-xs text-gray-400 py-4 bg-[#1C121A] rounded-xl border border-dashed border-[#D87D98]">ยังไม่มีไอคอนช่องทางติดต่อ สามารถเพิ่มด้านบนได้เลยค่ะ</p>`;
+                return;
+            }
+            container.innerHTML = contactList.map(item => {
+                const style = PLATFORM_STYLES[item.platform] || PLATFORM_STYLES.website;
+                return `
+                    <div class="flex items-center justify-between gap-2 p-2.5 bg-[#1C121A] rounded-xl border border-[#D87D98]">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <div class="w-9 h-9 rounded-full ${style.bg} ${style.text} border ${style.border} flex items-center justify-center text-base flex-shrink-0">
+                                <i class="${style.icon}"></i>
+                            </div>
+                            <div class="min-w-0">
+                                <p class="text-xs font-bold text-[#FF9EB5] truncate">${escapeHTML(item.label || style.defaultLabel)}</p>
+                                <p class="text-[11px] text-gray-400 truncate">${escapeHTML(item.url)}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1 flex-shrink-0">
+                            <button type="button" onclick="editContactItem(${Number(item.id)})" class="w-8 h-8 rounded-lg bg-[#2C1A26] hover:bg-[#3D2536] text-[#FF9EB5] flex items-center justify-center text-xs cursor-pointer border border-[#D87D98]/50" title="แก้ไข">
+                                <i class="fa-solid fa-pen text-[#FF9EB5]"></i>
+                            </button>
+                            <button type="button" onclick="deleteContactItem(${Number(item.id)})" class="w-8 h-8 rounded-lg bg-[#2C1A26] hover:bg-[#3D2536] text-[#D87D98] flex items-center justify-center text-xs cursor-pointer border border-[#D87D98]/50" title="ลบ">
+                                <i class="fa-solid fa-trash text-[#D87D98]"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        async function saveContactItem(silent = false) {
+            if (!requireClient()) return false;
+            const result = await guarded('saveContact', async () => {
+                const saveBtn = document.getElementById('saveContactBtn');
+                const editId = document.getElementById('editContactId').value;
+                const platform = document.getElementById('contactPlatformSelect').value;
+                const label = document.getElementById('contactLabelInput').value.trim();
+                const url = document.getElementById('contactUrlInput').value.trim();
+                if (!url) {
+                    if (!silent) showToast('กรุณากรอกลิงก์ URL ก่อนบันทึกค่ะ', true);
+                    return false;
+                }
+                if (!/^(https?:\/\/|mailto:)\S+$/i.test(url)) {
+                    showToast('ลิงก์ต้องขึ้นต้นด้วย https://, http:// หรือ mailto: ค่ะ', true);
+                    return false;
+                }
+                const style = PLATFORM_STYLES[platform] || PLATFORM_STYLES.website;
+                const finalLabel = label || style.defaultLabel;
+                saveBtn.disabled = true;
+                saveBtn.classList.add('opacity-60');
+                try {
+                    if (editId) {
+                        const { error } = await sb.from('contact_links').update({ platform, label: finalLabel, url }).eq('id', Number(editId));
+                        if (error) throw error;
+                        if (!silent) showToast('แก้ไขช่องทางติดต่อเรียบร้อยแล้ว');
+                    } else {
+                        const nextOrder = contactList.reduce((m, c) => Math.max(m, c.sort_order || 0), 0) + 1;
+                        const { error } = await sb.from('contact_links').insert({ platform, label: finalLabel, url, sort_order: nextOrder });
+                        if (error) throw error;
+                        if (!silent) showToast('เพิ่มไอคอนช่องทางติดต่อแล้ว');
+                    }
+                    await loadContacts();
+                    resetContactForm();
+                    return true;
+                } catch (err) {
+                    console.error(err);
+                    showToast(friendlyError(err), true);
+                    return false;
+                } finally {
+                    saveBtn.disabled = false;
+                    saveBtn.classList.remove('opacity-60');
+                }
+            });
+            return result === undefined ? false : result;
+        }
+        function editContactItem(id) {
+            const target = contactList.find(c => c.id === id);
+            if (!target) return;
+            document.getElementById('editContactId').value = target.id;
+            document.getElementById('contactPlatformSelect').value = target.platform;
+            document.getElementById('contactLabelInput').value = target.label;
+            document.getElementById('contactUrlInput').value = target.url;
+            document.getElementById('contactFormTitle').innerHTML = '<i class="fa-solid fa-pen-to-square text-[#D87D98]"></i> แก้ไขช่องทางติดต่อ';
+            document.getElementById('saveContactBtnText').textContent = 'บันทึกการแก้ไข';
+            document.getElementById('cancelEditContactBtn').classList.remove('hidden');
+        }
+        async function deleteContactItem(id) {
+            if (!requireClient()) return;
+            await guarded('delContact' + id, async () => {
+                const { error } = await sb.from('contact_links').delete().eq('id', id);
+                if (error) {
+                    console.error(error);
+                    showToast(friendlyError(error), true);
+                    return;
+                }
+                await loadContacts();
+                if (document.getElementById('editContactId').value === String(id)) {
+                    resetContactForm();
+                }
+                showToast('ลบช่องทางติดต่อแล้ว');
+            });
+        }
+        function resetContactForm() {
+            document.getElementById('editContactId').value = '';
+            document.getElementById('contactPlatformSelect').value = 'facebook';
+            document.getElementById('contactLabelInput').value = '';
+            document.getElementById('contactUrlInput').value = '';
+            document.getElementById('contactFormTitle').innerHTML = '<i class="fa-solid fa-circle-plus text-[#D87D98]"></i> เพิ่มช่องทางติดต่อใหม่';
+            document.getElementById('saveContactBtnText').textContent = 'เพิ่มไอคอนติดต่อ';
+            document.getElementById('cancelEditContactBtn').classList.add('hidden');
+        }
+
+        /* ===================== หัวใจแสดงความคืบหน้า ===================== */
+        function renderHeartProgressSVG(statusText, sizeClass = "w-44 h-44 sm:w-48 sm:h-48") {
+            const percent = STATUS_PERCENT_MAP[statusText] ?? 0;
+            const pulseClass = percent === 100 ? 'heart-complete' : '';
+            const uniqueId = 'heartCrystal_' + Math.random().toString(36).substring(2, 9);
+            const topY = 26;
+            const bottomY = 112;
+            const fillableHeight = bottomY - topY;
+            const fillY = bottomY - (fillableHeight * (percent / 100));
+            return `
+                <div class="relative inline-flex items-center justify-center ${pulseClass}">
+                    <span class="sparkle-dot absolute -top-1 left-2 text-[#FF9EB5] text-base select-none">✟</span>
+                    <span class="sparkle-dot absolute top-2 right-1 text-[#D87D98] text-sm select-none" style="animation-delay: 0.5s;">♡</span>
+                    <span class="sparkle-dot absolute bottom-3 left-2 text-[#FF9EB5] text-xs select-none" style="animation-delay: 1s;">˚₊·</span>
+                    <span class="sparkle-dot absolute bottom-2 right-2 text-[#D87D98] text-sm select-none" style="animation-delay: 1.4s;">✟</span>
+                    <div class="relative ${sizeClass} flex items-center justify-center gentle-bounce">
+                        <svg viewBox="0 0 140 132" class="w-full h-full overflow-visible">
+                            <defs>
+                                <path id="${uniqueId}_main" d="M70 114 C70 114 16 82 16 47 C16 27 31 16 48 16 C59 16 66 22 70 29 C74 22 81 16 92 16 C109 16 124 27 124 47 C124 82 70 114 70 114 Z" />
+                                <path id="${uniqueId}_outer" d="M70 121 C70 121 9 86 9 47 C9 23 27 10 47 10 C60 10 66 16 70 22 C74 16 80 10 93 10 C113 10 131 23 131 47 C131 86 70 121 70 121 Z" />
+                                <clipPath id="${uniqueId}_clip">
+                                    <use href="#${uniqueId}_main" />
+                                </clipPath>
+                                <linearGradient id="${uniqueId}_fillGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#FF9EB5" />
+                                    <stop offset="55%" stop-color="#D87D98" />
+                                    <stop offset="100%" stop-color="#9C4A63" />
+                                </linearGradient>
+                                <linearGradient id="${uniqueId}_bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#2C1A26" />
+                                    <stop offset="100%" stop-color="#1C121A" />
+                                </linearGradient>
+                                <filter id="${uniqueId}_softShadow" x="-15%" y="-15%" width="130%" height="135%">
+                                    <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.5" />
+                                </filter>
+                            </defs>
+                            <use href="#${uniqueId}_outer" fill="none" stroke="#D87D98" stroke-width="2" stroke-dasharray="4 4" stroke-linecap="round" />
+                            <g filter="url(#${uniqueId}_softShadow)">
+                                <use href="#${uniqueId}_main" fill="url(#${uniqueId}_bgGrad)" />
+                            </g>
+                            <g clip-path="url(#${uniqueId}_clip)">
+                                ${percent > 0 ? `
+                                    <path class="heart-wave" fill="#5C2A3B" opacity="0.75"
+                                        d="M-25 ${fillY - 2} Q -5 ${fillY - 8}, 15 ${fillY - 2} T 55 ${fillY - 2} T 95 ${fillY - 2} T 135 ${fillY - 2} T 175 ${fillY - 2} V 135 H -25 Z" />
+                                    <path class="heart-wave" style="animation-duration: 2.6s; animation-direction: reverse;" fill="url(#${uniqueId}_fillGrad)"
+                                        d="M-25 ${fillY + 1} Q -5 ${fillY + 6}, 15 ${fillY + 1} T 55 ${fillY + 1} T 95 ${fillY + 1} T 135 ${fillY + 1} T 175 ${fillY + 1} V 135 H -25 Z" />
+                                    ${percent >= 25 ? `<circle cx="44" cy="${Math.min(fillY + 14, 100)}" r="2.2" fill="#FFFFFF" opacity="0.6" />` : ''}
+                                    ${percent >= 50 ? `<circle cx="94" cy="${Math.min(fillY + 20, 96)}" r="2.8" fill="#FFFFFF" opacity="0.55" />` : ''}
+                                    ${percent >= 75 ? `<circle cx="62" cy="${Math.min(fillY + 32, 102)}" r="1.8" fill="#FFFFFF" opacity="0.65" />` : ''}
+                                ` : ''}
+                            </g>
+                            <path d="M32 34 C29 40 29 47 32 52" stroke="#FF9EB5" stroke-width="3.5" stroke-linecap="round" fill="none" opacity="0.9" />
+                            <circle cx="37" cy="27" r="2.2" fill="#FF9EB5" opacity="0.95" />
+                            <path d="M106 33 C109 37 110 42 109 46" stroke="#FF9EB5" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.7" />
+                            <use href="#${uniqueId}_main" fill="none" stroke="#FF9EB5" stroke-width="3.5" stroke-linejoin="round" opacity="0.85" />
+                            <use href="#${uniqueId}_main" fill="none" stroke="#D87D98" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                        <!-- ฟอนต์ตัวเลขเปอร์เซ็นต์ด้านใน (คงดีไซน์และขนาดฟอนต์เดิมทุกประการ) -->
+                        <div class="absolute inset-0 flex items-center justify-center z-10 pointer-events-none pt-1">
+                            <span class="font-number font-bold text-2xl sm:text-3xl text-[#F5E6EC] tracking-wider bg-[#1C121A]/95 px-3.5 py-1 rounded-full shadow-xs border border-[#D87D98]">
+                                ${percent}%
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        /* ===================== Modal เพิ่มคิว / สลับหน้าแอดมิน ===================== */
+        function openAddQueueModal() {
+            const modal = document.getElementById('addQueueModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.getElementById('adminCreatedBanner').classList.add('hidden');
+        }
+        function closeAddQueueModal() {
+            const modal = document.getElementById('addQueueModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        function toggleAdminView() {
+            if (!isAdminViewActive && !isAdminAuthenticated) {
+                openAdminLoginModal();
+                return;
+            }
+            isAdminViewActive = !isAdminViewActive;
+            const statusView = document.getElementById('view-status');
+            const adminView = document.getElementById('view-admin');
+            const toggleText = document.getElementById('adminToggleBtnText');
+            if (isAdminViewActive) {
+                statusView.classList.add('hidden');
+                adminView.classList.remove('hidden');
+                toggleText.textContent = 'กลับหน้าลูกค้า';
+                loadQueues();
+            } else {
+                adminView.classList.add('hidden');
+                statusView.classList.remove('hidden');
+                toggleText.textContent = 'หลังบ้าน (Admin)';
+                /* ล้างผลค้นหาเดิม ไม่ให้ข้อมูลเก่าค้างหน้าจอ */
+                document.getElementById('queuePreviewResult').classList.add('hidden');
+                document.getElementById('queueFullDetailCard').classList.add('hidden');
+            }
+        }
+
+        /* ===================== ล็อกอินแอดมิน (Supabase Auth) ===================== */
+        async function checkIsAdmin() {
+            const { data, error } = await sb.rpc('is_admin');
+            return !error && data === true;
+        }
+        async function restoreAdminSession() {
+            try {
+                const { data } = await sb.auth.getSession();
+                if (!data || !data.session) {
+                    isAdminAuthenticated = false;
+                    return;
+                }
+                isAdminAuthenticated = await checkIsAdmin();
+                if (!isAdminAuthenticated) {
+                    await sb.auth.signOut();
+                }
+            } catch (e) {
+                console.error(e);
+                isAdminAuthenticated = false;
+            }
+        }
+        async function adminLogout() {
+            if (!requireClient()) return;
+            await guarded('logout', async () => {
+                await sb.auth.signOut();
+                isAdminAuthenticated = false;
+                queues = [];
+                if (isAdminViewActive) toggleAdminView();
+                showToast('ออกจากระบบแล้ว');
+            });
+        }
+        function showLoginError(msg) {
+            document.getElementById('adminLoginErrorText').textContent = msg;
+            document.getElementById('adminLoginError').classList.remove('hidden');
+        }
+        function openAdminLoginModal() {
+            const modal = document.getElementById('adminLoginModal');
+            const emailInput = document.getElementById('adminEmailInput');
+            const pwdInput = document.getElementById('adminPasswordInput');
+            const errEl = document.getElementById('adminLoginError');
+            if (emailInput) {
+                emailInput.value = '';
+            }
+            if (pwdInput) {
+                pwdInput.value = '';
+                pwdInput.type = 'password';
+            }
+            const eyeIcon = document.getElementById('adminPwdEyeIcon');
+            if (eyeIcon) eyeIcon.className = 'fa-regular fa-eye';
+            if (errEl) errEl.classList.add('hidden');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => emailInput && emailInput.focus(), 100);
+        }
+
+        function closeAdminLoginModal() {
+            const modal = document.getElementById('adminLoginModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function toggleAdminPasswordVisibility() {
+            const pwdInput = document.getElementById('adminPasswordInput');
+            const eyeIcon = document.getElementById('adminPwdEyeIcon');
+            if (!pwdInput || !eyeIcon) return;
+            if (pwdInput.type === 'password') {
+                pwdInput.type = 'text';
+                eyeIcon.className = 'fa-regular fa-eye-slash';
+            } else {
+                pwdInput.type = 'password';
+                eyeIcon.className = 'fa-regular fa-eye';
+            }
+        }
+
+        async function handleAdminLoginSubmit(event) {
+            event.preventDefault();
+            if (!requireClient()) return;
+            const btn = event.target.querySelector('button[type="submit"]');
+            document.getElementById('adminLoginError').classList.add('hidden');
+            await runBusy(btn, '<i class="fa-solid fa-spinner fa-spin"></i> กำลังเข้าสู่ระบบ...', async () => {
+                const email = document.getElementById('adminEmailInput').value.trim();
+                const password = document.getElementById('adminPasswordInput').value;
+                try {
+                    const { error } = await sb.auth.signInWithPassword({ email, password });
+                    if (error) {
+                        showLoginError(error.status === 400 ? 'อีเมลหรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่ค่ะ' : friendlyError(error));
+                        return;
+                    }
+                    const ok = await checkIsAdmin();
+                    if (!ok) {
+                        await sb.auth.signOut();
+                        showLoginError('บัญชีนี้ไม่มีสิทธิ์แอดมิน');
+                        return;
+                    }
+                    isAdminAuthenticated = true;
+                    closeAdminLoginModal();
+                    showToast('เข้าสู่ระบบหลังบ้านสำเร็จแล้ว ✟');
+                    toggleAdminView();
+                } catch (err) {
+                    console.error(err);
+                    showLoginError(friendlyError(err));
+                }
+            });
+        }
+        function formatThaiDateTime(dateTimeStr) {
+            if (!dateTimeStr) return 'ยังไม่ระบุกำหนดส่ง';
+            try {
+                const dateObj = new Date(dateTimeStr);
+                if (isNaN(dateObj.getTime())) return dateTimeStr;
+                return dateObj.toLocaleDateString('th-TH', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                }) + ' เวลา ' + dateObj.toLocaleTimeString('th-TH', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }) + ' น.';
+            } catch (e) {
+                return dateTimeStr;
+            }
+        }
+
+        /* ===================== คิว (queues) — ฝั่งแอดมิน ===================== */
+        function mapQueueRow(r) {
+            return {
+                id: r.id,
+                code: r.code,
+                pin: r.pin,
+                customerName: r.customer_name,
+                contact: r.contact,
+                service: r.service,
+                detail: r.detail,
+                dueDate: r.due_date,
+                status: r.status
+            };
+        }
+        async function loadQueues(btn) {
+            if (!requireClient()) return;
+            const list = document.getElementById('adminQueueList');
+            await runBusy(btn, null, async () => {
+                list.innerHTML = `<p class="text-center text-sm text-[#D8B4BE] py-6"><i class="fa-solid fa-spinner fa-spin text-[#D87D98]"></i> กำลังโหลดรายการคิว...</p>`;
+                const { data, error } = await sb.from('queues').select('*').order('created_at', { ascending: true }).order('id', { ascending: true });
+                if (error) {
+                    console.error(error);
+                    list.innerHTML = `<p class="text-center text-sm text-[#FF9EB5] py-6">โหลดรายการคิวไม่สำเร็จ: ${escapeHTML(friendlyError(error))}</p>`;
+                    showToast(friendlyError(error), true);
+                    return;
+                }
+                queues = (data || []).map(mapQueueRow);
+                renderAdminList();
+            });
+        }
+        function calculateQueueOrder(targetId) {
+            const activeQueues = queues.filter(q => q.status !== 'ส่งแล้ว 100%');
+            const index = activeQueues.findIndex(q => q.id === targetId);
+            return index !== -1 ? index + 1 : null;
+        }
+        async function handleAdminAddQueue(event) {
+            event.preventDefault();
+            if (!requireClient()) return;
+            const form = event.target;
+            const btn = form.querySelector('button[type="submit"]');
+            const customerName = document.getElementById('adminCustName').value.trim();
+            const contact = document.getElementById('adminCustContact').value.trim();
+            const service = document.getElementById('adminCustService').value.trim();
+            const dueDate = document.getElementById('adminDueDate').value;
+            const detail = document.getElementById('adminCustDetail').value.trim();
+            if (!customerName || !contact || !service || !dueDate || !detail) return;
+            await runBusy(btn, '<i class="fa-solid fa-spinner fa-spin"></i> กำลังบันทึก...', async () => {
+                const { data, error } = await sb.rpc('admin_create_queue', {
+                    p_customer_name: customerName,
+                    p_contact: contact,
+                    p_service: service,
+                    p_detail: detail,
+                    p_due_date: dueDate
+                });
+                if (error) {
+                    console.error(error);
+                    showToast(friendlyError(error), true);
+                    return;
+                }
+                const row = Array.isArray(data) ? data[0] : data;
+                if (!row || !row.code) {
+                    showToast('สร้างคิวไม่สำเร็จ กรุณาลองใหม่ค่ะ', true);
+                    return;
+                }
+                document.getElementById('adminLatestCode').textContent = row.code;
+                document.getElementById('adminLatestPin').textContent = row.pin;
+                document.getElementById('adminCreatedBanner').classList.remove('hidden');
+                form.reset();
+                await loadQueues();
+                showToast(`เพิ่มคิวสำเร็จ! รหัส ${row.code}`);
+            });
+        }
+        function copyLatestQueueAndPin() {
+            const code = document.getElementById('adminLatestCode').textContent;
+            const pin = document.getElementById('adminLatestPin').textContent;
+            copyRawText(`รหัสเช็กคิว: ${code} | รหัส PIN: ${pin}`, 'คัดลอกรหัสคิวและ PIN แล้ว!');
+        }
+        function renderAdminList() {
+            const listContainer = document.getElementById('adminQueueList');
+            const searchTerm = document.getElementById('adminSearchInput').value.trim().toLowerCase();
+            const statusFilter = document.getElementById('adminStatusFilter').value;
+            const filtered = queues.filter(q => {
+                const matchesText = q.customerName.toLowerCase().includes(searchTerm) ||
+                                    q.code.toLowerCase().includes(searchTerm) ||
+                                    q.service.toLowerCase().includes(searchTerm) ||
+                                    (q.contact && q.contact.toLowerCase().includes(searchTerm));
+                const matchesStatus = statusFilter === 'ALL' || q.status === statusFilter;
+                return matchesText && matchesStatus;
+            });
+            if (filtered.length === 0) {
+                listContainer.innerHTML = `<p class="text-center text-sm text-gray-400 py-6">ไม่พบรายการคิวที่ค้นหา</p>`;
+                return;
+            }
+            listContainer.innerHTML = filtered.map(q => {
+                const activeOrder = calculateQueueOrder(q.id);
+                const orderBadge = activeOrder
+                    ? `<span class="px-2 py-0.5 rounded-md bg-[#2C1A26] text-[#FF9EB5] border border-[#D87D98] text-xs font-bold">ลำดับที่ ${activeOrder}</span>`
+                    : `<span class="px-2 py-0.5 rounded-md bg-gradient-to-r from-[#D87D98] to-[#FF9EB5] text-[#120A0F] text-xs font-bold">ส่งแล้ว 100%</span>`;
+                return `
+                    <div class="p-4 rounded-2xl border-2 border-[#D87D98]/50 bg-[#120A0F] hover:border-[#D87D98] transition-all space-y-3">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <div class="flex flex-wrap items-center gap-2">
+                                ${orderBadge}
+                                <span class="font-mono font-bold text-sm text-[#FF9EB5] bg-[#2C1A26] px-2.5 py-0.5 rounded-lg border border-[#D87D98]">
+                                    ${escapeHTML(q.code)}
+                                </span>
+                                <span class="font-mono font-bold text-xs text-[#FF9EB5] bg-[#2C1A26] px-2.5 py-0.5 rounded-lg border border-[#D87D98]">
+                                    PIN: ${escapeHTML(q.pin || '----')}
+                                </span>
+                                <button onclick="copyRawText('รหัสเช็กคิว: ${escapeHTML(q.code)} | รหัส PIN: ${escapeHTML(q.pin || '')}', 'คัดลอกรหัสคิวและ PIN แล้ว!')" class="text-xs px-2.5 py-1 rounded-lg bg-[#2C1A26] border border-[#D87D98] hover:bg-[#3D2536] text-[#FF9EB5] flex items-center gap-1 cursor-pointer">
+                                    <i class="fa-regular fa-copy"></i> คัดลอกรหัส + PIN
+                                </button>
+                            </div>
+                            <span class="text-xs font-medium text-[#FF9EB5] bg-[#2C1A26] px-2.5 py-1 rounded-full border border-[#D87D98]/50">
+                                <i class="fa-regular fa-clock"></i> ส่งงาน: ${escapeHTML(formatThaiDateTime(q.dueDate))}
+                            </span>
+                        </div>
+                        <div class="text-xs sm:text-sm space-y-1">
+                            <p>
+                                <b class="text-[#FF9EB5]">ลูกค้า:</b> ${escapeHTML(q.customerName)}
+                                <span class="text-gray-600">|</span>
+                                <b class="text-[#FF9EB5]">ติดต่อ:</b> <span class="text-[#F5E6EC]">${escapeHTML(q.contact || '-')}</span>
+                            </p>
+                            <p><b class="text-[#FF9EB5]">บริการ:</b> <span class="text-[#FF9EB5] font-medium">${escapeHTML(q.service)}</span></p>
+                            <p class="text-gray-300 bg-[#1C121A] p-2.5 rounded-lg border border-[#D87D98]/40 text-xs mt-1">${escapeHTML(q.detail)}</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-2 border-t border-dashed border-[#D87D98]/40">
+                            <label class="text-xs font-medium text-[#D8B4BE]">อัปเดตสถานะงาน:</label>
+                            <select onchange="updateQueueStatus(${Number(q.id)}, this.value, this)" class="text-xs sm:text-sm p-1.5 px-3 rounded-xl border-2 border-[#D87D98] bg-[#120A0F] text-[#F5E6EC] font-medium focus:outline-none">
+                                <option value="รอบรีฟ 0%" ${q.status === 'รอบรีฟ 0%' ? 'selected' : ''}>[0%] รอบรีฟ 0%</option>
+                                <option value="บรีฟแล้ว 25%" ${q.status === 'บรีฟแล้ว 25%' ? 'selected' : ''}>[25%] บรีฟแล้ว 25%</option>
+                                <option value="กำลังดำเนินงาน 50%" ${q.status === 'กำลังดำเนินงาน 50%' ? 'selected' : ''}>[50%] กำลังดำเนินงาน 50%</option>
+                                <option value="รอเช็คงาน 75%" ${q.status === 'รอเช็คงาน 75%' ? 'selected' : ''}>[75%] รอเช็คงาน 75%</option>
+                                <option value="ส่งแล้ว 100%" ${q.status === 'ส่งแล้ว 100%' ? 'selected' : ''}>[100%] ส่งแล้ว 100%</option>
+                            </select>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        async function updateQueueStatus(id, newStatus, selectEl) {
+            if (!requireClient()) return;
+            await guarded('status' + id, async () => {
+                if (selectEl) selectEl.disabled = true;
+                const { error } = await sb.from('queues').update({ status: newStatus }).eq('id', id);
+                if (error) {
+                    console.error(error);
+                    showToast(friendlyError(error), true);
+                    renderAdminList();
+                    return;
+                }
+                const idx = queues.findIndex(q => q.id === id);
+                if (idx !== -1) queues[idx].status = newStatus;
+                renderAdminList();
+                showToast(`อัปเดตสถานะเป็น "${newStatus}" แล้ว`);
+            });
+        }
+
+        /* ===================== คิว — ฝั่งลูกค้า (ผ่านฟังก์ชันที่ตรวจรหัส + PIN) ===================== */
+        async function searchQueueByCode(btn) {
+            const inputCode = document.getElementById('searchCodeInput').value.trim().toUpperCase();
+            const previewContainer = document.getElementById('queuePreviewResult');
+            const fullDetailCard = document.getElementById('queueFullDetailCard');
+            fullDetailCard.classList.add('hidden');
+            previewContainer.classList.remove('hidden');
+            targetQueueForVerification = null;
+            if (!inputCode) {
+                previewContainer.innerHTML = `
+                    <div class="p-4 rounded-2xl bg-red-950 border border-red-800 text-center text-xs sm:text-sm text-red-300">
+                        กรุณากรอกรหัสคิวที่ได้รับจากแอดมินก่อนกดค้นหาค่ะ
+                    </div>`;
+                return;
+            }
+            if (!requireClient()) return;
+            await runBusy(btn, '<i class="fa-solid fa-spinner fa-spin"></i> กำลังค้นหา...', async () => {
+                const { data, error } = await sb.rpc('check_queue_code', { p_code: inputCode });
+                if (error) {
+                    console.error(error);
+                    previewContainer.innerHTML = `
+                        <div class="p-4 rounded-2xl bg-red-950 border border-red-800 text-center text-xs sm:text-sm text-red-300">
+                            ${escapeHTML(friendlyError(error))}
+                        </div>`;
+                    return;
+                }
+                if (data !== true) {
+                    previewContainer.innerHTML = `
+                        <div class="p-5 rounded-2xl bg-[#1C121A] border-2 border-dashed border-[#D87D98] text-center space-y-1.5">
+                            <div class="w-10 h-10 rounded-full bg-[#2C1A26] border border-[#D87D98] flex items-center justify-center mx-auto text-[#FF9EB5]">
+                                <i class="fa-solid fa-circle-xmark text-lg"></i>
+                            </div>
+                            <p class="font-medium text-sm text-[#FF9EB5]">ไม่พบข้อมูลคิวสำหรับรหัส "${escapeHTML(inputCode)}"</p>
+                            <p class="text-xs text-[#D8B4BE]">กรุณาตรวจสอบตัวอักษรและขีด (-) ให้ถูกต้อง</p>
+                        </div>`;
+                    return;
+                }
+                targetQueueForVerification = { code: inputCode };
+                previewContainer.innerHTML = `
+                    <div onclick="openVerifyModal()" class="cursor-pointer group dashed-box bg-gradient-to-r from-[#2C1A26] to-[#1C121A] p-4 sm:p-5 hover:shadow-md transition-all flex items-center justify-between gap-3 border-[#D87D98]">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-2xl bg-[#120A0F] flex items-center justify-center text-xl text-[#FF9EB5] shadow-xs border border-[#D87D98]">
+                                <i class="fa-solid fa-envelope-open-text"></i>
+                            </div>
+                            <div>
+                                <span class="text-[11px] bg-[#2C1A26] px-2 py-0.5 rounded-full text-[#FF9EB5] font-semibold">พบข้อมูลคิวของคุณแล้ว!</span>
+                                <h3 class="font-cute font-bold text-base sm:text-lg text-[#F5E6EC] mt-0.5">
+                                    รหัสคิว: ${escapeHTML(inputCode)}
+                                </h3>
+                                <p class="text-xs text-[#D8B4BE]">แตะเพื่อกรอก <b>รหัส PIN 4 หลัก</b></p>
+                            </div>
+                        </div>
+                        <div class="px-3 py-2 rounded-full bg-[#D87D98] text-[#120A0F] text-xs font-bold group-hover:scale-105 transition-transform flex-shrink-0 shadow-xs">
+                            ใส่รหัส PIN <i class="fa-solid fa-key ml-1"></i>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        function openVerifyModal() {
+            if (!targetQueueForVerification) return;
+            document.getElementById('secondVerifyInput').value = '';
+            document.getElementById('secondVerifyError').classList.add('hidden');
+            const modal = document.getElementById('verifyModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => document.getElementById('secondVerifyInput').focus(), 100);
+        }
+        function closeVerifyModal() {
+            const modal = document.getElementById('verifyModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        async function confirmSecondVerification(btn) {
+            const enteredPin = document.getElementById('secondVerifyInput').value.trim();
+            const errEl = document.getElementById('secondVerifyError');
+            if (!targetQueueForVerification) return;
+            if (!/^\d{4,6}$/.test(enteredPin)) {
+                errEl.textContent = 'กรุณากรอกรหัส PIN ที่เป็นตัวเลข 4 หลักค่ะ';
+                errEl.classList.remove('hidden');
+                return;
+            }
+            if (!requireClient()) return;
+            await runBusy(btn, '<i class="fa-solid fa-spinner fa-spin"></i> กำลังตรวจ...', async () => {
+                const { data, error } = await sb.rpc('get_queue_public', {
+                    p_code: targetQueueForVerification.code,
+                    p_pin: enteredPin
+                });
+                if (error) {
+                    console.error(error);
+                    errEl.textContent = friendlyError(error);
+                    errEl.classList.remove('hidden');
+                    return;
+                }
+                if (!data || data.ok !== true) {
+                    errEl.textContent = (data && data.error === 'locked')
+                        ? 'กรอก PIN ผิดหลายครั้ง ระบบล็อกชั่วคราว 15 นาที กรุณาลองใหม่ภายหลังค่ะ'
+                        : 'รหัส PIN ไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง';
+                    errEl.classList.remove('hidden');
+                    return;
+                }
+                closeVerifyModal();
+                renderUnlockedQueueDetail({
+                    code: data.code,
+                    customerName: data.customer_name,
+                    contact: data.contact,
+                    service: data.service,
+                    detail: data.detail,
+                    dueDate: data.due_date,
+                    status: data.status,
+                    queueOrder: data.queue_order
+                });
+                showToast('ยืนยันรหัส PIN สำเร็จ!');
+            });
+        }
+        function renderUnlockedQueueDetail(q) {
+            const fullDetailCard = document.getElementById('queueFullDetailCard');
+            const queueOrder = q.queueOrder || null;
+            let statusBadgeColor = 'bg-[#2C1A26] text-[#D8B4BE] border border-[#D87D98]/60';
+            if (q.status === 'บรีฟแล้ว 25%') statusBadgeColor = 'bg-[#2C1A26] text-[#FF9EB5] border border-[#D87D98]';
+            if (q.status === 'กำลังดำเนินงาน 50%') statusBadgeColor = 'bg-[#3D2536] text-[#FF9EB5] border border-[#FF9EB5]';
+            if (q.status === 'รอเช็คงาน 75%') statusBadgeColor = 'bg-[#3D2536] text-[#F5E6EC] border border-[#FF9EB5]';
+            if (q.status === 'ส่งแล้ว 100%') statusBadgeColor = 'bg-gradient-to-r from-[#D87D98] to-[#FF9EB5] text-[#120A0F] font-bold';
+            const subtleOrderText = queueOrder
+                ? `<span class="text-xs text-[#D8B4BE] bg-[#120A0F] px-3 py-1 rounded-full border border-[#D87D98]">ลำดับคิวปัจจุบัน: คิวที่ ${queueOrder}</span>`
+                : `<span class="text-xs text-[#FF9EB5] bg-[#2C1A26] px-3 py-1 rounded-full border border-[#D87D98]">ดำเนินการเสร็จสิ้นเรียบร้อยแล้ว</span>`;
+            fullDetailCard.classList.remove('hidden');
+            fullDetailCard.innerHTML = `
+                <div class="flex items-center justify-between border-b border-dashed border-[#D87D98] pb-3 mb-4">
+                    <div>
+                        <span class="text-xs text-[#FF9EB5] font-semibold flex items-center gap-1"><i class="fa-solid fa-lock-open text-[#D87D98]"></i> ยืนยันรหัสผ่านแล้ว</span>
+                        <h3 class="font-cute text-xl font-bold text-[#F5E6EC]">รายละเอียดคิว ${escapeHTML(q.code)}</h3>
+                    </div>
+                    <span class="px-3 py-1 rounded-full text-xs font-semibold ${statusBadgeColor}">
+                        ${escapeHTML(q.status)}
+                    </span>
+                </div>
+                <div class="bg-gradient-to-b from-[#2C1A26] to-[#1C121A] border-2 border-dashed border-[#D87D98] rounded-3xl p-6 text-center flex flex-col items-center justify-center space-y-2 shadow-xs">
+                    <span class="text-xs font-medium text-[#D8B4BE] tracking-wide">ความคืบหน้างานของคุณ</span>
+                    <div class="py-1">
+                        ${renderHeartProgressSVG(q.status, "w-40 h-40 sm:w-44 sm:h-44")}
+                    </div>
+                    <p class="font-cute text-xl sm:text-2xl font-bold text-[#FF9EB5] pt-1">
+                        ${escapeHTML(q.status)}
+                    </p>
+                    <div class="pt-1">${subtleOrderText}</div>
+                </div>
+                <div class="mt-4 space-y-2.5 text-sm bg-[#120A0F] p-4 rounded-xl border border-[#D87D98]/40">
+                    <div class="flex justify-between gap-2">
+                        <span class="text-[#D8B4BE]">ชื่อลูกค้า:</span>
+                        <span class="font-semibold text-right text-[#F5E6EC]">${escapeHTML(q.customerName)}</span>
+                    </div>
+                    <div class="flex justify-between gap-2">
+                        <span class="text-[#D8B4BE]">ช่องทางติดต่อของคุณ:</span>
+                        <span class="font-medium text-right text-[#F5E6EC]">${escapeHTML(q.contact || '-')}</span>
+                    </div>
+                    <div class="flex justify-between gap-2">
+                        <span class="text-[#D8B4BE]">บริการที่สั่ง:</span>
+                        <span class="font-semibold text-[#FF9EB5] text-right">${escapeHTML(q.service)}</span>
+                    </div>
+                    <div class="flex justify-between gap-2">
+                        <span class="text-[#D8B4BE]">กำหนดวันเวลาส่งงาน:</span>
+                        <span class="font-semibold text-[#FF9EB5] text-right">${escapeHTML(formatThaiDateTime(q.dueDate))}</span>
+                    </div>
+                    <div class="pt-2 border-t border-dashed border-[#D87D98]/50">
+                        <span class="text-[#D8B4BE] block text-xs mb-1">รายละเอียดงาน:</span>
+                        <p class="text-xs sm:text-sm bg-[#1C121A] p-2.5 rounded-lg border border-[#D87D98]/40 text-[#F5E6EC] leading-relaxed">${escapeHTML(q.detail)}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        /* ===================== ตัวช่วยทั่วไป: คัดลอก / Toast / Escape ===================== */
+        function copyRawText(text, customToastMsg) {
+            const tempInput = document.createElement('textarea');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            showToast(customToastMsg || `คัดลอกเรียบร้อยแล้ว!`);
+        }
+        let toastTimer = null;
+        function showToast(msg, isError = false) {
+            const toast = document.getElementById('toastBox');
+            const icon = document.getElementById('toastIcon');
+            document.getElementById('toastMessage').textContent = msg;
+            icon.className = isError
+                ? 'fa-solid fa-circle-exclamation text-[#FF9EB5]'
+                : 'fa-solid fa-circle-check text-[#FF9EB5]';
+            toast.classList.remove('opacity-0');
+            if (toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.add('opacity-0');
+            }, isError ? 4000 : 2500);
+        }
+        function escapeHTML(str) {
+            return String(str ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        /* ===================== เพลงประกอบ (YouTube BGM) ===================== */
+        let bgmPlayer = null;
+        let isBgmPlaying = false;
+        let hasUserInteractedForAudio = false;
+        function initYoutubeBgm() {
+            const tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            const firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        }
+        window.onYouTubeIframeAPIReady = function () {
+            bgmPlayer = new YT.Player('youtubeBgmPlayer', {
+                height: '10',
+                width: '10',
+                videoId: 'MC6hL6Hj8ww',
+                playerVars: {
+                    autoplay: 1,
+                    loop: 1,
+                    playlist: 'MC6hL6Hj8ww',
+                    controls: 0,
+                    disablekb: 1,
+                    fs: 0,
+                    modestbranding: 1,
+                    playsinline: 1
+                },
+                events: {
+                    onReady: onBgmPlayerReady,
+                    onStateChange: onBgmPlayerStateChange
+                }
+            });
+        };
+        function onBgmPlayerReady(event) {
+            event.target.setVolume(45);
+            event.target.playVideo();
+            setTimeout(() => {
+                if (bgmPlayer && typeof bgmPlayer.getPlayerState === 'function') {
+                    const state = bgmPlayer.getPlayerState();
+                    if (state !== YT.PlayerState.PLAYING) {
+                        updateBgmButtonUI(false, true);
+                        setupFirstClickAutoplay();
+                    }
+                }
+            }, 900);
+        }
+        function onBgmPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.PLAYING) {
+                isBgmPlaying = true;
+                hasUserInteractedForAudio = true;
+                updateBgmButtonUI(true, false);
+            } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+                isBgmPlaying = false;
+                updateBgmButtonUI(false, false);
+            }
+        }
+        function setupFirstClickAutoplay() {
+            const unlockAudio = () => {
+                if (!hasUserInteractedForAudio && bgmPlayer && typeof bgmPlayer.playVideo === 'function') {
+                    bgmPlayer.unMute();
+                    bgmPlayer.setVolume(45);
+                    bgmPlayer.playVideo();
+                    hasUserInteractedForAudio = true;
+                }
+                document.removeEventListener('click', unlockAudio);
+                document.removeEventListener('touchstart', unlockAudio);
+            };
+            document.addEventListener('click', unlockAudio, { once: true });
+            document.addEventListener('touchstart', unlockAudio, { once: true });
+        }
+        function toggleBgmMusic() {
+            hasUserInteractedForAudio = true;
+            if (!bgmPlayer || typeof bgmPlayer.playVideo !== 'function') {
+                showToast('กำลังเชื่อมต่อเครื่องเล่นเพลง กรุณารอสักครู่ค่ะ...');
+                return;
+            }
+            if (isBgmPlaying) {
+                bgmPlayer.pauseVideo();
+                isBgmPlaying = false;
+                updateBgmButtonUI(false, false);
+                showToast('ปิดเสียงเพลงประกอบแล้ว');
+            } else {
+                bgmPlayer.unMute();
+                bgmPlayer.setVolume(45);
+                bgmPlayer.playVideo();
+                isBgmPlaying = true;
+                updateBgmButtonUI(true, false);
+                showToast(`เปิดเพลงประกอบร้าน ${storeProfile.name} แล้ว ♪`);
+            }
+        }
+        function updateBgmButtonUI(playing, waitingInteraction) {
+            const btn = document.getElementById('bgmToggleBtn');
+            const statusText = document.getElementById('bgmStatusText');
+            const eqBars = document.getElementById('bgmEqBars');
+            const icon = document.getElementById('bgmIcon');
+            if (!btn || !statusText || !eqBars || !icon) return;
+            if (playing) {
+                btn.className = 'kawaii-btn py-0.5 px-2.5 rounded-full bg-[#1C121A] text-[#FF9EB5] font-semibold text-[11px] shadow-2xs border border-[#D87D98] flex items-center gap-1.5 cursor-pointer';
+                eqBars.classList.add('eq-playing');
+                icon.className = 'fa-solid fa-volume-high text-[#FF9EB5] text-[10px]';
+                statusText.textContent = 'BGM: เปิดอยู่';
+            } else {
+                btn.className = 'kawaii-btn py-0.5 px-2.5 rounded-full bg-[#1C121A]/90 text-[#D8B4BE] hover:bg-[#2C1A26] font-medium text-[11px] shadow-2xs border border-[#D87D98] flex items-center gap-1.5 cursor-pointer';
+                eqBars.classList.remove('eq-playing');
+                icon.className = 'fa-solid fa-volume-xmark text-[#D8B4BE] text-[10px]';
+                statusText.textContent = waitingInteraction ? 'เปิดเพลง ♪' : 'BGM: ปิดอยู่';
+            }
+        }
+    </script>
+</body>
+</html>
