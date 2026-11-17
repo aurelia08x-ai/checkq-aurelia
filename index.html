@@ -24,11 +24,11 @@
                         number: ['Fredoka', 'cursive'],
                     },
                     colors: {
-                        jiraiDark: '#120A0F',
-                        jiraiCard: '#1C121A',
-                        jiraiBorder: '#D87D98',
-                        jiraiPink: '#FF9EB5',
-                        jiraiText: '#F5E6EC',
+                        jiraiDark: '#161215',
+                        jiraiCard: '#1D171B',
+                        jiraiBorder: '#F075AB',
+                        jiraiPink: '#FFC2DE',
+                        jiraiText: '#FFF5F9',
                     }
                 }
             }
@@ -37,12 +37,10 @@
     <style>
         /* พื้นหลังธีมจิไรเคย์ (Jirai Kei) โทนดำอมม่วงเข้ม ตัดลายตารางและจุดไข่ปลา */
         body {
-            background-color: #120A0F;
-            background-image: 
-                linear-gradient(rgba(216, 125, 152, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(216, 125, 152, 0.05) 1px, transparent 1px);
-            background-size: 24px 24px;
-            color: #F5E6EC;
+            background-color: #161215;
+            background-image: radial-gradient(rgba(255,224,238,0.22) 1.5px,transparent 1.5px),linear-gradient(to right,rgba(240,117,171,0.1) 1px,transparent 1px),linear-gradient(to bottom,rgba(240,117,171,0.1) 1px,transparent 1px);
+            background-size: 24px 24px,48px 48px,48px 48px;
+            color: #FFF5F9;
             font-family: 'Prompt', sans-serif;
             position: relative;
             overflow-x: hidden;
@@ -57,7 +55,7 @@
             background-repeat: repeat-x;
             background-position: top left;
             background-size: 84px 36px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='36' viewBox='0 0 84 36'%3E%3Cpath d='M0 0 H84 V21 C76 21 72 26 68 26 C64 26 60 22 57 22 C54 22 49 32 42 32 C35 32 30 22 27 22 C24 22 20 26 16 26 C12 26 8 21 0 21 Z' fill='%23FF9EB5'/%3E%3Cpath d='M0 21 C8 21 12 26 16 26 C20 26 24 22 27 22 C30 22 35 32 42 32 C49 32 54 22 57 22 C60 22 64 26 68 26 C72 26 76 21 84 21' fill='none' stroke='%23120A0F' stroke-width='2'/%3E%3Cpath d='M0 17.5 C7 17.5 11 22.5 16 22.5 C20 22.5 23 18.5 27 18.5 C31 18.5 35 28 42 28 C49 28 53 18.5 57 18.5 C61 18.5 64 22.5 68 22.5 C73 22.5 77 17.5 84 17.5' fill='none' stroke='%23120A0F' stroke-width='1.5' stroke-dasharray='2.5 2.5'/%3E%3Cpath d='M42 10 Q42 16 47 16 Q42 16 42 22 Q42 16 37 16 Q42 16 42 10 Z' fill='%23120A0F'/%3E%3Ccircle cx='16' cy='15' r='1.5' fill='%23120A0F'/%3E%3Ccircle cx='68' cy='15' r='1.5' fill='%23120A0F'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='36' viewBox='0 0 84 36'%3E%3Cpath d='M0 0 H84 V21 C76 21 72 26 68 26 C64 26 60 22 57 22 C54 22 49 32 42 32 C35 32 30 22 27 22 C24 22 20 26 16 26 C12 26 8 21 0 21 Z' fill='%23F47FB3'/%3E%3Cpath d='M0 21 C8 21 12 26 16 26 C20 26 24 22 27 22 C30 22 35 32 42 32 C49 32 54 22 57 22 C60 22 64 26 68 26 C72 26 76 21 84 21' fill='none' stroke='%23161215' stroke-width='2'/%3E%3Cpath d='M0 17.5 C7 17.5 11 22.5 16 22.5 C20 22.5 23 18.5 27 18.5 C31 18.5 35 28 42 28 C49 28 53 18.5 57 18.5 C61 18.5 64 22.5 68 22.5 C73 22.5 77 17.5 84 17.5' fill='none' stroke='%23161215' stroke-width='1.5' stroke-dasharray='2.5 2.5'/%3E%3Cpath d='M42 10 Q42 16 47 16 Q42 16 42 22 Q42 16 37 16 Q42 16 42 10 Z' fill='%23161215'/%3E%3Ccircle cx='16' cy='15' r='1.5' fill='%23161215'/%3E%3Ccircle cx='68' cy='15' r='1.5' fill='%23161215'/%3E%3C/svg%3E");
             z-index: 40;
             pointer-events: none;
         }
@@ -70,37 +68,37 @@
             background-repeat: repeat-x;
             background-position: bottom left;
             background-size: 84px 36px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='36' viewBox='0 0 84 36'%3E%3Cpath d='M0 36 H84 V15 C76 15 72 10 68 10 C64 10 60 14 57 14 C54 14 49 4 42 4 C35 4 30 14 27 14 C24 14 20 10 16 10 C12 10 8 15 0 15 Z' fill='%23FF9EB5'/%3E%3Cpath d='M0 15 C8 15 12 10 16 10 C20 10 24 14 27 14 C30 14 35 4 42 4 C49 4 54 14 57 14 C60 14 64 10 68 10 C72 10 76 15 84 15' fill='none' stroke='%23120A0F' stroke-width='2'/%3E%3Cpath d='M0 18.5 C7 18.5 11 13.5 16 13.5 C20 13.5 23 17.5 27 17.5 C31 17.5 35 8 42 8 C49 8 53 17.5 57 17.5 C61 17.5 64 13.5 68 13.5 C73 13.5 77 18.5 84 18.5' fill='none' stroke='%23120A0F' stroke-width='1.5' stroke-dasharray='2.5 2.5'/%3E%3Cpath d='M42 14 Q42 20 47 20 Q42 20 42 26 Q42 20 37 20 Q42 20 42 14 Z' fill='%23120A0F'/%3E%3Ccircle cx='16' cy='21' r='1.5' fill='%23120A0F'/%3E%3Ccircle cx='68' cy='21' r='1.5' fill='%23120A0F'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='36' viewBox='0 0 84 36'%3E%3Cpath d='M0 36 H84 V15 C76 15 72 10 68 10 C64 10 60 14 57 14 C54 14 49 4 42 4 C35 4 30 14 27 14 C24 14 20 10 16 10 C12 10 8 15 0 15 Z' fill='%23F47FB3'/%3E%3Cpath d='M0 15 C8 15 12 10 16 10 C20 10 24 14 27 14 C30 14 35 4 42 4 C49 4 54 14 57 14 C60 14 64 10 68 10 C72 10 76 15 84 15' fill='none' stroke='%23161215' stroke-width='2'/%3E%3Cpath d='M0 18.5 C7 18.5 11 13.5 16 13.5 C20 13.5 23 17.5 27 17.5 C31 17.5 35 8 42 8 C49 8 53 17.5 57 17.5 C61 17.5 64 13.5 68 13.5 C73 13.5 77 18.5 84 18.5' fill='none' stroke='%23161215' stroke-width='1.5' stroke-dasharray='2.5 2.5'/%3E%3Cpath d='M42 14 Q42 20 47 20 Q42 20 42 26 Q42 20 37 20 Q42 20 42 14 Z' fill='%23161215'/%3E%3Ccircle cx='16' cy='21' r='1.5' fill='%23161215'/%3E%3Ccircle cx='68' cy='21' r='1.5' fill='%23161215'/%3E%3C/svg%3E");
             z-index: 40;
             pointer-events: none;
         }
         /* กรอบการ์ดหลักสไตล์จิไรเคย์ */
         .kawaii-frame {
-            background-color: #1C121A;
-            border: 3px solid #D87D98;
+            background-color: #1D171B;
+            border: 3px solid rgba(255,214,232,0.75);
             border-radius: 24px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(216, 125, 152, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(240, 117, 171, 0.2);
             position: relative;
             margin-top: 10px;
             margin-bottom: 10px;
         }
         /* เส้นประตกแต่งด้านใน */
         .dashed-box {
-            border: 2px dashed #D87D98;
+            border: 2px dashed #F075AB;
             border-radius: 18px;
-            background-color: rgba(28, 18, 26, 0.85);
+            background-color: rgba(29, 23, 27, 0.85);
         }
         /* แถบกันสาดร้านค้า */
         .awning-stripe {
             background: repeating-linear-gradient(
                 90deg,
-                #2C1A26,
-                #2C1A26 28px,
-                #1C121A 28px,
-                #1C121A 56px
+                #2A2227,
+                #2A2227 28px,
+                #1D171B 28px,
+                #1D171B 56px
             );
             height: 22px;
-            border-bottom: 2px dashed #D87D98;
+            border-bottom: 2px dashed #F075AB;
         }
         /* ปุ่มสไตล์เม็ดแคปซูลจิไรเคย์ */
         .kawaii-btn {
@@ -115,9 +113,9 @@
         }
         /* แถบป้ายสถานะ */
         .demo-badge {
-            background-color: #2E1B26;
-            color: #FF9EB5;
-            border: 1px dashed #D87D98;
+            background-color: #36202A;
+            color: #FFC2DE;
+            border: 1px dashed #F075AB;
             font-size: 0.7rem;
             padding: 2px 8px;
             border-radius: 999px;
@@ -156,7 +154,7 @@
         }
         .eq-bar {
             width: 2.5px;
-            background-color: #FF9EB5;
+            background-color: #FFC2DE;
             border-radius: 999px;
             transition: height 0.2s ease;
         }
@@ -193,12 +191,12 @@
         .ambient-sparkle {
             position: fixed;
             top: -5vh;
-            color: #FF9EB5;
+            color: #FFC2DE;
             pointer-events: none;
             z-index: 35;
             user-select: none;
             animation: floatingSparkle linear infinite;
-            text-shadow: 0 0 8px rgba(255, 158, 181, 0.6);
+            text-shadow: 0 0 8px rgba(255, 194, 222, 0.6);
         }
 
         /* แถบโหลดไล่สี (Gradient Progress Bar) */
@@ -208,7 +206,7 @@
             100% { background-position: 0% 50%; }
         }
         .gradient-progress-fill {
-            background: linear-gradient(90deg, #9C4A63, #D87D98, #FF9EB5, #FFD1DC, #D87D98);
+            background: linear-gradient(90deg, #C44D83, #F075AB, #FFC2DE, #FFE4F0, #F075AB);
             background-size: 200% 200%;
             animation: gradientShift 2s ease infinite;
         }
@@ -216,7 +214,7 @@
 </head>
 <body class="min-h-screen pt-12 pb-14 px-3 sm:pt-14 sm:pb-16 sm:px-6">
     <!-- หน้าจอรอโหลด (Preloader + Gradient Progress Bar) -->
-    <div id="sitePreloader" class="fixed inset-0 bg-[#120A0F] z-[120] flex flex-col items-center justify-center p-6 transition-opacity duration-500">
+    <div id="sitePreloader" class="fixed inset-0 bg-[#161215] z-[120] flex flex-col items-center justify-center p-6 transition-opacity duration-500">
         <!-- แถบลูกไม้ตกแต่งในหน้าโหลด -->
         <div class="jirai-lace-border-top"></div>
         <div class="jirai-lace-border-bottom"></div>
@@ -224,29 +222,29 @@
         <div class="max-w-xs w-full text-center space-y-5 relative z-10">
             <!-- โลโก้หน้าโหลดเด้งเบาๆ -->
             <div class="relative inline-block">
-                <span class="sparkle-dot absolute -top-2 -left-3 text-[#FF9EB5] text-lg">✟</span>
-                <span class="sparkle-dot absolute -bottom-1 -right-3 text-[#D87D98] text-base" style="animation-delay: 0.6s;">♡</span>
-                <div class="w-28 h-28 sm:w-32 sm:h-32 mx-auto rounded-full border-4 border-[#D87D98] shadow-[0_0_25px_rgba(216,125,152,0.4)] overflow-hidden bg-[#2C1A26] gentle-bounce">
-                    <img id="preloaderLogoImg" src="https://placehold.co/400x400/2C1A26/FF9EB5?text=Aurelia%0ALogo" alt="โลโก้รอโหลด" class="w-full h-full object-cover">
+                <span class="sparkle-dot absolute -top-2 -left-3 text-[#FFC2DE] text-lg">✟</span>
+                <span class="sparkle-dot absolute -bottom-1 -right-3 text-[#F075AB] text-base" style="animation-delay: 0.6s;">♡</span>
+                <div class="w-28 h-28 sm:w-32 sm:h-32 mx-auto rounded-full border-4 border-[#F075AB] shadow-[0_0_25px_rgba(240,117,171,0.4)] overflow-hidden bg-[#2A2227] gentle-bounce">
+                    <img id="preloaderLogoImg" src="https://placehold.co/400x400/2A2227/FFC2DE?text=Aurelia%0ALogo" alt="โลโก้รอโหลด" class="w-full h-full object-cover">
                 </div>
             </div>
 
             <!-- ชื่อร้านและข้อความต้อนรับ -->
             <div class="space-y-1">
-                <h2 id="preloaderStoreName" class="font-cute text-2xl sm:text-3xl font-bold text-[#FF9EB5] tracking-wide">
-                    Aurelia Store <span class="text-sm text-[#D87D98]">✟°｡⋆</span>
+                <h2 id="preloaderStoreName" class="font-cute text-2xl sm:text-3xl font-bold text-[#FFC2DE] tracking-wide">
+                    Aurelia Store <span class="text-sm text-[#F075AB]">✟°｡⋆</span>
                 </h2>
-                <p class="text-xs text-[#D8B4BE]">กำลังเตรียมความน่ารักสักครู่นะคะ...</p>
+                <p class="text-xs text-[#FFD6E8]">กำลังเตรียมความน่ารักสักครู่นะคะ...</p>
             </div>
 
             <!-- Gradient Progress Bar + ตัวเลข 0% - 100% -->
             <div class="space-y-2 pt-1">
-                <div class="w-full h-4 bg-[#1C121A] rounded-full p-0.5 border-2 border-[#D87D98] shadow-inner overflow-hidden">
+                <div class="w-full h-4 bg-[#1D171B] rounded-full p-0.5 border-2 border-[#F075AB] shadow-inner overflow-hidden">
                     <div id="preloaderProgressBar" class="h-full rounded-full gradient-progress-fill transition-all duration-150 ease-out" style="width: 0%;"></div>
                 </div>
                 <div class="flex items-center justify-between text-xs font-number px-1">
-                    <span class="text-[#D87D98]">LOADING ✧</span>
-                    <span id="preloaderPercentText" class="font-bold text-sm text-[#FF9EB5]">0%</span>
+                    <span class="text-[#F075AB]">LOADING ✧</span>
+                    <span id="preloaderPercentText" class="font-bold text-sm text-[#FFC2DE]">0%</span>
                 </div>
             </div>
         </div>
@@ -261,10 +259,10 @@
     <!-- กรอบหน้าเว็บหลัก -->
     <main class="max-w-4xl mx-auto kawaii-frame overflow-hidden p-3 sm:p-6">
         <!-- แถบริบบิ้นด้านบนสุด -->
-        <div class="w-full h-8 bg-[#2C1A26] rounded-t-2xl flex items-center justify-between px-2.5 sm:px-4 text-[#F5E6EC] text-xs border-b border-[#D87D98]/40">
+        <div class="w-full h-8 bg-[#2A2227] rounded-t-2xl flex items-center justify-between px-2.5 sm:px-4 text-[#FFF5F9] text-xs border-b border-[#F075AB]/40">
             <div class="flex items-center gap-2">
-                <button onclick="toggleBgmMusic()" id="bgmToggleBtn" class="kawaii-btn py-0.5 px-2.5 rounded-full bg-[#1C121A] text-[#FF9EB5] hover:bg-[#2C1A26] font-medium text-[11px] shadow-2xs border border-[#D87D98] flex items-center gap-1.5 cursor-pointer" title="คลิกเพื่อเปิด/ปิดเพลงประกอบเว็บไซต์">
-                    <i id="bgmIcon" class="fa-solid fa-music text-[#FF9EB5] text-[10px]"></i>
+                <button onclick="toggleBgmMusic()" id="bgmToggleBtn" class="kawaii-btn py-0.5 px-2.5 rounded-full bg-[#1D171B] text-[#FFC2DE] hover:bg-[#2A2227] font-medium text-[11px] shadow-2xs border border-[#F075AB] flex items-center gap-1.5 cursor-pointer" title="คลิกเพื่อเปิด/ปิดเพลงประกอบเว็บไซต์">
+                    <i id="bgmIcon" class="fa-solid fa-music text-[#FFC2DE] text-[10px]"></i>
                     <span id="bgmEqBars" class="flex items-end gap-[2px] h-3">
                         <span class="eq-bar eq-bar-1 h-1"></span>
                         <span class="eq-bar eq-bar-2 h-2"></span>
@@ -272,46 +270,46 @@
                     </span>
                     <span id="bgmStatusText">BGM: กำลังโหลด...</span>
                 </button>
-                <span class="hidden md:inline text-[#D87D98]">✟ ⁺ ₊ ✧</span>
+                <span class="hidden md:inline text-[#F075AB]">✟ ⁺ ₊ ✧</span>
             </div>
-            <span id="topBarStoreName" class="font-cute tracking-widest text-sm hidden sm:inline uppercase text-[#FF9EB5]">AURELIA STORE</span>
+            <span id="topBarStoreName" class="font-cute tracking-widest text-sm hidden sm:inline uppercase text-[#FFC2DE]">AURELIA STORE</span>
             <div class="flex items-center gap-2">
-                <span class="hidden md:inline text-[#D87D98]">✧ ₊ ⁺ ✟</span>
-                <button onclick="toggleAdminView()" id="tab-admin" class="kawaii-btn py-0.5 px-2.5 rounded-full bg-[#1C121A] text-[#FF9EB5] hover:bg-[#2C1A26] font-medium text-[11px] shadow-2xs border border-[#D87D98] flex items-center gap-1 cursor-pointer">
-                    <i class="fa-solid fa-wand-magic-sparkles text-[#D87D98]"></i>
+                <span class="hidden md:inline text-[#F075AB]">✧ ₊ ⁺ ✟</span>
+                <button onclick="toggleAdminView()" id="tab-admin" class="kawaii-btn py-0.5 px-2.5 rounded-full bg-[#1D171B] text-[#FFC2DE] hover:bg-[#2A2227] font-medium text-[11px] shadow-2xs border border-[#F075AB] flex items-center gap-1 cursor-pointer">
+                    <i class="fa-solid fa-wand-magic-sparkles text-[#F075AB]"></i>
                     <span id="adminToggleBtnText">หลังบ้าน (Admin)</span>
                 </button>
             </div>
         </div>
         <!-- ส่วนแบนเนอร์ 1920x800px และโปรไฟล์ร้าน -->
         <div class="relative w-full mt-3">
-            <div class="w-full aspect-[1920/800] rounded-2xl overflow-hidden border-2 border-[#D87D98] bg-[#2C1A26] relative group">
+            <div class="w-full aspect-[1920/800] rounded-2xl overflow-hidden border-2 border-[#F075AB] bg-[#2A2227] relative group">
                 <img
                     id="storeBanner"
-                    src="https://placehold.co/1920x800/1C121A/FF9EB5?text=Aurelia+Store+Banner+(1920x800px)"
+                    src="https://placehold.co/1920x800/241D22/FFC2DE?text=Aurelia+Store+Banner+(1920x800px)"
                     alt="แบนเนอร์ร้าน"
                     class="w-full h-full object-cover opacity-90"
-                    onerror="this.src='https://placehold.co/1920x800/1C121A/FF9EB5?text=Banner+1920x800'"
+                    onerror="this.src='https://placehold.co/1920x800/241D22/FFC2DE?text=Banner+1920x800'"
                 >
             </div>
             <!-- ส่วนหัวโปรไฟล์ร้าน: โลโก้และชื่อร้านจัดกึ่งกลางสมบูรณ์ -->
             <div class="flex flex-col items-center justify-center text-center px-4 -mt-12 sm:-mt-16 relative z-10">
                 <!-- โลโก้วงกลม (เพิ่มเอฟเฟกต์เด้งเบาๆ) -->
-                <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full border-4 border-[#D87D98] shadow-md overflow-hidden bg-[#2C1A26] flex-shrink-0 relative gentle-bounce">
+                <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full border-4 border-[#F075AB] shadow-md overflow-hidden bg-[#2A2227] flex-shrink-0 relative gentle-bounce">
                     <img
                         id="storeLogo"
-                        src="https://placehold.co/400x400/2C1A26/FF9EB5?text=Aurelia%0ALogo"
+                        src="https://placehold.co/400x400/2A2227/FFC2DE?text=Aurelia%0ALogo"
                         alt="โลโก้ร้าน"
                         class="w-full h-full object-cover"
-                        onerror="this.src='https://placehold.co/400x400/2C1A26/FF9EB5?text=Logo'"
+                        onerror="this.src='https://placehold.co/400x400/2A2227/FFC2DE?text=Logo'"
                     >
                 </div>
                 <!-- ชื่อร้านและรายละเอียดอยู่ตรงกลางใต้โลโก้ -->
                 <div class="mt-3 pb-1 w-full max-w-xl mx-auto text-center flex flex-col items-center">
-                    <h1 id="storeNameDisplay" class="font-cute text-2xl sm:text-3xl font-bold text-[#FF9EB5] text-center drop-shadow-sm">
-                        Aurelia Store <span class="text-base font-normal text-[#D87D98]">✟°｡⋆</span>
+                    <h1 id="storeNameDisplay" class="font-cute text-2xl sm:text-3xl font-bold text-[#FFC2DE] text-center drop-shadow-sm">
+                        Aurelia Store <span class="text-base font-normal text-[#F075AB]">✟°｡⋆</span>
                     </h1>
-                    <p id="storeDescDisplay" class="text-xs sm:text-sm text-[#D8B4BE] mt-1.5 text-center leading-relaxed max-w-md mx-auto">
+                    <p id="storeDescDisplay" class="text-xs sm:text-sm text-[#FFD6E8] mt-1.5 text-center leading-relaxed max-w-md mx-auto">
                         ยินดีต้อนรับสู่ระบบตรวจสอบคิวออนไลน์ กรอกรหัสที่ได้รับจากทางร้านเพื่อเช็กลำดับและสถานะงานได้เลยค่ะ
                     </p>
                 </div>
@@ -324,33 +322,33 @@
         <!-- ========================================================= -->
         <section id="view-status" class="space-y-5">
             <div class="dashed-box p-4 sm:p-6">
-                <div class="flex items-center justify-between border-b border-dashed border-[#D87D98] pb-3 mb-4">
-                    <h2 class="font-cute text-lg sm:text-xl font-bold text-[#FF9EB5] flex items-center gap-2">
-                        <i class="fa-solid fa-magnifying-glass text-[#D87D98]"></i> ตรวจสอบสถานะและลำดับคิว
+                <div class="flex items-center justify-between border-b border-dashed border-[#F075AB] pb-3 mb-4">
+                    <h2 class="font-cute text-lg sm:text-xl font-bold text-[#FFC2DE] flex items-center gap-2">
+                        <i class="fa-solid fa-magnifying-glass text-[#F075AB]"></i> ตรวจสอบสถานะและลำดับคิว
                     </h2>
                     <span class="demo-badge">สำหรับลูกค้า</span>
                 </div>
-                <p class="text-xs sm:text-sm text-[#D8B4BE] mb-4 bg-[#2C1A26] p-3 rounded-xl leading-relaxed border border-[#D87D98]/40">
-                    <i class="fa-solid fa-shield-halved text-[#FF9EB5]"></i> กรุณากรอก <b>รหัสคิวที่ได้รับจากแอดมิน</b> เพื่อตรวจสอบสถานะงาน แล้วยืนยันด้วย <b>รหัส PIN</b> ที่ได้รับพร้อมกัน
+                <p class="text-xs sm:text-sm text-[#FFD6E8] mb-4 bg-[#2A2227] p-3 rounded-xl leading-relaxed border border-[#F075AB]/40">
+                    <i class="fa-solid fa-shield-halved text-[#FFC2DE]"></i> กรุณากรอก <b>รหัสคิวที่ได้รับจากแอดมิน</b> เพื่อตรวจสอบสถานะงาน แล้วยืนยันด้วย <b>รหัส PIN</b> ที่ได้รับพร้อมกัน
                 </p>
                 <div class="flex flex-col sm:flex-row gap-2">
-                    <input type="text" id="searchCodeInput" placeholder="กรอกรหัสคิวของคุณ เช่น AUR-1024" class="flex-1 p-3 rounded-xl border-2 border-[#D87D98] bg-[#120A0F] text-[#F5E6EC] placeholder:text-gray-500 focus:outline-none focus:border-[#FF9EB5] text-sm uppercase">
-                    <button id="searchBtn" onclick="searchQueueByCode(this)" class="kawaii-btn py-3 px-6 rounded-xl bg-[#2C1A26] hover:bg-[#3D2536] border-2 border-[#D87D98] text-[#FF9EB5] font-semibold text-sm flex items-center justify-center gap-2 cursor-pointer shadow-sm">
-                        <i class="fa-solid fa-search text-[#FF9EB5]"></i> ค้นหาคิวของฉัน
+                    <input type="text" id="searchCodeInput" placeholder="กรอกรหัสคิวของคุณ เช่น AUR-1024" class="flex-1 p-3 rounded-xl border-2 border-[#F075AB] bg-[#161215] text-[#FFF5F9] placeholder:text-gray-500 focus:outline-none focus:border-[#FFC2DE] text-sm uppercase">
+                    <button id="searchBtn" onclick="searchQueueByCode(this)" class="kawaii-btn py-3 px-6 rounded-xl bg-[#2A2227] hover:bg-[#3A2E35] border-2 border-[#F075AB] text-[#FFC2DE] font-semibold text-sm flex items-center justify-center gap-2 cursor-pointer shadow-sm">
+                        <i class="fa-solid fa-search text-[#FFC2DE]"></i> ค้นหาคิวของฉัน
                     </button>
                 </div>
             </div>
             <!-- ผลลัพธ์การค้นหาเบื้องต้น -->
             <div id="queuePreviewResult" class="hidden"></div>
             <!-- กล่องรายละเอียดคิวฉบับเต็ม -->
-            <div id="queueFullDetailCard" class="hidden dashed-box p-5 sm:p-6 border-2 border-[#D87D98] shadow-md"></div>
+            <div id="queueFullDetailCard" class="hidden dashed-box p-5 sm:p-6 border-2 border-[#F075AB] shadow-md"></div>
             <!-- กล่องช่องทางการติดต่อแอดมิน (แบบไอคอนทั้งหมด อยู่กึ่งกลาง) -->
             <div class="dashed-box p-5 text-center space-y-3">
-                <div class="flex items-center justify-center gap-2 text-[#FF9EB5]">
-                    <i class="fa-solid fa-headset text-lg text-[#D87D98]"></i>
+                <div class="flex items-center justify-center gap-2 text-[#FFC2DE]">
+                    <i class="fa-solid fa-headset text-lg text-[#F075AB]"></i>
                     <h3 class="font-cute text-lg font-bold">สอบถามเพิ่มเติม / ติดต่อแอดมิน</h3>
                 </div>
-                <p class="text-xs sm:text-sm text-[#D8B4BE] max-w-md mx-auto">
+                <p class="text-xs sm:text-sm text-[#FFD6E8] max-w-md mx-auto">
                     หากมีข้อสงสัยเรื่องคิวงานหรือต้องการแจ้งปรับแก้ สามารถกดที่ไอคอนช่องทางติดต่อด้านล่างได้เลยค่ะ
                 </p>
                 <div id="publicContactButtons" class="flex flex-wrap items-center justify-center gap-3.5 pt-2">
@@ -362,47 +360,47 @@
         <!-- ส่วนที่ 2: หน้าหลังบ้านสำหรับเจ้าของร้าน -->
         <!-- ========================================================= -->
         <section id="view-admin" class="hidden space-y-6">
-            <div class="bg-[#2E1B26] border-2 border-dashed border-[#D87D98] rounded-2xl p-4 text-xs sm:text-sm text-[#FF9EB5] flex items-start gap-3">
-                <i class="fa-solid fa-triangle-exclamation text-lg text-[#FF9EB5] mt-0.5"></i>
+            <div class="bg-[#36202A] border-2 border-dashed border-[#F075AB] rounded-2xl p-4 text-xs sm:text-sm text-[#FFC2DE] flex items-start gap-3">
+                <i class="fa-solid fa-triangle-exclamation text-lg text-[#FFC2DE] mt-0.5"></i>
                 <div>
-                    <p class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-[#D87D98]"></i> หน้าหลังบ้าน (Admin)</p>
-                    <p class="mt-0.5 text-[#D8B4BE]">ข้อมูลการตั้งค่าร้านค้า โลโก้ แบนเนอร์ ช่องทางติดต่อ และรายการคิว ถูกบันทึกลงฐานข้อมูลจริง (Supabase)</p>
+                    <p class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-[#F075AB]"></i> หน้าหลังบ้าน (Admin)</p>
+                    <p class="mt-0.5 text-[#FFD6E8]">ข้อมูลการตั้งค่าร้านค้า โลโก้ แบนเนอร์ ช่องทางติดต่อ และรายการคิว ถูกบันทึกลงฐานข้อมูลจริง (Supabase)</p>
                 </div>
             </div>
             <!-- แถบปุ่มเมนูป๊อบอัพสำหรับแอดมิน -->
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl dashed-box">
                 <div>
-                    <h2 class="font-cute text-lg font-bold text-[#FF9EB5]">จัดการหลังบ้านร้านค้า</h2>
-                    <p class="text-xs text-[#D8B4BE]">ตั้งค่าโปรไฟล์ร้าน รูปภาพ ช่องทางติดต่อ หรือเพิ่มคิวลูกค้าใหม่</p>
+                    <h2 class="font-cute text-lg font-bold text-[#FFC2DE]">จัดการหลังบ้านร้านค้า</h2>
+                    <p class="text-xs text-[#FFD6E8]">ตั้งค่าโปรไฟล์ร้าน รูปภาพ ช่องทางติดต่อ หรือเพิ่มคิวลูกค้าใหม่</p>
                 </div>
                 <div class="flex flex-wrap items-center gap-2">
-                    <button onclick="openUnifiedStoreSettingsModal()" class="kawaii-btn py-2.5 px-4 rounded-full bg-[#2C1A26] hover:bg-[#3D2536] text-[#FF9EB5] border border-[#D87D98] text-xs sm:text-sm font-semibold flex items-center gap-1.5 shadow-sm cursor-pointer">
-                        <i class="fa-solid fa-store text-[#D87D98]"></i> ตั้งค่าร้านค้า & ช่องทางติดต่อ
+                    <button onclick="openUnifiedStoreSettingsModal()" class="kawaii-btn py-2.5 px-4 rounded-full bg-[#2A2227] hover:bg-[#3A2E35] text-[#FFC2DE] border border-[#F075AB] text-xs sm:text-sm font-semibold flex items-center gap-1.5 shadow-sm cursor-pointer">
+                        <i class="fa-solid fa-store text-[#F075AB]"></i> ตั้งค่าร้านค้า & ช่องทางติดต่อ
                     </button>
-                    <button onclick="openAddQueueModal()" class="kawaii-btn py-2.5 px-4 rounded-full bg-gradient-to-r from-[#D87D98] to-[#FF9EB5] text-[#120A0F] text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-sm cursor-pointer">
+                    <button onclick="openAddQueueModal()" class="kawaii-btn py-2.5 px-4 rounded-full bg-gradient-to-r from-[#F075AB] to-[#FFC2DE] text-[#161215] text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-sm cursor-pointer">
                         <i class="fa-solid fa-plus-circle"></i> เพิ่มคิวลูกค้าใหม่
                     </button>
-                    <button onclick="adminLogout()" class="kawaii-btn py-2.5 px-4 rounded-full bg-[#1C121A] hover:bg-[#3D2536] text-[#D8B4BE] border border-[#D87D98]/60 text-xs sm:text-sm font-semibold flex items-center gap-1.5 shadow-sm cursor-pointer">
-                        <i class="fa-solid fa-right-from-bracket text-[#D87D98]"></i> ออกจากระบบ
+                    <button onclick="adminLogout()" class="kawaii-btn py-2.5 px-4 rounded-full bg-[#1D171B] hover:bg-[#3A2E35] text-[#FFD6E8] border border-[#F075AB]/60 text-xs sm:text-sm font-semibold flex items-center gap-1.5 shadow-sm cursor-pointer">
+                        <i class="fa-solid fa-right-from-bracket text-[#F075AB]"></i> ออกจากระบบ
                     </button>
                 </div>
             </div>
             <!-- ส่วนค้นหาและจัดการรายการคิวทั้งหมด -->
             <div class="dashed-box p-4 sm:p-6 space-y-4">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-dashed border-[#D87D98] pb-3">
-                    <h2 id="adminListTitle" class="font-cute text-lg sm:text-xl font-bold text-[#FF9EB5] flex items-center gap-2">
-                        <i class="fa-solid fa-crown text-[#D87D98]"></i> รายการคิวทั้งหมด (Aurelia Store)
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-dashed border-[#F075AB] pb-3">
+                    <h2 id="adminListTitle" class="font-cute text-lg sm:text-xl font-bold text-[#FFC2DE] flex items-center gap-2">
+                        <i class="fa-solid fa-crown text-[#F075AB]"></i> รายการคิวทั้งหมด (Aurelia Store)
                     </h2>
-                    <button onclick="loadQueues(this)" class="text-xs px-3 py-1.5 rounded-full bg-[#2C1A26] hover:bg-[#3D2536] text-[#D8B4BE] border border-[#D87D98]/50 self-start sm:self-auto cursor-pointer flex items-center gap-1.5">
-                        <i class="fa-solid fa-rotate text-[#D87D98]"></i> รีเฟรชรายการ
+                    <button onclick="loadQueues(this)" class="text-xs px-3 py-1.5 rounded-full bg-[#2A2227] hover:bg-[#3A2E35] text-[#FFD6E8] border border-[#F075AB]/50 self-start sm:self-auto cursor-pointer flex items-center gap-1.5">
+                        <i class="fa-solid fa-rotate text-[#F075AB]"></i> รีเฟรชรายการ
                     </button>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                     <div class="sm:col-span-2 relative">
-                        <i class="fa-solid fa-search absolute left-3.5 top-3.5 text-[#D87D98] text-sm"></i>
-                        <input type="text" id="adminSearchInput" oninput="renderAdminList()" placeholder="ค้นหาชื่อลูกค้า, รหัสคิว, ช่องทางติดต่อ, หรือบริการ..." class="w-full pl-9 pr-3 py-2.5 rounded-xl border-2 border-[#D87D98] bg-[#120A0F] text-[#F5E6EC] placeholder:text-gray-500 text-sm focus:outline-none focus:border-[#FF9EB5]">
+                        <i class="fa-solid fa-search absolute left-3.5 top-3.5 text-[#F075AB] text-sm"></i>
+                        <input type="text" id="adminSearchInput" oninput="renderAdminList()" placeholder="ค้นหาชื่อลูกค้า, รหัสคิว, ช่องทางติดต่อ, หรือบริการ..." class="w-full pl-9 pr-3 py-2.5 rounded-xl border-2 border-[#F075AB] bg-[#161215] text-[#FFF5F9] placeholder:text-gray-500 text-sm focus:outline-none focus:border-[#FFC2DE]">
                     </div>
-                    <select id="adminStatusFilter" onchange="renderAdminList()" class="p-2.5 rounded-xl border-2 border-[#D87D98] text-sm bg-[#120A0F] text-[#F5E6EC] focus:outline-none">
+                    <select id="adminStatusFilter" onchange="renderAdminList()" class="p-2.5 rounded-xl border-2 border-[#F075AB] text-sm bg-[#161215] text-[#FFF5F9] focus:outline-none">
                         <option value="ALL">สถานะทั้งหมด</option>
                         <option value="รอบรีฟ 0%">[0%] รอบรีฟ 0%</option>
                         <option value="บรีฟแล้ว 25%">[25%] บรีฟแล้ว 25%</option>
@@ -415,8 +413,8 @@
             </div>
         </section>
         <!-- ฟุตเตอร์ตกแต่งสไตล์จิไรเคย์ -->
-        <footer class="mt-8 pt-4 border-t-2 border-dashed border-[#D87D98] text-center text-xs text-[#D8B4BE] space-y-1">
-            <div class="flex items-center justify-center gap-2 text-[#FF9EB5]">
+        <footer class="mt-8 pt-4 border-t-2 border-dashed border-[#F075AB] text-center text-xs text-[#FFD6E8] space-y-1">
+            <div class="flex items-center justify-center gap-2 text-[#FFC2DE]">
                 <span>✟</span>
                 <span id="footerStoreName" class="font-cute">Aurelia Store Queue System</span>
                 <span>✟</span>
@@ -428,97 +426,97 @@
     <!-- หน้าต่าง Modal 2: ตั้งค่าร้านค้า & ช่องทางติดต่อ (รวมครบจบในหน้าเดียว) -->
     <!-- ========================================================= -->
     <div id="unifiedStoreSettingsModal" class="fixed inset-0 bg-black/70 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
-        <div class="bg-[#1C121A] border-4 border-[#D87D98] rounded-3xl max-w-2xl w-full p-5 sm:p-6 shadow-xl space-y-5 max-h-[90vh] overflow-y-auto text-[#F5E6EC]">
-            <div class="flex items-center justify-between border-b border-dashed border-[#D87D98] pb-3">
-                <h3 class="font-cute text-lg sm:text-xl font-bold text-[#FF9EB5] flex items-center gap-2">
-                    <i class="fa-solid fa-ribbon text-[#D87D98]"></i> ตั้งค่าร้านค้า & ช่องทางติดต่อ
+        <div class="bg-[#1D171B] border-4 border-[#F075AB] rounded-3xl max-w-2xl w-full p-5 sm:p-6 shadow-xl space-y-5 max-h-[90vh] overflow-y-auto text-[#FFF5F9]">
+            <div class="flex items-center justify-between border-b border-dashed border-[#F075AB] pb-3">
+                <h3 class="font-cute text-lg sm:text-xl font-bold text-[#FFC2DE] flex items-center gap-2">
+                    <i class="fa-solid fa-ribbon text-[#F075AB]"></i> ตั้งค่าร้านค้า & ช่องทางติดต่อ
                 </h3>
-                <button onclick="closeUnifiedStoreSettingsModal()" class="w-8 h-8 rounded-full bg-[#2C1A26] text-[#FF9EB5] hover:bg-[#3D2536] border border-[#D87D98] flex items-center justify-center cursor-pointer">
+                <button onclick="closeUnifiedStoreSettingsModal()" class="w-8 h-8 rounded-full bg-[#2A2227] text-[#FFC2DE] hover:bg-[#3A2E35] border border-[#F075AB] flex items-center justify-center cursor-pointer">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
             <!-- ส่วนที่ 1: ข้อมูลร้านค้า & รูปภาพ -->
-            <div class="space-y-3 text-xs sm:text-sm bg-[#120A0F] p-4 rounded-2xl border-2 border-dashed border-[#D87D98]">
+            <div class="space-y-3 text-xs sm:text-sm bg-[#161215] p-4 rounded-2xl border-2 border-dashed border-[#F075AB]">
                 <div class="flex items-center justify-between">
-                    <h4 class="font-cute text-base font-bold text-[#FF9EB5] flex items-center gap-1.5">
-                        <i class="fa-solid fa-shop text-[#D87D98]"></i> ส่วนที่ 1: ข้อมูลร้าน โลโก้ และแบนเนอร์
+                    <h4 class="font-cute text-base font-bold text-[#FFC2DE] flex items-center gap-1.5">
+                        <i class="fa-solid fa-shop text-[#F075AB]"></i> ส่วนที่ 1: ข้อมูลร้าน โลโก้ และแบนเนอร์
                     </h4>
-                    <button type="button" onclick="resetStoreProfileToDefault()" class="text-[11px] px-2.5 py-1 rounded-full bg-[#2C1A26] hover:bg-[#3D2536] text-[#D8B4BE] border border-[#D87D98]/50 cursor-pointer flex items-center gap-1">
-                        <i class="fa-solid fa-rotate-left text-[#D87D98]"></i> คืนค่าโปรไฟล์เริ่มต้น
+                    <button type="button" onclick="resetStoreProfileToDefault()" class="text-[11px] px-2.5 py-1 rounded-full bg-[#2A2227] hover:bg-[#3A2E35] text-[#FFD6E8] border border-[#F075AB]/50 cursor-pointer flex items-center gap-1">
+                        <i class="fa-solid fa-rotate-left text-[#F075AB]"></i> คืนค่าโปรไฟล์เริ่มต้น
                     </button>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                        <label class="block font-semibold mb-1 text-[#FF9EB5]">ชื่อร้านค้า</label>
-                        <input type="text" id="settingStoreName" maxlength="100" placeholder="กรอกชื่อร้าน..." class="w-full p-2.5 rounded-xl border-2 border-[#D87D98] bg-[#1C121A] text-[#F5E6EC] focus:outline-none focus:border-[#FF9EB5]">
+                        <label class="block font-semibold mb-1 text-[#FFC2DE]">ชื่อร้านค้า</label>
+                        <input type="text" id="settingStoreName" maxlength="100" placeholder="กรอกชื่อร้าน..." class="w-full p-2.5 rounded-xl border-2 border-[#F075AB] bg-[#1D171B] text-[#FFF5F9] focus:outline-none focus:border-[#FFC2DE]">
                     </div>
                     <div>
-                        <label class="block font-semibold mb-1 text-[#FF9EB5]">รายละเอียดร้าน / ข้อความต้อนรับ</label>
-                        <input type="text" id="settingStoreDesc" maxlength="500" placeholder="กรอกคำอธิบายร้านสั้นๆ..." class="w-full p-2.5 rounded-xl border-2 border-[#D87D98] bg-[#1C121A] text-[#F5E6EC] focus:outline-none focus:border-[#FF9EB5]">
+                        <label class="block font-semibold mb-1 text-[#FFC2DE]">รายละเอียดร้าน / ข้อความต้อนรับ</label>
+                        <input type="text" id="settingStoreDesc" maxlength="500" placeholder="กรอกคำอธิบายร้านสั้นๆ..." class="w-full p-2.5 rounded-xl border-2 border-[#F075AB] bg-[#1D171B] text-[#FFF5F9] focus:outline-none focus:border-[#FFC2DE]">
                     </div>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                     <!-- เปลี่ยนรูปโลโก้ -->
-                    <div class="p-3 rounded-2xl bg-[#2C1A26]/80 border border-[#D87D98] space-y-2">
-                        <label class="font-semibold text-[#FF9EB5] text-xs flex items-center gap-1.5"><i class="fa-solid fa-heart text-[#D87D98]"></i> รูปโลโก้ร้าน (1:1)</label>
+                    <div class="p-3 rounded-2xl bg-[#2A2227]/80 border border-[#F075AB] space-y-2">
+                        <label class="font-semibold text-[#FFC2DE] text-xs flex items-center gap-1.5"><i class="fa-solid fa-heart text-[#F075AB]"></i> รูปโลโก้ร้าน (1:1)</label>
                         <div class="flex items-center gap-2.5">
-                            <img id="previewLogoImg" src="" alt="ตัวอย่างโลโก้" class="w-14 h-14 rounded-full object-cover border-2 border-[#D87D98] shadow-xs bg-[#1C121A] flex-shrink-0">
+                            <img id="previewLogoImg" src="" alt="ตัวอย่างโลโก้" class="w-14 h-14 rounded-full object-cover border-2 border-[#F075AB] shadow-xs bg-[#1D171B] flex-shrink-0">
                             <div class="flex-1 space-y-1.5 min-w-0">
-                                <label class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#1C121A] border border-[#D87D98] text-[#FF9EB5] text-[11px] font-semibold cursor-pointer hover:bg-[#2C1A26]">
-                                    <i class="fa-solid fa-upload text-[#D87D98]"></i> อัปโหลดรูป
+                                <label class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#1D171B] border border-[#F075AB] text-[#FFC2DE] text-[11px] font-semibold cursor-pointer hover:bg-[#2A2227]">
+                                    <i class="fa-solid fa-upload text-[#F075AB]"></i> อัปโหลดรูป
                                     <input type="file" accept="image/*" onchange="handleImageUpload(event, 'logo')" class="hidden">
                                 </label>
-                                <input type="url" id="settingLogoUrl" oninput="syncUrlToPreview('logo')" placeholder="หรือวางลิงก์ URL..." class="w-full p-1.5 rounded-lg border border-[#D87D98] bg-[#1C121A] text-[#F5E6EC] text-[11px] focus:outline-none">
+                                <input type="url" id="settingLogoUrl" oninput="syncUrlToPreview('logo')" placeholder="หรือวางลิงก์ URL..." class="w-full p-1.5 rounded-lg border border-[#F075AB] bg-[#1D171B] text-[#FFF5F9] text-[11px] focus:outline-none">
                             </div>
                         </div>
                     </div>
                     <!-- เปลี่ยนรูปแบนเนอร์ -->
-                    <div class="p-3 rounded-2xl bg-[#2C1A26]/80 border border-[#D87D98] space-y-2">
-                        <label class="font-semibold text-[#FF9EB5] text-xs flex items-center gap-1.5"><i class="fa-regular fa-image text-[#D87D98]"></i> รูปแบนเนอร์ร้าน (1920×800px)</label>
+                    <div class="p-3 rounded-2xl bg-[#2A2227]/80 border border-[#F075AB] space-y-2">
+                        <label class="font-semibold text-[#FFC2DE] text-xs flex items-center gap-1.5"><i class="fa-regular fa-image text-[#F075AB]"></i> รูปแบนเนอร์ร้าน (1920×800px)</label>
                         <div class="flex items-center gap-2.5">
-                            <img id="previewBannerImg" src="" alt="ตัวอย่างแบนเนอร์" class="w-20 h-14 rounded-xl object-cover border-2 border-[#D87D98] shadow-xs bg-[#1C121A] flex-shrink-0">
+                            <img id="previewBannerImg" src="" alt="ตัวอย่างแบนเนอร์" class="w-20 h-14 rounded-xl object-cover border-2 border-[#F075AB] shadow-xs bg-[#1D171B] flex-shrink-0">
                             <div class="flex-1 space-y-1.5 min-w-0">
-                                <label class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#1C121A] border border-[#D87D98] text-[#FF9EB5] text-[11px] font-semibold cursor-pointer hover:bg-[#2C1A26]">
-                                    <i class="fa-solid fa-upload text-[#D87D98]"></i> อัปโหลดรูป
+                                <label class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#1D171B] border border-[#F075AB] text-[#FFC2DE] text-[11px] font-semibold cursor-pointer hover:bg-[#2A2227]">
+                                    <i class="fa-solid fa-upload text-[#F075AB]"></i> อัปโหลดรูป
                                     <input type="file" accept="image/*" onchange="handleImageUpload(event, 'banner')" class="hidden">
                                 </label>
-                                <input type="url" id="settingBannerUrl" oninput="syncUrlToPreview('banner')" placeholder="หรือวางลิงก์ URL..." class="w-full p-1.5 rounded-lg border border-[#D87D98] bg-[#1C121A] text-[#F5E6EC] text-[11px] focus:outline-none">
+                                <input type="url" id="settingBannerUrl" oninput="syncUrlToPreview('banner')" placeholder="หรือวางลิงก์ URL..." class="w-full p-1.5 rounded-lg border border-[#F075AB] bg-[#1D171B] text-[#FFF5F9] text-[11px] focus:outline-none">
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- เปลี่ยนรูปโลโก้หน้าจอรอโหลด (อัปโหลดจากมือถือได้) -->
-                <div class="p-3 rounded-2xl bg-[#2C1A26]/80 border border-[#D87D98] space-y-2">
+                <div class="p-3 rounded-2xl bg-[#2A2227]/80 border border-[#F075AB] space-y-2">
                     <div class="flex items-center justify-between">
-                        <label class="font-semibold text-[#FF9EB5] text-xs flex items-center gap-1.5"><i class="fa-solid fa-hourglass-half text-[#D87D98]"></i> รูปโลโก้หน้าจอรอโหลด (Loading Screen Logo)</label>
-                        <button type="button" onclick="previewLoadingScreenFromAdmin()" class="text-[11px] px-2.5 py-0.5 rounded-full bg-[#1C121A] text-[#FF9EB5] border border-[#D87D98] hover:bg-[#3D2536] cursor-pointer">
-                            <i class="fa-solid fa-play mr-1 text-[#D87D98]"></i> ทดสอบดูหน้าโหลด
+                        <label class="font-semibold text-[#FFC2DE] text-xs flex items-center gap-1.5"><i class="fa-solid fa-hourglass-half text-[#F075AB]"></i> รูปโลโก้หน้าจอรอโหลด (Loading Screen Logo)</label>
+                        <button type="button" onclick="previewLoadingScreenFromAdmin()" class="text-[11px] px-2.5 py-0.5 rounded-full bg-[#1D171B] text-[#FFC2DE] border border-[#F075AB] hover:bg-[#3A2E35] cursor-pointer">
+                            <i class="fa-solid fa-play mr-1 text-[#F075AB]"></i> ทดสอบดูหน้าโหลด
                         </button>
                     </div>
                     <div class="flex items-center gap-3">
-                        <img id="previewLoaderLogoImg" src="" alt="ตัวอย่างโลโก้หน้าโหลด" class="w-14 h-14 rounded-full object-cover border-2 border-[#D87D98] shadow-xs bg-[#1C121A] flex-shrink-0">
+                        <img id="previewLoaderLogoImg" src="" alt="ตัวอย่างโลโก้หน้าโหลด" class="w-14 h-14 rounded-full object-cover border-2 border-[#F075AB] shadow-xs bg-[#1D171B] flex-shrink-0">
                         <div class="flex-1 space-y-1.5 min-w-0">
-                            <label class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1C121A] border border-[#D87D98] text-[#FF9EB5] text-[11px] font-semibold cursor-pointer hover:bg-[#2C1A26]">
-                                <i class="fa-solid fa-mobile-screen-button text-[#D87D98]"></i> อัปโหลดรูปจากมือถือ / เครื่อง
+                            <label class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1D171B] border border-[#F075AB] text-[#FFC2DE] text-[11px] font-semibold cursor-pointer hover:bg-[#2A2227]">
+                                <i class="fa-solid fa-mobile-screen-button text-[#F075AB]"></i> อัปโหลดรูปจากมือถือ / เครื่อง
                                 <input type="file" accept="image/*" onchange="handleImageUpload(event, 'loaderLogo')" class="hidden">
                             </label>
-                            <input type="url" id="settingLoaderLogoUrl" oninput="syncUrlToPreview('loaderLogo')" placeholder="หรือวางลิงก์ URL รูปหน้าโหลด (ว่างไว้จะใช้รูปเดียวกับโลโก้ร้าน)..." class="w-full p-1.5 rounded-lg border border-[#D87D98] bg-[#1C121A] text-[#F5E6EC] text-[11px] focus:outline-none">
+                            <input type="url" id="settingLoaderLogoUrl" oninput="syncUrlToPreview('loaderLogo')" placeholder="หรือวางลิงก์ URL รูปหน้าโหลด (ว่างไว้จะใช้รูปเดียวกับโลโก้ร้าน)..." class="w-full p-1.5 rounded-lg border border-[#F075AB] bg-[#1D171B] text-[#FFF5F9] text-[11px] focus:outline-none">
                         </div>
                     </div>
                 </div>
             </div>
             <!-- ส่วนที่ 2: จัดการไอคอนช่องทางติดต่อแอดมิน -->
-            <div class="space-y-3 text-xs sm:text-sm bg-[#120A0F] p-4 rounded-2xl border-2 border-dashed border-[#D87D98]">
-                <h4 class="font-cute text-base font-bold text-[#FF9EB5] flex items-center gap-1.5">
-                    <i class="fa-solid fa-icons text-[#D87D98]"></i> ส่วนที่ 2: จัดการไอคอนช่องทางติดต่อ
+            <div class="space-y-3 text-xs sm:text-sm bg-[#161215] p-4 rounded-2xl border-2 border-dashed border-[#F075AB]">
+                <h4 class="font-cute text-base font-bold text-[#FFC2DE] flex items-center gap-1.5">
+                    <i class="fa-solid fa-icons text-[#F075AB]"></i> ส่วนที่ 2: จัดการไอคอนช่องทางติดต่อ
                 </h4>
                 <!-- ฟอร์มเพิ่ม / แก้ไขช่องทางติดต่อ -->
-                <div class="bg-[#2C1A26] p-3 rounded-xl border border-[#D87D98] space-y-2">
-                    <p id="contactFormTitle" class="font-bold text-[#FF9EB5] text-xs flex items-center gap-1.5"><i class="fa-solid fa-circle-plus text-[#D87D98]"></i> เพิ่มช่องทางติดต่อใหม่</p>
+                <div class="bg-[#2A2227] p-3 rounded-xl border border-[#F075AB] space-y-2">
+                    <p id="contactFormTitle" class="font-bold text-[#FFC2DE] text-xs flex items-center gap-1.5"><i class="fa-solid fa-circle-plus text-[#F075AB]"></i> เพิ่มช่องทางติดต่อใหม่</p>
                     <input type="hidden" id="editContactId" value="">
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                         <div>
-                            <select id="contactPlatformSelect" onchange="handlePlatformPresetChange()" class="w-full p-2 rounded-xl border border-[#D87D98] bg-[#1C121A] text-[#F5E6EC] text-xs focus:outline-none">
+                            <select id="contactPlatformSelect" onchange="handlePlatformPresetChange()" class="w-full p-2 rounded-xl border border-[#F075AB] bg-[#1D171B] text-[#FFF5F9] text-xs focus:outline-none">
                                 <option value="facebook">Facebook</option>
                                 <option value="line">LINE</option>
                                 <option value="instagram">Instagram</option>
@@ -531,24 +529,24 @@
                             </select>
                         </div>
                         <div>
-                            <input type="text" id="contactLabelInput" maxlength="100" placeholder="ชื่อแสดง (เช่น เพจร้าน)" class="w-full p-2 rounded-xl border border-[#D87D98] bg-[#1C121A] text-[#F5E6EC] text-xs focus:outline-none placeholder:text-gray-500">
+                            <input type="text" id="contactLabelInput" maxlength="100" placeholder="ชื่อแสดง (เช่น เพจร้าน)" class="w-full p-2 rounded-xl border border-[#F075AB] bg-[#1D171B] text-[#FFF5F9] text-xs focus:outline-none placeholder:text-gray-500">
                         </div>
                         <div>
-                            <input type="url" id="contactUrlInput" placeholder="ลิงก์ URL เช่น https://..." class="w-full p-2 rounded-xl border border-[#D87D98] bg-[#1C121A] text-[#F5E6EC] text-xs focus:outline-none placeholder:text-gray-500">
+                            <input type="url" id="contactUrlInput" placeholder="ลิงก์ URL เช่น https://..." class="w-full p-2 rounded-xl border border-[#F075AB] bg-[#1D171B] text-[#FFF5F9] text-xs focus:outline-none placeholder:text-gray-500">
                         </div>
                     </div>
                     <div class="flex justify-end gap-2 pt-0.5">
-                        <button type="button" id="cancelEditContactBtn" onclick="resetContactForm()" class="hidden py-1.5 px-3 rounded-full bg-[#1C121A] text-gray-300 text-xs font-medium cursor-pointer border border-[#D87D98]/50">
+                        <button type="button" id="cancelEditContactBtn" onclick="resetContactForm()" class="hidden py-1.5 px-3 rounded-full bg-[#1D171B] text-gray-300 text-xs font-medium cursor-pointer border border-[#F075AB]/50">
                             ยกเลิกแก้ไข
                         </button>
-                        <button type="button" id="saveContactBtn" onclick="saveContactItem()" class="py-1.5 px-4 rounded-full bg-[#2C1A26] hover:bg-[#3D2536] text-[#FF9EB5] border border-[#D87D98] text-xs font-semibold shadow-2xs cursor-pointer">
-                            <i class="fa-solid fa-plus mr-1 text-[#D87D98]"></i> <span id="saveContactBtnText">เพิ่มไอคอนติดต่อ</span>
+                        <button type="button" id="saveContactBtn" onclick="saveContactItem()" class="py-1.5 px-4 rounded-full bg-[#2A2227] hover:bg-[#3A2E35] text-[#FFC2DE] border border-[#F075AB] text-xs font-semibold shadow-2xs cursor-pointer">
+                            <i class="fa-solid fa-plus mr-1 text-[#F075AB]"></i> <span id="saveContactBtnText">เพิ่มไอคอนติดต่อ</span>
                         </button>
                     </div>
                 </div>
                 <!-- รายการช่องทางติดต่อที่มีอยู่ -->
                 <div class="space-y-1.5">
-                    <p class="text-[11px] font-semibold text-[#D8B4BE]">รายการไอคอนที่แสดงหน้าเว็บตอนนี้:</p>
+                    <p class="text-[11px] font-semibold text-[#FFD6E8]">รายการไอคอนที่แสดงหน้าเว็บตอนนี้:</p>
                     <div id="adminContactList" class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-44 overflow-y-auto pr-1">
                         <!-- แสดงรายการผ่าน JS -->
                     </div>
@@ -556,10 +554,10 @@
             </div>
             <!-- ปุ่มบันทึกการตั้งค่าทั้งหมด -->
             <div class="flex gap-2 pt-1">
-                <button type="button" onclick="closeUnifiedStoreSettingsModal()" class="flex-1 py-2.5 rounded-full bg-[#2C1A26] text-[#D8B4BE] text-sm font-medium cursor-pointer border border-[#D87D98]">
+                <button type="button" onclick="closeUnifiedStoreSettingsModal()" class="flex-1 py-2.5 rounded-full bg-[#2A2227] text-[#FFD6E8] text-sm font-medium cursor-pointer border border-[#F075AB]">
                     ปิดหน้าต่าง
                 </button>
-                <button type="button" onclick="saveAllUnifiedSettings(this)" class="flex-1 py-2.5 rounded-full bg-gradient-to-r from-[#D87D98] to-[#FF9EB5] hover:opacity-95 text-[#120A0F] text-sm font-bold shadow-sm cursor-pointer">
+                <button type="button" onclick="saveAllUnifiedSettings(this)" class="flex-1 py-2.5 rounded-full bg-gradient-to-r from-[#F075AB] to-[#FFC2DE] hover:opacity-95 text-[#161215] text-sm font-bold shadow-sm cursor-pointer">
                     <i class="fa-solid fa-floppy-disk mr-1"></i> บันทึกข้อมูลร้านค้าทั้งหมด
                 </button>
             </div>
@@ -569,62 +567,62 @@
     <!-- หน้าต่าง Modal 3: เพิ่มคิวลูกค้าใหม่ -->
     <!-- ========================================================= -->
     <div id="addQueueModal" class="fixed inset-0 bg-black/70 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
-        <div class="bg-[#1C121A] border-4 border-[#D87D98] rounded-3xl max-w-lg w-full p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto text-[#F5E6EC]">
-            <div class="flex items-center justify-between border-b border-dashed border-[#D87D98] pb-3">
-                <h3 class="font-cute text-lg sm:text-xl font-bold text-[#FF9EB5] flex items-center gap-2">
-                    <i class="fa-solid fa-circle-plus text-[#D87D98]"></i> เพิ่มคิวลูกค้าใหม่ (แอดมินกรอกเอง)
+        <div class="bg-[#1D171B] border-4 border-[#F075AB] rounded-3xl max-w-lg w-full p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto text-[#FFF5F9]">
+            <div class="flex items-center justify-between border-b border-dashed border-[#F075AB] pb-3">
+                <h3 class="font-cute text-lg sm:text-xl font-bold text-[#FFC2DE] flex items-center gap-2">
+                    <i class="fa-solid fa-circle-plus text-[#F075AB]"></i> เพิ่มคิวลูกค้าใหม่ (แอดมินกรอกเอง)
                 </h3>
-                <button onclick="closeAddQueueModal()" class="w-8 h-8 rounded-full bg-[#2C1A26] text-[#FF9EB5] hover:bg-[#3D2536] border border-[#D87D98] flex items-center justify-center cursor-pointer">
+                <button onclick="closeAddQueueModal()" class="w-8 h-8 rounded-full bg-[#2A2227] text-[#FFC2DE] hover:bg-[#3A2E35] border border-[#F075AB] flex items-center justify-center cursor-pointer">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
             <form id="adminAddQueueForm" onsubmit="handleAdminAddQueue(event)" class="space-y-3">
                 <div>
-                    <label class="block text-xs sm:text-sm font-medium mb-1 text-[#FF9EB5]">
-                        1. ชื่อลูกค้า / แอคเคาท์ <span class="text-[#FF9EB5]">*</span>
+                    <label class="block text-xs sm:text-sm font-medium mb-1 text-[#FFC2DE]">
+                        1. ชื่อลูกค้า / แอคเคาท์ <span class="text-[#FFC2DE]">*</span>
                     </label>
-                    <input type="text" id="adminCustName" required maxlength="150" placeholder="เช่น คุณนิตา / @nita_cute" class="w-full p-2.5 rounded-xl border-2 border-[#D87D98] bg-[#120A0F] text-[#F5E6EC] focus:outline-none focus:border-[#FF9EB5] text-sm">
+                    <input type="text" id="adminCustName" required maxlength="150" placeholder="เช่น คุณนิตา / @nita_cute" class="w-full p-2.5 rounded-xl border-2 border-[#F075AB] bg-[#161215] text-[#FFF5F9] focus:outline-none focus:border-[#FFC2DE] text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs sm:text-sm font-medium mb-1 text-[#FF9EB5]">
-                        2. ช่องทางการติดต่อ <span class="text-[#FF9EB5]">*</span>
+                    <label class="block text-xs sm:text-sm font-medium mb-1 text-[#FFC2DE]">
+                        2. ช่องทางการติดต่อ <span class="text-[#FFC2DE]">*</span>
                     </label>
-                    <input type="text" id="adminCustContact" required maxlength="200" placeholder="เช่น LINE: nita123 / IG / X" class="w-full p-2.5 rounded-xl border-2 border-[#D87D98] bg-[#120A0F] text-[#F5E6EC] focus:outline-none focus:border-[#FF9EB5] text-sm">
+                    <input type="text" id="adminCustContact" required maxlength="200" placeholder="เช่น LINE: nita123 / IG / X" class="w-full p-2.5 rounded-xl border-2 border-[#F075AB] bg-[#161215] text-[#FFF5F9] focus:outline-none focus:border-[#FFC2DE] text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs sm:text-sm font-medium mb-1 text-[#FF9EB5]">
-                        3. บริการที่ลูกค้าสั่ง <span class="text-[#FF9EB5]">*</span>
+                    <label class="block text-xs sm:text-sm font-medium mb-1 text-[#FFC2DE]">
+                        3. บริการที่ลูกค้าสั่ง <span class="text-[#FFC2DE]">*</span>
                     </label>
-                    <input type="text" id="adminCustService" required maxlength="200" placeholder="เช่น ออกแบบป้าย / วาดรูป..." class="w-full p-2.5 rounded-xl border-2 border-[#D87D98] bg-[#120A0F] text-[#F5E6EC] focus:outline-none focus:border-[#FF9EB5] text-sm">
+                    <input type="text" id="adminCustService" required maxlength="200" placeholder="เช่น ออกแบบป้าย / วาดรูป..." class="w-full p-2.5 rounded-xl border-2 border-[#F075AB] bg-[#161215] text-[#FFF5F9] focus:outline-none focus:border-[#FFC2DE] text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs sm:text-sm font-medium mb-1 text-[#FF9EB5]">
-                        4. วันเวลาส่งงาน <span class="text-[#FF9EB5]">*</span>
+                    <label class="block text-xs sm:text-sm font-medium mb-1 text-[#FFC2DE]">
+                        4. วันเวลาส่งงาน <span class="text-[#FFC2DE]">*</span>
                     </label>
-                    <input type="datetime-local" id="adminDueDate" required class="w-full p-2.5 rounded-xl border-2 border-[#D87D98] bg-[#120A0F] text-[#F5E6EC] focus:outline-none focus:border-[#FF9EB5] text-sm">
+                    <input type="datetime-local" id="adminDueDate" required class="w-full p-2.5 rounded-xl border-2 border-[#F075AB] bg-[#161215] text-[#FFF5F9] focus:outline-none focus:border-[#FFC2DE] text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs sm:text-sm font-medium mb-1 text-[#FF9EB5]">
-                        5. รายละเอียดงานเพิ่มเติม <span class="text-[#FF9EB5]">*</span>
+                    <label class="block text-xs sm:text-sm font-medium mb-1 text-[#FFC2DE]">
+                        5. รายละเอียดงานเพิ่มเติม <span class="text-[#FFC2DE]">*</span>
                     </label>
-                    <textarea id="adminCustDetail" rows="2" required maxlength="3000" placeholder="ระบุรายละเอียดบรีฟงาน..." class="w-full p-2.5 rounded-xl border-2 border-[#D87D98] bg-[#120A0F] text-[#F5E6EC] focus:outline-none focus:border-[#FF9EB5] text-sm"></textarea>
+                    <textarea id="adminCustDetail" rows="2" required maxlength="3000" placeholder="ระบุรายละเอียดบรีฟงาน..." class="w-full p-2.5 rounded-xl border-2 border-[#F075AB] bg-[#161215] text-[#FFF5F9] focus:outline-none focus:border-[#FFC2DE] text-sm"></textarea>
                 </div>
                 <div class="flex gap-2 pt-2">
-                    <button type="button" onclick="closeAddQueueModal()" class="flex-1 py-2.5 rounded-full bg-[#2C1A26] text-[#D8B4BE] text-sm font-medium cursor-pointer border border-[#D87D98]">
+                    <button type="button" onclick="closeAddQueueModal()" class="flex-1 py-2.5 rounded-full bg-[#2A2227] text-[#FFD6E8] text-sm font-medium cursor-pointer border border-[#F075AB]">
                         ยกเลิก
                     </button>
-                    <button type="submit" class="flex-1 py-2.5 rounded-full bg-gradient-to-r from-[#D87D98] to-[#FF9EB5] text-[#120A0F] text-sm font-bold shadow-sm cursor-pointer">
+                    <button type="submit" class="flex-1 py-2.5 rounded-full bg-gradient-to-r from-[#F075AB] to-[#FFC2DE] text-[#161215] text-sm font-bold shadow-sm cursor-pointer">
                         บันทึกเพิ่มคิว
                     </button>
                 </div>
             </form>
-            <div id="adminCreatedBanner" class="hidden mt-3 p-3 rounded-2xl bg-[#2C1A26] border-2 border-dashed border-[#D87D98] space-y-2">
-                <p class="text-xs sm:text-sm text-[#FF9EB5] font-bold flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[#FF9EB5]"></i> เพิ่มคิวสำเร็จ! ส่งรหัสคิวและ PIN นี้ให้ลูกค้าได้เลย</p>
+            <div id="adminCreatedBanner" class="hidden mt-3 p-3 rounded-2xl bg-[#2A2227] border-2 border-dashed border-[#F075AB] space-y-2">
+                <p class="text-xs sm:text-sm text-[#FFC2DE] font-bold flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[#FFC2DE]"></i> เพิ่มคิวสำเร็จ! ส่งรหัสคิวและ PIN นี้ให้ลูกค้าได้เลย</p>
                 <div class="flex flex-wrap items-center gap-2 text-xs">
-                    <span>รหัสคิว: <b id="adminLatestCode" class="font-mono text-sm text-[#FF9EB5] bg-[#120A0F] px-2 py-0.5 rounded border border-[#D87D98]">AUR-XXXX</b></span>
-                    <span>PIN: <b id="adminLatestPin" class="font-mono text-sm text-[#FF9EB5] bg-[#120A0F] px-2 py-0.5 rounded border border-[#D87D98]">0000</b></span>
+                    <span>รหัสคิว: <b id="adminLatestCode" class="font-mono text-sm text-[#FFC2DE] bg-[#161215] px-2 py-0.5 rounded border border-[#F075AB]">AUR-XXXX</b></span>
+                    <span>PIN: <b id="adminLatestPin" class="font-mono text-sm text-[#FFC2DE] bg-[#161215] px-2 py-0.5 rounded border border-[#F075AB]">0000</b></span>
                 </div>
-                <button type="button" onclick="copyLatestQueueAndPin()" class="kawaii-btn w-full py-2 rounded-full bg-[#D87D98] text-[#120A0F] text-xs font-bold flex items-center justify-center gap-1 cursor-pointer">
+                <button type="button" onclick="copyLatestQueueAndPin()" class="kawaii-btn w-full py-2 rounded-full bg-[#F075AB] text-[#161215] text-xs font-bold flex items-center justify-center gap-1 cursor-pointer">
                     <i class="fa-regular fa-copy"></i> คัดลอกรหัส + PIN ส่งลูกค้า
                 </button>
             </div>
@@ -634,23 +632,23 @@
     <!-- หน้าต่าง Modal 4: ยืนยันรหัส PIN -->
     <!-- ========================================================= -->
     <div id="verifyModal" class="fixed inset-0 bg-black/70 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
-        <div class="bg-[#1C121A] border-4 border-[#D87D98] rounded-3xl max-w-sm w-full p-6 text-center shadow-xl space-y-4 text-[#F5E6EC]">
-            <div class="w-14 h-14 bg-[#2C1A26] rounded-full flex items-center justify-center mx-auto text-2xl text-[#FF9EB5] border-2 border-dashed border-[#D87D98]">
-                <i class="fa-solid fa-key text-[#FF9EB5]"></i>
+        <div class="bg-[#1D171B] border-4 border-[#F075AB] rounded-3xl max-w-sm w-full p-6 text-center shadow-xl space-y-4 text-[#FFF5F9]">
+            <div class="w-14 h-14 bg-[#2A2227] rounded-full flex items-center justify-center mx-auto text-2xl text-[#FFC2DE] border-2 border-dashed border-[#F075AB]">
+                <i class="fa-solid fa-key text-[#FFC2DE]"></i>
             </div>
             <div>
-                <h3 class="font-cute text-lg font-bold text-[#FF9EB5]">กรอกรหัส PIN ประจำคิว</h3>
-                <p class="text-xs text-[#D8B4BE] mt-1">
+                <h3 class="font-cute text-lg font-bold text-[#FFC2DE]">กรอกรหัส PIN ประจำคิว</h3>
+                <p class="text-xs text-[#FFD6E8] mt-1">
                     กรุณากรอก <b>รหัส PIN 4 หลัก</b> ที่ได้รับจากแอดมิน เพื่อเปิดดูสถานะและรายละเอียดคิวของคุณ
                 </p>
             </div>
-            <input type="text" id="secondVerifyInput" maxlength="6" inputmode="numeric" placeholder="เช่น 4829" class="w-full p-3 rounded-xl border-2 border-[#D87D98] bg-[#120A0F] text-center font-mono tracking-widest text-lg font-bold text-[#FF9EB5] focus:outline-none focus:border-[#FF9EB5]">
+            <input type="text" id="secondVerifyInput" maxlength="6" inputmode="numeric" placeholder="เช่น 4829" class="w-full p-3 rounded-xl border-2 border-[#F075AB] bg-[#161215] text-center font-mono tracking-widest text-lg font-bold text-[#FFC2DE] focus:outline-none focus:border-[#FFC2DE]">
             <p id="secondVerifyError" class="text-xs text-red-400 hidden">รหัส PIN ไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง</p>
             <div class="flex gap-2 pt-1">
-                <button onclick="closeVerifyModal()" class="flex-1 py-2.5 rounded-full bg-[#2C1A26] text-[#D8B4BE] text-sm font-medium cursor-pointer border border-[#D87D98]">
+                <button onclick="closeVerifyModal()" class="flex-1 py-2.5 rounded-full bg-[#2A2227] text-[#FFD6E8] text-sm font-medium cursor-pointer border border-[#F075AB]">
                     ยกเลิก
                 </button>
-                <button onclick="confirmSecondVerification(this)" class="flex-1 py-2.5 rounded-full bg-[#D87D98] text-[#120A0F] text-sm font-bold shadow-sm cursor-pointer">
+                <button onclick="confirmSecondVerification(this)" class="flex-1 py-2.5 rounded-full bg-[#F075AB] text-[#161215] text-sm font-bold shadow-sm cursor-pointer">
                     ยืนยัน PIN
                 </button>
             </div>
@@ -660,58 +658,58 @@
     <!-- หน้าต่าง Modal 5: ล็อกอินแอดมินสไตล์จิไรเคย์ (Jirai Kei Admin Login) -->
     <!-- ========================================================= -->
     <div id="adminLoginModal" class="fixed inset-0 bg-black/75 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
-        <div class="bg-[#1C121A] border-4 border-[#D87D98] rounded-3xl max-w-sm w-full p-6 text-center shadow-[0_10px_35px_rgba(216,125,152,0.3)] space-y-4 text-[#F5E6EC] relative overflow-hidden">
+        <div class="bg-[#1D171B] border-4 border-[#F075AB] rounded-3xl max-w-sm w-full p-6 text-center shadow-[0_10px_35px_rgba(240,117,171,0.3)] space-y-4 text-[#FFF5F9] relative overflow-hidden">
             <!-- แถบตกแต่งด้านบนของ Modal -->
-            <div class="flex items-center justify-between border-b border-dashed border-[#D87D98] pb-2.5">
-                <span class="text-xs text-[#D87D98] tracking-widest">✟ ADMIN ONLY ✟</span>
-                <button onclick="closeAdminLoginModal()" class="w-7 h-7 rounded-full bg-[#2C1A26] text-[#FF9EB5] hover:bg-[#3D2536] border border-[#D87D98] flex items-center justify-center cursor-pointer text-xs">
+            <div class="flex items-center justify-between border-b border-dashed border-[#F075AB] pb-2.5">
+                <span class="text-xs text-[#F075AB] tracking-widest">✟ ADMIN ONLY ✟</span>
+                <button onclick="closeAdminLoginModal()" class="w-7 h-7 rounded-full bg-[#2A2227] text-[#FFC2DE] hover:bg-[#3A2E35] border border-[#F075AB] flex items-center justify-center cursor-pointer text-xs">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
 
             <!-- ไอคอนล็อกอินสไตล์จิไรเคย์ -->
             <div class="relative w-16 h-16 mx-auto">
-                <div class="w-16 h-16 bg-[#2C1A26] rounded-full flex items-center justify-center text-2xl text-[#FF9EB5] border-2 border-dashed border-[#D87D98] gentle-bounce shadow-inner">
-                    <i class="fa-solid fa-lock text-[#FF9EB5]"></i>
+                <div class="w-16 h-16 bg-[#2A2227] rounded-full flex items-center justify-center text-2xl text-[#FFC2DE] border-2 border-dashed border-[#F075AB] gentle-bounce shadow-inner">
+                    <i class="fa-solid fa-lock text-[#FFC2DE]"></i>
                 </div>
-                <span class="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-[#1C121A] border border-[#D87D98] flex items-center justify-center text-[11px] text-[#FF9EB5]">
+                <span class="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-[#1D171B] border border-[#F075AB] flex items-center justify-center text-[11px] text-[#FFC2DE]">
                     <i class="fa-solid fa-heart"></i>
                 </span>
             </div>
 
             <div>
-                <h3 class="font-cute text-xl font-bold text-[#FF9EB5]">เข้าสู่ระบบหลังบ้าน ✟</h3>
-                <p class="text-xs text-[#D8B4BE] mt-1 leading-relaxed">
+                <h3 class="font-cute text-xl font-bold text-[#FFC2DE]">เข้าสู่ระบบหลังบ้าน ✟</h3>
+                <p class="text-xs text-[#FFD6E8] mt-1 leading-relaxed">
                     กรุณากรอกอีเมลและรหัสผ่านแอดมินเพื่อเข้าจัดการร้านค้า
                 </p>
             </div>
 
             <form onsubmit="handleAdminLoginSubmit(event)" class="space-y-3 text-left">
                 <div>
-                    <label class="block text-xs font-semibold text-[#FF9EB5] mb-1">อีเมลแอดมิน (Email)</label>
+                    <label class="block text-xs font-semibold text-[#FFC2DE] mb-1">อีเมลแอดมิน (Email)</label>
                     <div class="relative">
-                        <i class="fa-solid fa-envelope absolute left-3.5 top-3.5 text-[#D87D98] text-xs"></i>
-                        <input type="email" id="adminEmailInput" required autocomplete="username" placeholder="กรอกอีเมลแอดมิน" class="w-full pl-9 pr-3 py-2.5 rounded-xl border-2 border-[#D87D98] bg-[#120A0F] text-[#F5E6EC] placeholder:text-gray-500 text-sm focus:outline-none focus:border-[#FF9EB5]">
+                        <i class="fa-solid fa-envelope absolute left-3.5 top-3.5 text-[#F075AB] text-xs"></i>
+                        <input type="email" id="adminEmailInput" required autocomplete="username" placeholder="กรอกอีเมลแอดมิน" class="w-full pl-9 pr-3 py-2.5 rounded-xl border-2 border-[#F075AB] bg-[#161215] text-[#FFF5F9] placeholder:text-gray-500 text-sm focus:outline-none focus:border-[#FFC2DE]">
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-[#FF9EB5] mb-1">รหัสผ่านแอดมิน (Password)</label>
+                    <label class="block text-xs font-semibold text-[#FFC2DE] mb-1">รหัสผ่านแอดมิน (Password)</label>
                     <div class="relative">
-                        <i class="fa-solid fa-key absolute left-3.5 top-3.5 text-[#D87D98] text-xs"></i>
-                        <input type="password" id="adminPasswordInput" required autocomplete="current-password" placeholder="กรอกรหัสผ่านแอดมิน..." class="w-full pl-9 pr-10 py-2.5 rounded-xl border-2 border-[#D87D98] bg-[#120A0F] text-[#F5E6EC] placeholder:text-gray-500 text-sm focus:outline-none focus:border-[#FF9EB5]">
-                        <button type="button" onclick="toggleAdminPasswordVisibility()" class="absolute right-3 top-3 text-[#D8B4BE] hover:text-[#FF9EB5] text-xs cursor-pointer" title="แสดง/ซ่อนรหัสผ่าน">
+                        <i class="fa-solid fa-key absolute left-3.5 top-3.5 text-[#F075AB] text-xs"></i>
+                        <input type="password" id="adminPasswordInput" required autocomplete="current-password" placeholder="กรอกรหัสผ่านแอดมิน..." class="w-full pl-9 pr-10 py-2.5 rounded-xl border-2 border-[#F075AB] bg-[#161215] text-[#FFF5F9] placeholder:text-gray-500 text-sm focus:outline-none focus:border-[#FFC2DE]">
+                        <button type="button" onclick="toggleAdminPasswordVisibility()" class="absolute right-3 top-3 text-[#FFD6E8] hover:text-[#FFC2DE] text-xs cursor-pointer" title="แสดง/ซ่อนรหัสผ่าน">
                             <i id="adminPwdEyeIcon" class="fa-regular fa-eye"></i>
                         </button>
                     </div>
                 </div>
-                <p id="adminLoginError" class="text-xs text-[#FF9EB5] text-center hidden bg-[#2E1B26] py-1.5 px-2 rounded-lg border border-dashed border-[#D87D98]">
-                    <i class="fa-solid fa-circle-exclamation mr-1 text-[#FF9EB5]"></i> <span id="adminLoginErrorText">อีเมลหรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่ค่ะ</span>
+                <p id="adminLoginError" class="text-xs text-[#FFC2DE] text-center hidden bg-[#36202A] py-1.5 px-2 rounded-lg border border-dashed border-[#F075AB]">
+                    <i class="fa-solid fa-circle-exclamation mr-1 text-[#FFC2DE]"></i> <span id="adminLoginErrorText">อีเมลหรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่ค่ะ</span>
                 </p>
                 <div class="flex gap-2 pt-1">
-                    <button type="button" onclick="closeAdminLoginModal()" class="flex-1 py-2.5 rounded-full bg-[#2C1A26] text-[#D8B4BE] text-xs sm:text-sm font-medium cursor-pointer border border-[#D87D98]">
+                    <button type="button" onclick="closeAdminLoginModal()" class="flex-1 py-2.5 rounded-full bg-[#2A2227] text-[#FFD6E8] text-xs sm:text-sm font-medium cursor-pointer border border-[#F075AB]">
                         ยกเลิก
                     </button>
-                    <button type="submit" class="flex-1 py-2.5 rounded-full bg-gradient-to-r from-[#D87D98] to-[#FF9EB5] text-[#120A0F] text-xs sm:text-sm font-bold shadow-sm cursor-pointer">
+                    <button type="submit" class="flex-1 py-2.5 rounded-full bg-gradient-to-r from-[#F075AB] to-[#FFC2DE] text-[#161215] text-xs sm:text-sm font-bold shadow-sm cursor-pointer">
                         เข้าสู่ระบบ ✧
                     </button>
                 </div>
@@ -719,8 +717,8 @@
         </div>
     </div>
     <!-- กล่องแจ้งเตือน Toast Message -->
-    <div id="toastBox" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-[#2C1A26] text-[#FF9EB5] border border-[#D87D98] px-5 py-2.5 rounded-full text-xs sm:text-sm shadow-xl opacity-0 pointer-events-none transition-opacity duration-300 z-[130] flex items-center gap-2 max-w-[92vw]">
-        <i id="toastIcon" class="fa-solid fa-circle-check text-[#FF9EB5]"></i>
+    <div id="toastBox" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-[#2A2227] text-[#FFC2DE] border border-[#F075AB] px-5 py-2.5 rounded-full text-xs sm:text-sm shadow-xl opacity-0 pointer-events-none transition-opacity duration-300 z-[130] flex items-center gap-2 max-w-[92vw]">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-[#FFC2DE]"></i>
         <span id="toastMessage">บันทึกเรียบร้อยแล้ว</span>
     </div>
     <!-- กล่องซ่อนสำหรับเล่นเพลง YouTube BGM (MC6hL6Hj8ww) -->
@@ -749,20 +747,20 @@
         const DEFAULT_STORE_PROFILE = {
             name: 'Aurelia Store',
             description: 'ยินดีต้อนรับสู่ระบบตรวจสอบคิวออนไลน์ กรอกรหัสที่ได้รับจากทางร้านเพื่อเช็กลำดับและสถานะงานได้เลยค่ะ',
-            logo: 'https://placehold.co/400x400/2C1A26/FF9EB5?text=Aurelia%0ALogo',
-            banner: 'https://placehold.co/1920x800/1C121A/FF9EB5?text=Aurelia+Store+Banner+(1920x800px)',
-            loaderLogo: 'https://placehold.co/400x400/2C1A26/FF9EB5?text=Aurelia%0ALogo'
+            logo: 'https://placehold.co/400x400/2A2227/FFC2DE?text=Aurelia%0ALogo',
+            banner: 'https://placehold.co/1920x800/241D22/FFC2DE?text=Aurelia+Store+Banner+(1920x800px)',
+            loaderLogo: 'https://placehold.co/400x400/2A2227/FFC2DE?text=Aurelia%0ALogo'
         };
         const PLATFORM_STYLES = {
-            facebook: { icon: 'fa-brands fa-facebook-f', bg: 'bg-[#2C1A26]', hover: 'hover:bg-[#3D2536]', text: 'text-[#FF9EB5]', border: 'border-[#D87D98]', defaultLabel: 'Facebook' },
-            line: { icon: 'fa-brands fa-line', bg: 'bg-[#2C1A26]', hover: 'hover:bg-[#3D2536]', text: 'text-[#FF9EB5]', border: 'border-[#D87D98]', defaultLabel: 'LINE' },
-            instagram: { icon: 'fa-brands fa-instagram', bg: 'bg-[#2C1A26]', hover: 'hover:bg-[#3D2536]', text: 'text-[#FF9EB5]', border: 'border-[#D87D98]', defaultLabel: 'Instagram' },
-            twitter: { icon: 'fa-brands fa-x-twitter', bg: 'bg-[#2C1A26]', hover: 'hover:bg-[#3D2536]', text: 'text-[#FF9EB5]', border: 'border-[#D87D98]', defaultLabel: 'X (Twitter)' },
-            discord: { icon: 'fa-brands fa-discord', bg: 'bg-[#2C1A26]', hover: 'hover:bg-[#3D2536]', text: 'text-[#FF9EB5]', border: 'border-[#D87D98]', defaultLabel: 'Discord' },
-            tiktok: { icon: 'fa-brands fa-tiktok', bg: 'bg-[#2C1A26]', hover: 'hover:bg-[#3D2536]', text: 'text-[#FF9EB5]', border: 'border-[#D87D98]', defaultLabel: 'TikTok' },
-            youtube: { icon: 'fa-brands fa-youtube', bg: 'bg-[#2C1A26]', hover: 'hover:bg-[#3D2536]', text: 'text-[#FF9EB5]', border: 'border-[#D87D98]', defaultLabel: 'YouTube' },
-            email: { icon: 'fa-solid fa-envelope', bg: 'bg-[#2C1A26]', hover: 'hover:bg-[#3D2536]', text: 'text-[#FF9EB5]', border: 'border-[#D87D98]', defaultLabel: 'Email' },
-            website: { icon: 'fa-solid fa-globe', bg: 'bg-[#2C1A26]', hover: 'hover:bg-[#3D2536]', text: 'text-[#FF9EB5]', border: 'border-[#D87D98]', defaultLabel: 'Website' }
+            facebook: { icon: 'fa-brands fa-facebook-f', bg: 'bg-[#2A2227]', hover: 'hover:bg-[#3A2E35]', text: 'text-[#FFC2DE]', border: 'border-[#F075AB]', defaultLabel: 'Facebook' },
+            line: { icon: 'fa-brands fa-line', bg: 'bg-[#2A2227]', hover: 'hover:bg-[#3A2E35]', text: 'text-[#FFC2DE]', border: 'border-[#F075AB]', defaultLabel: 'LINE' },
+            instagram: { icon: 'fa-brands fa-instagram', bg: 'bg-[#2A2227]', hover: 'hover:bg-[#3A2E35]', text: 'text-[#FFC2DE]', border: 'border-[#F075AB]', defaultLabel: 'Instagram' },
+            twitter: { icon: 'fa-brands fa-x-twitter', bg: 'bg-[#2A2227]', hover: 'hover:bg-[#3A2E35]', text: 'text-[#FFC2DE]', border: 'border-[#F075AB]', defaultLabel: 'X (Twitter)' },
+            discord: { icon: 'fa-brands fa-discord', bg: 'bg-[#2A2227]', hover: 'hover:bg-[#3A2E35]', text: 'text-[#FFC2DE]', border: 'border-[#F075AB]', defaultLabel: 'Discord' },
+            tiktok: { icon: 'fa-brands fa-tiktok', bg: 'bg-[#2A2227]', hover: 'hover:bg-[#3A2E35]', text: 'text-[#FFC2DE]', border: 'border-[#F075AB]', defaultLabel: 'TikTok' },
+            youtube: { icon: 'fa-brands fa-youtube', bg: 'bg-[#2A2227]', hover: 'hover:bg-[#3A2E35]', text: 'text-[#FFC2DE]', border: 'border-[#F075AB]', defaultLabel: 'YouTube' },
+            email: { icon: 'fa-solid fa-envelope', bg: 'bg-[#2A2227]', hover: 'hover:bg-[#3A2E35]', text: 'text-[#FFC2DE]', border: 'border-[#F075AB]', defaultLabel: 'Email' },
+            website: { icon: 'fa-solid fa-globe', bg: 'bg-[#2A2227]', hover: 'hover:bg-[#3A2E35]', text: 'text-[#FFC2DE]', border: 'border-[#F075AB]', defaultLabel: 'Website' }
         };
 
         /* ข้อมูลทั้งหมดมาจาก Supabase (ไม่ใช้ LocalStorage เก็บข้อมูลอีกต่อไป) */
@@ -839,7 +837,7 @@
                 loaderLogo.src = storeProfile.loaderLogo || storeProfile.logo || DEFAULT_STORE_PROFILE.logo;
             }
             if (loaderName) {
-                loaderName.innerHTML = `${escapeHTML(storeProfile.name)} <span class="text-sm text-[#D87D98]">✟°｡⋆</span>`;
+                loaderName.innerHTML = `${escapeHTML(storeProfile.name)} <span class="text-sm text-[#F075AB]">✟°｡⋆</span>`;
             }
 
             preloader.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
@@ -929,7 +927,7 @@
             const preloaderLogoEl = document.getElementById('preloaderLogoImg');
             const preloaderNameEl = document.getElementById('preloaderStoreName');
             if (nameEl) {
-                nameEl.innerHTML = `${escapeHTML(storeProfile.name)} <span class="text-base font-normal text-[#D87D98]">✟°｡⋆</span>`;
+                nameEl.innerHTML = `${escapeHTML(storeProfile.name)} <span class="text-base font-normal text-[#F075AB]">✟°｡⋆</span>`;
             }
             if (descEl) {
                 descEl.textContent = storeProfile.description || '';
@@ -941,7 +939,7 @@
                 preloaderLogoEl.src = storeProfile.loaderLogo || storeProfile.logo || DEFAULT_STORE_PROFILE.logo;
             }
             if (preloaderNameEl) {
-                preloaderNameEl.innerHTML = `${escapeHTML(storeProfile.name)} <span class="text-sm text-[#D87D98]">✟°｡⋆</span>`;
+                preloaderNameEl.innerHTML = `${escapeHTML(storeProfile.name)} <span class="text-sm text-[#F075AB]">✟°｡⋆</span>`;
             }
             if (bannerEl && storeProfile.banner) {
                 bannerEl.src = storeProfile.banner;
@@ -953,7 +951,7 @@
                 footerNameEl.textContent = `${storeProfile.name} Queue System`;
             }
             if (adminTitleEl) {
-                adminTitleEl.innerHTML = `<i class="fa-solid fa-crown text-[#D87D98]"></i> รายการคิวทั้งหมด (${escapeHTML(storeProfile.name)})`;
+                adminTitleEl.innerHTML = `<i class="fa-solid fa-crown text-[#F075AB]"></i> รายการคิวทั้งหมด (${escapeHTML(storeProfile.name)})`;
             }
             document.title = `${storeProfile.name} - ระบบจองคิวออนไลน์`;
         }
@@ -1026,7 +1024,7 @@
                     canvas.width = width;
                     canvas.height = height;
                     const ctx = canvas.getContext('2d');
-                    ctx.fillStyle = '#1C121A';
+                    ctx.fillStyle = '#1D171B';
                     ctx.fillRect(0, 0, width, height);
                     ctx.drawImage(img, 0, 0, width, height);
                     canvas.toBlob(function (blob) {
@@ -1163,28 +1161,28 @@
             const container = document.getElementById('adminContactList');
             if (!container) return;
             if (contactList.length === 0) {
-                container.innerHTML = `<p class="text-center text-xs text-gray-400 py-4 bg-[#1C121A] rounded-xl border border-dashed border-[#D87D98]">ยังไม่มีไอคอนช่องทางติดต่อ สามารถเพิ่มด้านบนได้เลยค่ะ</p>`;
+                container.innerHTML = `<p class="text-center text-xs text-gray-400 py-4 bg-[#1D171B] rounded-xl border border-dashed border-[#F075AB]">ยังไม่มีไอคอนช่องทางติดต่อ สามารถเพิ่มด้านบนได้เลยค่ะ</p>`;
                 return;
             }
             container.innerHTML = contactList.map(item => {
                 const style = PLATFORM_STYLES[item.platform] || PLATFORM_STYLES.website;
                 return `
-                    <div class="flex items-center justify-between gap-2 p-2.5 bg-[#1C121A] rounded-xl border border-[#D87D98]">
+                    <div class="flex items-center justify-between gap-2 p-2.5 bg-[#1D171B] rounded-xl border border-[#F075AB]">
                         <div class="flex items-center gap-2.5 min-w-0">
                             <div class="w-9 h-9 rounded-full ${style.bg} ${style.text} border ${style.border} flex items-center justify-center text-base flex-shrink-0">
                                 <i class="${style.icon}"></i>
                             </div>
                             <div class="min-w-0">
-                                <p class="text-xs font-bold text-[#FF9EB5] truncate">${escapeHTML(item.label || style.defaultLabel)}</p>
+                                <p class="text-xs font-bold text-[#FFC2DE] truncate">${escapeHTML(item.label || style.defaultLabel)}</p>
                                 <p class="text-[11px] text-gray-400 truncate">${escapeHTML(item.url)}</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-1 flex-shrink-0">
-                            <button type="button" onclick="editContactItem(${Number(item.id)})" class="w-8 h-8 rounded-lg bg-[#2C1A26] hover:bg-[#3D2536] text-[#FF9EB5] flex items-center justify-center text-xs cursor-pointer border border-[#D87D98]/50" title="แก้ไข">
-                                <i class="fa-solid fa-pen text-[#FF9EB5]"></i>
+                            <button type="button" onclick="editContactItem(${Number(item.id)})" class="w-8 h-8 rounded-lg bg-[#2A2227] hover:bg-[#3A2E35] text-[#FFC2DE] flex items-center justify-center text-xs cursor-pointer border border-[#F075AB]/50" title="แก้ไข">
+                                <i class="fa-solid fa-pen text-[#FFC2DE]"></i>
                             </button>
-                            <button type="button" onclick="deleteContactItem(${Number(item.id)})" class="w-8 h-8 rounded-lg bg-[#2C1A26] hover:bg-[#3D2536] text-[#D87D98] flex items-center justify-center text-xs cursor-pointer border border-[#D87D98]/50" title="ลบ">
-                                <i class="fa-solid fa-trash text-[#D87D98]"></i>
+                            <button type="button" onclick="deleteContactItem(${Number(item.id)})" class="w-8 h-8 rounded-lg bg-[#2A2227] hover:bg-[#3A2E35] text-[#F075AB] flex items-center justify-center text-xs cursor-pointer border border-[#F075AB]/50" title="ลบ">
+                                <i class="fa-solid fa-trash text-[#F075AB]"></i>
                             </button>
                         </div>
                     </div>
@@ -1243,7 +1241,7 @@
             document.getElementById('contactPlatformSelect').value = target.platform;
             document.getElementById('contactLabelInput').value = target.label;
             document.getElementById('contactUrlInput').value = target.url;
-            document.getElementById('contactFormTitle').innerHTML = '<i class="fa-solid fa-pen-to-square text-[#D87D98]"></i> แก้ไขช่องทางติดต่อ';
+            document.getElementById('contactFormTitle').innerHTML = '<i class="fa-solid fa-pen-to-square text-[#F075AB]"></i> แก้ไขช่องทางติดต่อ';
             document.getElementById('saveContactBtnText').textContent = 'บันทึกการแก้ไข';
             document.getElementById('cancelEditContactBtn').classList.remove('hidden');
         }
@@ -1268,7 +1266,7 @@
             document.getElementById('contactPlatformSelect').value = 'facebook';
             document.getElementById('contactLabelInput').value = '';
             document.getElementById('contactUrlInput').value = '';
-            document.getElementById('contactFormTitle').innerHTML = '<i class="fa-solid fa-circle-plus text-[#D87D98]"></i> เพิ่มช่องทางติดต่อใหม่';
+            document.getElementById('contactFormTitle').innerHTML = '<i class="fa-solid fa-circle-plus text-[#F075AB]"></i> เพิ่มช่องทางติดต่อใหม่';
             document.getElementById('saveContactBtnText').textContent = 'เพิ่มไอคอนติดต่อ';
             document.getElementById('cancelEditContactBtn').classList.add('hidden');
         }
@@ -1284,10 +1282,10 @@
             const fillY = bottomY - (fillableHeight * (percent / 100));
             return `
                 <div class="relative inline-flex items-center justify-center ${pulseClass}">
-                    <span class="sparkle-dot absolute -top-1 left-2 text-[#FF9EB5] text-base select-none">✟</span>
-                    <span class="sparkle-dot absolute top-2 right-1 text-[#D87D98] text-sm select-none" style="animation-delay: 0.5s;">♡</span>
-                    <span class="sparkle-dot absolute bottom-3 left-2 text-[#FF9EB5] text-xs select-none" style="animation-delay: 1s;">˚₊·</span>
-                    <span class="sparkle-dot absolute bottom-2 right-2 text-[#D87D98] text-sm select-none" style="animation-delay: 1.4s;">✟</span>
+                    <span class="sparkle-dot absolute -top-1 left-2 text-[#FFC2DE] text-base select-none">✟</span>
+                    <span class="sparkle-dot absolute top-2 right-1 text-[#F075AB] text-sm select-none" style="animation-delay: 0.5s;">♡</span>
+                    <span class="sparkle-dot absolute bottom-3 left-2 text-[#FFC2DE] text-xs select-none" style="animation-delay: 1s;">˚₊·</span>
+                    <span class="sparkle-dot absolute bottom-2 right-2 text-[#F075AB] text-sm select-none" style="animation-delay: 1.4s;">✟</span>
                     <div class="relative ${sizeClass} flex items-center justify-center gentle-bounce">
                         <svg viewBox="0 0 140 132" class="w-full h-full overflow-visible">
                             <defs>
@@ -1297,25 +1295,25 @@
                                     <use href="#${uniqueId}_main" />
                                 </clipPath>
                                 <linearGradient id="${uniqueId}_fillGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                                    <stop offset="0%" stop-color="#FF9EB5" />
-                                    <stop offset="55%" stop-color="#D87D98" />
-                                    <stop offset="100%" stop-color="#9C4A63" />
+                                    <stop offset="0%" stop-color="#FFC2DE" />
+                                    <stop offset="55%" stop-color="#F075AB" />
+                                    <stop offset="100%" stop-color="#C44D83" />
                                 </linearGradient>
                                 <linearGradient id="${uniqueId}_bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                                    <stop offset="0%" stop-color="#2C1A26" />
-                                    <stop offset="100%" stop-color="#1C121A" />
+                                    <stop offset="0%" stop-color="#2A2227" />
+                                    <stop offset="100%" stop-color="#1D171B" />
                                 </linearGradient>
                                 <filter id="${uniqueId}_softShadow" x="-15%" y="-15%" width="130%" height="135%">
                                     <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.5" />
                                 </filter>
                             </defs>
-                            <use href="#${uniqueId}_outer" fill="none" stroke="#D87D98" stroke-width="2" stroke-dasharray="4 4" stroke-linecap="round" />
+                            <use href="#${uniqueId}_outer" fill="none" stroke="#F075AB" stroke-width="2" stroke-dasharray="4 4" stroke-linecap="round" />
                             <g filter="url(#${uniqueId}_softShadow)">
                                 <use href="#${uniqueId}_main" fill="url(#${uniqueId}_bgGrad)" />
                             </g>
                             <g clip-path="url(#${uniqueId}_clip)">
                                 ${percent > 0 ? `
-                                    <path class="heart-wave" fill="#5C2A3B" opacity="0.75"
+                                    <path class="heart-wave" fill="#6B2B47" opacity="0.75"
                                         d="M-25 ${fillY - 2} Q -5 ${fillY - 8}, 15 ${fillY - 2} T 55 ${fillY - 2} T 95 ${fillY - 2} T 135 ${fillY - 2} T 175 ${fillY - 2} V 135 H -25 Z" />
                                     <path class="heart-wave" style="animation-duration: 2.6s; animation-direction: reverse;" fill="url(#${uniqueId}_fillGrad)"
                                         d="M-25 ${fillY + 1} Q -5 ${fillY + 6}, 15 ${fillY + 1} T 55 ${fillY + 1} T 95 ${fillY + 1} T 135 ${fillY + 1} T 175 ${fillY + 1} V 135 H -25 Z" />
@@ -1324,15 +1322,15 @@
                                     ${percent >= 75 ? `<circle cx="62" cy="${Math.min(fillY + 32, 102)}" r="1.8" fill="#FFFFFF" opacity="0.65" />` : ''}
                                 ` : ''}
                             </g>
-                            <path d="M32 34 C29 40 29 47 32 52" stroke="#FF9EB5" stroke-width="3.5" stroke-linecap="round" fill="none" opacity="0.9" />
-                            <circle cx="37" cy="27" r="2.2" fill="#FF9EB5" opacity="0.95" />
-                            <path d="M106 33 C109 37 110 42 109 46" stroke="#FF9EB5" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.7" />
-                            <use href="#${uniqueId}_main" fill="none" stroke="#FF9EB5" stroke-width="3.5" stroke-linejoin="round" opacity="0.85" />
-                            <use href="#${uniqueId}_main" fill="none" stroke="#D87D98" stroke-width="2" stroke-linejoin="round" />
+                            <path d="M32 34 C29 40 29 47 32 52" stroke="#FFC2DE" stroke-width="3.5" stroke-linecap="round" fill="none" opacity="0.9" />
+                            <circle cx="37" cy="27" r="2.2" fill="#FFC2DE" opacity="0.95" />
+                            <path d="M106 33 C109 37 110 42 109 46" stroke="#FFC2DE" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.7" />
+                            <use href="#${uniqueId}_main" fill="none" stroke="#FFC2DE" stroke-width="3.5" stroke-linejoin="round" opacity="0.85" />
+                            <use href="#${uniqueId}_main" fill="none" stroke="#F075AB" stroke-width="2" stroke-linejoin="round" />
                         </svg>
                         <!-- ฟอนต์ตัวเลขเปอร์เซ็นต์ด้านใน (คงดีไซน์และขนาดฟอนต์เดิมทุกประการ) -->
                         <div class="absolute inset-0 flex items-center justify-center z-10 pointer-events-none pt-1">
-                            <span class="font-number font-bold text-2xl sm:text-3xl text-[#F5E6EC] tracking-wider bg-[#1C121A]/95 px-3.5 py-1 rounded-full shadow-xs border border-[#D87D98]">
+                            <span class="font-number font-bold text-2xl sm:text-3xl text-[#FFF5F9] tracking-wider bg-[#1D171B]/95 px-3.5 py-1 rounded-full shadow-xs border border-[#F075AB]">
                                 ${percent}%
                             </span>
                         </div>
@@ -1517,11 +1515,11 @@
             if (!requireClient()) return;
             const list = document.getElementById('adminQueueList');
             await runBusy(btn, null, async () => {
-                list.innerHTML = `<p class="text-center text-sm text-[#D8B4BE] py-6"><i class="fa-solid fa-spinner fa-spin text-[#D87D98]"></i> กำลังโหลดรายการคิว...</p>`;
+                list.innerHTML = `<p class="text-center text-sm text-[#FFD6E8] py-6"><i class="fa-solid fa-spinner fa-spin text-[#F075AB]"></i> กำลังโหลดรายการคิว...</p>`;
                 const { data, error } = await sb.from('queues').select('*').order('created_at', { ascending: true }).order('id', { ascending: true });
                 if (error) {
                     console.error(error);
-                    list.innerHTML = `<p class="text-center text-sm text-[#FF9EB5] py-6">โหลดรายการคิวไม่สำเร็จ: ${escapeHTML(friendlyError(error))}</p>`;
+                    list.innerHTML = `<p class="text-center text-sm text-[#FFC2DE] py-6">โหลดรายการคิวไม่สำเร็จ: ${escapeHTML(friendlyError(error))}</p>`;
                     showToast(friendlyError(error), true);
                     return;
                 }
@@ -1595,39 +1593,39 @@
             listContainer.innerHTML = filtered.map(q => {
                 const activeOrder = calculateQueueOrder(q.id);
                 const orderBadge = activeOrder
-                    ? `<span class="px-2 py-0.5 rounded-md bg-[#2C1A26] text-[#FF9EB5] border border-[#D87D98] text-xs font-bold">ลำดับที่ ${activeOrder}</span>`
-                    : `<span class="px-2 py-0.5 rounded-md bg-gradient-to-r from-[#D87D98] to-[#FF9EB5] text-[#120A0F] text-xs font-bold">ส่งแล้ว 100%</span>`;
+                    ? `<span class="px-2 py-0.5 rounded-md bg-[#2A2227] text-[#FFC2DE] border border-[#F075AB] text-xs font-bold">ลำดับที่ ${activeOrder}</span>`
+                    : `<span class="px-2 py-0.5 rounded-md bg-gradient-to-r from-[#F075AB] to-[#FFC2DE] text-[#161215] text-xs font-bold">ส่งแล้ว 100%</span>`;
                 return `
-                    <div class="p-4 rounded-2xl border-2 border-[#D87D98]/50 bg-[#120A0F] hover:border-[#D87D98] transition-all space-y-3">
+                    <div class="p-4 rounded-2xl border-2 border-[#F075AB]/50 bg-[#161215] hover:border-[#F075AB] transition-all space-y-3">
                         <div class="flex flex-wrap items-center justify-between gap-2">
                             <div class="flex flex-wrap items-center gap-2">
                                 ${orderBadge}
-                                <span class="font-mono font-bold text-sm text-[#FF9EB5] bg-[#2C1A26] px-2.5 py-0.5 rounded-lg border border-[#D87D98]">
+                                <span class="font-mono font-bold text-sm text-[#FFC2DE] bg-[#2A2227] px-2.5 py-0.5 rounded-lg border border-[#F075AB]">
                                     ${escapeHTML(q.code)}
                                 </span>
-                                <span class="font-mono font-bold text-xs text-[#FF9EB5] bg-[#2C1A26] px-2.5 py-0.5 rounded-lg border border-[#D87D98]">
+                                <span class="font-mono font-bold text-xs text-[#FFC2DE] bg-[#2A2227] px-2.5 py-0.5 rounded-lg border border-[#F075AB]">
                                     PIN: ${escapeHTML(q.pin || '----')}
                                 </span>
-                                <button onclick="copyRawText('รหัสเช็กคิว: ${escapeHTML(q.code)} | รหัส PIN: ${escapeHTML(q.pin || '')}', 'คัดลอกรหัสคิวและ PIN แล้ว!')" class="text-xs px-2.5 py-1 rounded-lg bg-[#2C1A26] border border-[#D87D98] hover:bg-[#3D2536] text-[#FF9EB5] flex items-center gap-1 cursor-pointer">
+                                <button onclick="copyRawText('รหัสเช็กคิว: ${escapeHTML(q.code)} | รหัส PIN: ${escapeHTML(q.pin || '')}', 'คัดลอกรหัสคิวและ PIN แล้ว!')" class="text-xs px-2.5 py-1 rounded-lg bg-[#2A2227] border border-[#F075AB] hover:bg-[#3A2E35] text-[#FFC2DE] flex items-center gap-1 cursor-pointer">
                                     <i class="fa-regular fa-copy"></i> คัดลอกรหัส + PIN
                                 </button>
                             </div>
-                            <span class="text-xs font-medium text-[#FF9EB5] bg-[#2C1A26] px-2.5 py-1 rounded-full border border-[#D87D98]/50">
+                            <span class="text-xs font-medium text-[#FFC2DE] bg-[#2A2227] px-2.5 py-1 rounded-full border border-[#F075AB]/50">
                                 <i class="fa-regular fa-clock"></i> ส่งงาน: ${escapeHTML(formatThaiDateTime(q.dueDate))}
                             </span>
                         </div>
                         <div class="text-xs sm:text-sm space-y-1">
                             <p>
-                                <b class="text-[#FF9EB5]">ลูกค้า:</b> ${escapeHTML(q.customerName)}
+                                <b class="text-[#FFC2DE]">ลูกค้า:</b> ${escapeHTML(q.customerName)}
                                 <span class="text-gray-600">|</span>
-                                <b class="text-[#FF9EB5]">ติดต่อ:</b> <span class="text-[#F5E6EC]">${escapeHTML(q.contact || '-')}</span>
+                                <b class="text-[#FFC2DE]">ติดต่อ:</b> <span class="text-[#FFF5F9]">${escapeHTML(q.contact || '-')}</span>
                             </p>
-                            <p><b class="text-[#FF9EB5]">บริการ:</b> <span class="text-[#FF9EB5] font-medium">${escapeHTML(q.service)}</span></p>
-                            <p class="text-gray-300 bg-[#1C121A] p-2.5 rounded-lg border border-[#D87D98]/40 text-xs mt-1">${escapeHTML(q.detail)}</p>
+                            <p><b class="text-[#FFC2DE]">บริการ:</b> <span class="text-[#FFC2DE] font-medium">${escapeHTML(q.service)}</span></p>
+                            <p class="text-gray-300 bg-[#1D171B] p-2.5 rounded-lg border border-[#F075AB]/40 text-xs mt-1">${escapeHTML(q.detail)}</p>
                         </div>
-                        <div class="flex items-center justify-between pt-2 border-t border-dashed border-[#D87D98]/40">
-                            <label class="text-xs font-medium text-[#D8B4BE]">อัปเดตสถานะงาน:</label>
-                            <select onchange="updateQueueStatus(${Number(q.id)}, this.value, this)" class="text-xs sm:text-sm p-1.5 px-3 rounded-xl border-2 border-[#D87D98] bg-[#120A0F] text-[#F5E6EC] font-medium focus:outline-none">
+                        <div class="flex items-center justify-between pt-2 border-t border-dashed border-[#F075AB]/40">
+                            <label class="text-xs font-medium text-[#FFD6E8]">อัปเดตสถานะงาน:</label>
+                            <select onchange="updateQueueStatus(${Number(q.id)}, this.value, this)" class="text-xs sm:text-sm p-1.5 px-3 rounded-xl border-2 border-[#F075AB] bg-[#161215] text-[#FFF5F9] font-medium focus:outline-none">
                                 <option value="รอบรีฟ 0%" ${q.status === 'รอบรีฟ 0%' ? 'selected' : ''}>[0%] รอบรีฟ 0%</option>
                                 <option value="บรีฟแล้ว 25%" ${q.status === 'บรีฟแล้ว 25%' ? 'selected' : ''}>[25%] บรีฟแล้ว 25%</option>
                                 <option value="กำลังดำเนินงาน 50%" ${q.status === 'กำลังดำเนินงาน 50%' ? 'selected' : ''}>[50%] กำลังดำเนินงาน 50%</option>
@@ -1685,31 +1683,31 @@
                 }
                 if (data !== true) {
                     previewContainer.innerHTML = `
-                        <div class="p-5 rounded-2xl bg-[#1C121A] border-2 border-dashed border-[#D87D98] text-center space-y-1.5">
-                            <div class="w-10 h-10 rounded-full bg-[#2C1A26] border border-[#D87D98] flex items-center justify-center mx-auto text-[#FF9EB5]">
+                        <div class="p-5 rounded-2xl bg-[#1D171B] border-2 border-dashed border-[#F075AB] text-center space-y-1.5">
+                            <div class="w-10 h-10 rounded-full bg-[#2A2227] border border-[#F075AB] flex items-center justify-center mx-auto text-[#FFC2DE]">
                                 <i class="fa-solid fa-circle-xmark text-lg"></i>
                             </div>
-                            <p class="font-medium text-sm text-[#FF9EB5]">ไม่พบข้อมูลคิวสำหรับรหัส "${escapeHTML(inputCode)}"</p>
-                            <p class="text-xs text-[#D8B4BE]">กรุณาตรวจสอบตัวอักษรและขีด (-) ให้ถูกต้อง</p>
+                            <p class="font-medium text-sm text-[#FFC2DE]">ไม่พบข้อมูลคิวสำหรับรหัส "${escapeHTML(inputCode)}"</p>
+                            <p class="text-xs text-[#FFD6E8]">กรุณาตรวจสอบตัวอักษรและขีด (-) ให้ถูกต้อง</p>
                         </div>`;
                     return;
                 }
                 targetQueueForVerification = { code: inputCode };
                 previewContainer.innerHTML = `
-                    <div onclick="openVerifyModal()" class="cursor-pointer group dashed-box bg-gradient-to-r from-[#2C1A26] to-[#1C121A] p-4 sm:p-5 hover:shadow-md transition-all flex items-center justify-between gap-3 border-[#D87D98]">
+                    <div onclick="openVerifyModal()" class="cursor-pointer group dashed-box bg-gradient-to-r from-[#2A2227] to-[#1D171B] p-4 sm:p-5 hover:shadow-md transition-all flex items-center justify-between gap-3 border-[#F075AB]">
                         <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 rounded-2xl bg-[#120A0F] flex items-center justify-center text-xl text-[#FF9EB5] shadow-xs border border-[#D87D98]">
+                            <div class="w-12 h-12 rounded-2xl bg-[#161215] flex items-center justify-center text-xl text-[#FFC2DE] shadow-xs border border-[#F075AB]">
                                 <i class="fa-solid fa-envelope-open-text"></i>
                             </div>
                             <div>
-                                <span class="text-[11px] bg-[#2C1A26] px-2 py-0.5 rounded-full text-[#FF9EB5] font-semibold">พบข้อมูลคิวของคุณแล้ว!</span>
-                                <h3 class="font-cute font-bold text-base sm:text-lg text-[#F5E6EC] mt-0.5">
+                                <span class="text-[11px] bg-[#2A2227] px-2 py-0.5 rounded-full text-[#FFC2DE] font-semibold">พบข้อมูลคิวของคุณแล้ว!</span>
+                                <h3 class="font-cute font-bold text-base sm:text-lg text-[#FFF5F9] mt-0.5">
                                     รหัสคิว: ${escapeHTML(inputCode)}
                                 </h3>
-                                <p class="text-xs text-[#D8B4BE]">แตะเพื่อกรอก <b>รหัส PIN 4 หลัก</b></p>
+                                <p class="text-xs text-[#FFD6E8]">แตะเพื่อกรอก <b>รหัส PIN 4 หลัก</b></p>
                             </div>
                         </div>
-                        <div class="px-3 py-2 rounded-full bg-[#D87D98] text-[#120A0F] text-xs font-bold group-hover:scale-105 transition-transform flex-shrink-0 shadow-xs">
+                        <div class="px-3 py-2 rounded-full bg-[#F075AB] text-[#161215] text-xs font-bold group-hover:scale-105 transition-transform flex-shrink-0 shadow-xs">
                             ใส่รหัส PIN <i class="fa-solid fa-key ml-1"></i>
                         </div>
                     </div>
@@ -1775,55 +1773,55 @@
         function renderUnlockedQueueDetail(q) {
             const fullDetailCard = document.getElementById('queueFullDetailCard');
             const queueOrder = q.queueOrder || null;
-            let statusBadgeColor = 'bg-[#2C1A26] text-[#D8B4BE] border border-[#D87D98]/60';
-            if (q.status === 'บรีฟแล้ว 25%') statusBadgeColor = 'bg-[#2C1A26] text-[#FF9EB5] border border-[#D87D98]';
-            if (q.status === 'กำลังดำเนินงาน 50%') statusBadgeColor = 'bg-[#3D2536] text-[#FF9EB5] border border-[#FF9EB5]';
-            if (q.status === 'รอเช็คงาน 75%') statusBadgeColor = 'bg-[#3D2536] text-[#F5E6EC] border border-[#FF9EB5]';
-            if (q.status === 'ส่งแล้ว 100%') statusBadgeColor = 'bg-gradient-to-r from-[#D87D98] to-[#FF9EB5] text-[#120A0F] font-bold';
+            let statusBadgeColor = 'bg-[#2A2227] text-[#FFD6E8] border border-[#F075AB]/60';
+            if (q.status === 'บรีฟแล้ว 25%') statusBadgeColor = 'bg-[#2A2227] text-[#FFC2DE] border border-[#F075AB]';
+            if (q.status === 'กำลังดำเนินงาน 50%') statusBadgeColor = 'bg-[#3A2E35] text-[#FFC2DE] border border-[#FFC2DE]';
+            if (q.status === 'รอเช็คงาน 75%') statusBadgeColor = 'bg-[#3A2E35] text-[#FFF5F9] border border-[#FFC2DE]';
+            if (q.status === 'ส่งแล้ว 100%') statusBadgeColor = 'bg-gradient-to-r from-[#F075AB] to-[#FFC2DE] text-[#161215] font-bold';
             const subtleOrderText = queueOrder
-                ? `<span class="text-xs text-[#D8B4BE] bg-[#120A0F] px-3 py-1 rounded-full border border-[#D87D98]">ลำดับคิวปัจจุบัน: คิวที่ ${queueOrder}</span>`
-                : `<span class="text-xs text-[#FF9EB5] bg-[#2C1A26] px-3 py-1 rounded-full border border-[#D87D98]">ดำเนินการเสร็จสิ้นเรียบร้อยแล้ว</span>`;
+                ? `<span class="text-xs text-[#FFD6E8] bg-[#161215] px-3 py-1 rounded-full border border-[#F075AB]">ลำดับคิวปัจจุบัน: คิวที่ ${queueOrder}</span>`
+                : `<span class="text-xs text-[#FFC2DE] bg-[#2A2227] px-3 py-1 rounded-full border border-[#F075AB]">ดำเนินการเสร็จสิ้นเรียบร้อยแล้ว</span>`;
             fullDetailCard.classList.remove('hidden');
             fullDetailCard.innerHTML = `
-                <div class="flex items-center justify-between border-b border-dashed border-[#D87D98] pb-3 mb-4">
+                <div class="flex items-center justify-between border-b border-dashed border-[#F075AB] pb-3 mb-4">
                     <div>
-                        <span class="text-xs text-[#FF9EB5] font-semibold flex items-center gap-1"><i class="fa-solid fa-lock-open text-[#D87D98]"></i> ยืนยันรหัสผ่านแล้ว</span>
-                        <h3 class="font-cute text-xl font-bold text-[#F5E6EC]">รายละเอียดคิว ${escapeHTML(q.code)}</h3>
+                        <span class="text-xs text-[#FFC2DE] font-semibold flex items-center gap-1"><i class="fa-solid fa-lock-open text-[#F075AB]"></i> ยืนยันรหัสผ่านแล้ว</span>
+                        <h3 class="font-cute text-xl font-bold text-[#FFF5F9]">รายละเอียดคิว ${escapeHTML(q.code)}</h3>
                     </div>
                     <span class="px-3 py-1 rounded-full text-xs font-semibold ${statusBadgeColor}">
                         ${escapeHTML(q.status)}
                     </span>
                 </div>
-                <div class="bg-gradient-to-b from-[#2C1A26] to-[#1C121A] border-2 border-dashed border-[#D87D98] rounded-3xl p-6 text-center flex flex-col items-center justify-center space-y-2 shadow-xs">
-                    <span class="text-xs font-medium text-[#D8B4BE] tracking-wide">ความคืบหน้างานของคุณ</span>
+                <div class="bg-gradient-to-b from-[#2A2227] to-[#1D171B] border-2 border-dashed border-[#F075AB] rounded-3xl p-6 text-center flex flex-col items-center justify-center space-y-2 shadow-xs">
+                    <span class="text-xs font-medium text-[#FFD6E8] tracking-wide">ความคืบหน้างานของคุณ</span>
                     <div class="py-1">
                         ${renderHeartProgressSVG(q.status, "w-40 h-40 sm:w-44 sm:h-44")}
                     </div>
-                    <p class="font-cute text-xl sm:text-2xl font-bold text-[#FF9EB5] pt-1">
+                    <p class="font-cute text-xl sm:text-2xl font-bold text-[#FFC2DE] pt-1">
                         ${escapeHTML(q.status)}
                     </p>
                     <div class="pt-1">${subtleOrderText}</div>
                 </div>
-                <div class="mt-4 space-y-2.5 text-sm bg-[#120A0F] p-4 rounded-xl border border-[#D87D98]/40">
+                <div class="mt-4 space-y-2.5 text-sm bg-[#161215] p-4 rounded-xl border border-[#F075AB]/40">
                     <div class="flex justify-between gap-2">
-                        <span class="text-[#D8B4BE]">ชื่อลูกค้า:</span>
-                        <span class="font-semibold text-right text-[#F5E6EC]">${escapeHTML(q.customerName)}</span>
+                        <span class="text-[#FFD6E8]">ชื่อลูกค้า:</span>
+                        <span class="font-semibold text-right text-[#FFF5F9]">${escapeHTML(q.customerName)}</span>
                     </div>
                     <div class="flex justify-between gap-2">
-                        <span class="text-[#D8B4BE]">ช่องทางติดต่อของคุณ:</span>
-                        <span class="font-medium text-right text-[#F5E6EC]">${escapeHTML(q.contact || '-')}</span>
+                        <span class="text-[#FFD6E8]">ช่องทางติดต่อของคุณ:</span>
+                        <span class="font-medium text-right text-[#FFF5F9]">${escapeHTML(q.contact || '-')}</span>
                     </div>
                     <div class="flex justify-between gap-2">
-                        <span class="text-[#D8B4BE]">บริการที่สั่ง:</span>
-                        <span class="font-semibold text-[#FF9EB5] text-right">${escapeHTML(q.service)}</span>
+                        <span class="text-[#FFD6E8]">บริการที่สั่ง:</span>
+                        <span class="font-semibold text-[#FFC2DE] text-right">${escapeHTML(q.service)}</span>
                     </div>
                     <div class="flex justify-between gap-2">
-                        <span class="text-[#D8B4BE]">กำหนดวันเวลาส่งงาน:</span>
-                        <span class="font-semibold text-[#FF9EB5] text-right">${escapeHTML(formatThaiDateTime(q.dueDate))}</span>
+                        <span class="text-[#FFD6E8]">กำหนดวันเวลาส่งงาน:</span>
+                        <span class="font-semibold text-[#FFC2DE] text-right">${escapeHTML(formatThaiDateTime(q.dueDate))}</span>
                     </div>
-                    <div class="pt-2 border-t border-dashed border-[#D87D98]/50">
-                        <span class="text-[#D8B4BE] block text-xs mb-1">รายละเอียดงาน:</span>
-                        <p class="text-xs sm:text-sm bg-[#1C121A] p-2.5 rounded-lg border border-[#D87D98]/40 text-[#F5E6EC] leading-relaxed">${escapeHTML(q.detail)}</p>
+                    <div class="pt-2 border-t border-dashed border-[#F075AB]/50">
+                        <span class="text-[#FFD6E8] block text-xs mb-1">รายละเอียดงาน:</span>
+                        <p class="text-xs sm:text-sm bg-[#1D171B] p-2.5 rounded-lg border border-[#F075AB]/40 text-[#FFF5F9] leading-relaxed">${escapeHTML(q.detail)}</p>
                     </div>
                 </div>
             `;
@@ -1845,8 +1843,8 @@
             const icon = document.getElementById('toastIcon');
             document.getElementById('toastMessage').textContent = msg;
             icon.className = isError
-                ? 'fa-solid fa-circle-exclamation text-[#FF9EB5]'
-                : 'fa-solid fa-circle-check text-[#FF9EB5]';
+                ? 'fa-solid fa-circle-exclamation text-[#FFC2DE]'
+                : 'fa-solid fa-circle-check text-[#FFC2DE]';
             toast.classList.remove('opacity-0');
             if (toastTimer) clearTimeout(toastTimer);
             toastTimer = setTimeout(() => {
@@ -1957,14 +1955,14 @@
             const icon = document.getElementById('bgmIcon');
             if (!btn || !statusText || !eqBars || !icon) return;
             if (playing) {
-                btn.className = 'kawaii-btn py-0.5 px-2.5 rounded-full bg-[#1C121A] text-[#FF9EB5] font-semibold text-[11px] shadow-2xs border border-[#D87D98] flex items-center gap-1.5 cursor-pointer';
+                btn.className = 'kawaii-btn py-0.5 px-2.5 rounded-full bg-[#1D171B] text-[#FFC2DE] font-semibold text-[11px] shadow-2xs border border-[#F075AB] flex items-center gap-1.5 cursor-pointer';
                 eqBars.classList.add('eq-playing');
-                icon.className = 'fa-solid fa-volume-high text-[#FF9EB5] text-[10px]';
+                icon.className = 'fa-solid fa-volume-high text-[#FFC2DE] text-[10px]';
                 statusText.textContent = 'BGM: เปิดอยู่';
             } else {
-                btn.className = 'kawaii-btn py-0.5 px-2.5 rounded-full bg-[#1C121A]/90 text-[#D8B4BE] hover:bg-[#2C1A26] font-medium text-[11px] shadow-2xs border border-[#D87D98] flex items-center gap-1.5 cursor-pointer';
+                btn.className = 'kawaii-btn py-0.5 px-2.5 rounded-full bg-[#1D171B]/90 text-[#FFD6E8] hover:bg-[#2A2227] font-medium text-[11px] shadow-2xs border border-[#F075AB] flex items-center gap-1.5 cursor-pointer';
                 eqBars.classList.remove('eq-playing');
-                icon.className = 'fa-solid fa-volume-xmark text-[#D8B4BE] text-[10px]';
+                icon.className = 'fa-solid fa-volume-xmark text-[#FFD6E8] text-[10px]';
                 statusText.textContent = waitingInteraction ? 'เปิดเพลง ♪' : 'BGM: ปิดอยู่';
             }
         }
